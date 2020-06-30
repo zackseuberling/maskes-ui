@@ -5,8 +5,6 @@ import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { NavLink } from 'react-router-dom';
-import { connect } from 'react-redux';
-// import { withRouter } from 'react-router';
 
 const AppNavbar = () => (
   <Navbar bg="light" expand="lg">
@@ -32,15 +30,5 @@ const AppNavbar = () => (
     </Form>
   </Navbar>
 );
-
-// const mapStateToProps = (state, props) => {
-//   const navId = props.match.params.navId;
-//   console.log('map state to props', navId);
-
-//   return {
-//     navId: navId || 'home',
-//     // todos: getVisibleTodos(state, navId),
-//   };
-// };
 
 export default AppNavbar;

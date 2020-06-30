@@ -10,9 +10,6 @@ function App() {
     <Provider store={store}>
       <Router>
         <AppRoot />
-        {/* <Route path="/(" component={AppRoot}></Route>
-        <Route path="/:navId?" component={AppRoot}></Route>
-        <Route path="/:navId?" component={AppRoot}></Route> */}
       </Router>
     </Provider>
   );

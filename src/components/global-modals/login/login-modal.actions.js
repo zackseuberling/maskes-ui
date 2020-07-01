@@ -5,3 +5,7 @@ export const openLoginModal = () => ({
 export const hideLoginModal = () => ({
   type: 'HIDE_LOGIN_MODAL',
 });
+
+export const onLogin = () => ({
+  type: 'SUCCESSFULLY_LOG_IN',
+});

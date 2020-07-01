@@ -7,6 +7,7 @@ export class Account {
       {
         id: v4(),
         accessToken: v4(),
+        roles: ['volunteer'],
       },
       _.pick(options, ['id', 'username', 'password'])
     );

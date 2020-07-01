@@ -7,13 +7,16 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import Spinner from 'react-bootstrap/Spinner';
-import { hideLoginModal } from './login-modal.actions';
+import { hideLoginModal, onLogin } from './login-modal.actions';
 import Alert from 'react-bootstrap/Alert';
-import * as auth from '../../../apis/auth.api';
+import * as auth from '../../../apis/auth/auth.api';
+import { withRouter } from 'react-router';
 
 interface ILoginModalProps {
   show?: boolean;
+  goTo?(): any;
   hideLoginModal?(): any;
+  onLogin?(): any;
 }
 
 interface ILoginModalState {
@@ -69,13 +72,14 @@ class LoginModal extends Component<ILoginModalProps, ILoginModalState> {
 
     function onSuccess(this: any) {
       this.props.hideLoginModal();
+      this.props.onLogin();
+      this.props.goTo('/my-requests');
     }
   }
 
   render() {
     if (this.props.show) {
       const { show, hideLoginModal } = this.props;
-      const { username, password } = this.state;
       return (
         <Modal
           show={show}
@@ -150,9 +154,13 @@ class LoginModal extends Component<ILoginModalProps, ILoginModalState> {
 const mapStateToProps = (state, props) => {
   return {
     show: state.globalModals.show,
+    goTo: props.history.push,
   };
 };
 
-export default connect(mapStateToProps, {
-  hideLoginModal,
-})(LoginModal);
+export default withRouter(
+  connect(mapStateToProps, {
+    hideLoginModal,
+    onLogin,
+  })(LoginModal)
+);

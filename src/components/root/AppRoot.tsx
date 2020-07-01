@@ -4,23 +4,26 @@ import { Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import Navbar from '../navbar/Navbar';
+import Breadcrumbs from '../breadcrumbs/Breadcrumbs';
 import GlobalModals from '../global-modals/GlobalModals';
 import { withRouter } from 'react-router';
 import * as navManager from '../navbar/nav-manager';
 
-const AppRoot = ({ component, hasLogin }) => (
+const AppRoot = ({ component }) => (
   <div>
     <GlobalModals />
     <Navbar />
-    <Route path="/:navId?" component={component}></Route>
+    {/* TODO: hide breadcrumbs for protected route */}
+    <Breadcrumbs />
+    <Route path="/:navId?/:subNavId?" component={component}></Route>
   </div>
 );
 
 const mapStateToProps = (state, props) => {
-  const navId = props.match.params.navId;
+  const params = props.match.params;
 
   return {
-    component: navManager.getDisplayComponentForNav(state, navId),
+    component: navManager.getDisplayComponentForNav(state, params),
   };
 };
 

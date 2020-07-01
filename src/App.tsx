@@ -12,7 +12,7 @@ function App() {
   return (
     <Provider store={store}>
       <Router>
-        <Route path="/:navId?" component={AppRoot}></Route>
+        <Route path="/:navId?/:subNavId?" component={AppRoot}></Route>
       </Router>
     </Provider>
   );

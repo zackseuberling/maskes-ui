@@ -1,0 +1,13 @@
+.create-request-form {
+  margin: auto;
+  width: 90%;
+}
+
+.create-your-request-title {
+  margin-bottom: 40px;
+  margin-left: 50px;
+}
+
+.form-label {
+  font-weight: bold;
+}

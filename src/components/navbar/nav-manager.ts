@@ -6,6 +6,7 @@ import MyRequests from '../manage-requests/manage-request-page/ManageRequests';
 import CreateRequestPage from '../manage-requests/create-request-page/CreateRequestPage';
 
 const PUBLIC_NAV_STATE = {
+  'create-request': CreateRequestPage, // TODO: remove this
   'get-help': GetHelp,
   home: Home,
   volunteer: Volunteer,

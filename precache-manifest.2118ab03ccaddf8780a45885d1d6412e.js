@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "0071cfb103738e7f915e2ef4ae4d0685",
+    "revision": "e44544c7e5b51e334fdc2e5855a6ef10",
     "url": "/maskes-ui/index.html"
   },
   {
@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/maskes-ui/static/css/2.af3c1da9.chunk.css"
   },
   {
-    "revision": "e8aa8938cb6813dea895",
+    "revision": "a73c985037d283cf8127",
     "url": "/maskes-ui/static/css/main.26fc38bc.chunk.css"
   },
   {
@@ -20,8 +20,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/maskes-ui/static/js/2.60a1dbd8.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "e8aa8938cb6813dea895",
-    "url": "/maskes-ui/static/js/main.e8258a4d.chunk.js"
+    "revision": "a73c985037d283cf8127",
+    "url": "/maskes-ui/static/js/main.c0882255.chunk.js"
   },
   {
     "revision": "ab7c1d1b1e03f487cddb",

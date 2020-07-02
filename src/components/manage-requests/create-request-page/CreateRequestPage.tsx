@@ -2,8 +2,10 @@ import React from 'react';
 
 import './CreateRequestPage.css';
 import { Button, Form, Col } from 'react-bootstrap';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
 
-const CreateRequestPage = () => {
+const CreateRequestPage = ({ goTo }) => {
   const locations = [
     'Algona Pacific',
     'Auburn',
@@ -37,16 +39,36 @@ const CreateRequestPage = () => {
   return (
     <React.Fragment>
       <h3 className="create-your-request-title">Create your requests</h3>
-      <Form className="create-request-form">
-        <Form.Group controlId="contact">
+      <Form
+        className="create-request-form"
+        onSubmit={(event) => {
+          event.preventDefault();
+          console.log('hello world');
+          //   console.log('loading');
+          goTo('/');
+        }}
+      >
+        <Form.Group controlId="contact-method">
           <Form.Label>
             What would be the quickest method of reaching you?{' '}
           </Form.Label>
-          <Form.Control as="select" className="my-1 mr-sm-2" custom>
-            <option value="0">Choose...</option>
-            <option value="1">Phone Number - Call</option>
-            <option value="2">Phone Number - Text</option>
-            <option value="3">Three</option>
+          <Form.Control
+            as="select"
+            multiple
+            name="contact-method"
+            onChange={(val1) =>
+              console.log(
+                'form change value',
+                // val1.target,
+                val1.target.name,
+                val1.target.value
+              )
+            }
+            required
+          >
+            <option value="call">Phone Number - Call</option>
+            <option value="text">Phone Number - Text</option>
+            <option value="email">Email</option>
           </Form.Control>
         </Form.Group>
 
@@ -70,7 +92,7 @@ const CreateRequestPage = () => {
           <Form.Label>
             What is your address? (Address, City, State, ZIP Code)
           </Form.Label>
-          <Form.Control placeholder="Your answer" />
+          <Form.Control placeholder="Your answer" required />
         </Form.Group>
 
         <Form.Group controlId="Redirect-Request">
@@ -330,12 +352,16 @@ const CreateRequestPage = () => {
 
         {/* TODO show poster here */}
 
-        <Button onClick={() => console.log('hello world')} variant="primary">
-          Submit
-        </Button>
+        <Button type="submit">Submit</Button>
       </Form>
     </React.Fragment>
   );
 };
 
-export default CreateRequestPage;
+const mapStateToProps = (state, props) => {
+  return {
+    goTo: props.history.push,
+  };
+};
+
+export default withRouter(connect(mapStateToProps)(CreateRequestPage));

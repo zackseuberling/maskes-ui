@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/maskes-ui/static/css/main.26fc38bc.chunk.css",
+    "main.js": "/maskes-ui/static/js/main.e8258a4d.chunk.js",
+    "main.js.map": "/maskes-ui/static/js/main.e8258a4d.chunk.js.map",
+    "runtime-main.js": "/maskes-ui/static/js/runtime-main.88357c5f.js",
+    "runtime-main.js.map": "/maskes-ui/static/js/runtime-main.88357c5f.js.map",
+    "static/css/2.af3c1da9.chunk.css": "/maskes-ui/static/css/2.af3c1da9.chunk.css",
+    "static/js/2.60a1dbd8.chunk.js": "/maskes-ui/static/js/2.60a1dbd8.chunk.js",
+    "static/js/2.60a1dbd8.chunk.js.map": "/maskes-ui/static/js/2.60a1dbd8.chunk.js.map",
+    "index.html": "/maskes-ui/index.html",
+    "precache-manifest.40e39f1f45240f0741a432573de460c7.js": "/maskes-ui/precache-manifest.40e39f1f45240f0741a432573de460c7.js",
+    "service-worker.js": "/maskes-ui/service-worker.js",
+    "static/css/2.af3c1da9.chunk.css.map": "/maskes-ui/static/css/2.af3c1da9.chunk.css.map",
+    "static/css/main.26fc38bc.chunk.css.map": "/maskes-ui/static/css/main.26fc38bc.chunk.css.map",
+    "static/js/2.60a1dbd8.chunk.js.LICENSE.txt": "/maskes-ui/static/js/2.60a1dbd8.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.88357c5f.js",
+    "static/css/2.af3c1da9.chunk.css",
+    "static/js/2.60a1dbd8.chunk.js",
+    "static/css/main.26fc38bc.chunk.css",
+    "static/js/main.e8258a4d.chunk.js"
+  ]
+}

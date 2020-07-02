@@ -11,7 +11,7 @@ import store from './store';
 function App() {
   return (
     <Provider store={store}>
-      <Router>
+      <Router basename={process.env.PUBLIC_URL}>
         <Route path="/:navId?/:subNavId?" component={AppRoot}></Route>
       </Router>
     </Provider>

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import './CreateRequestPage.css';
-import { Button, Form, Row, Col } from 'react-bootstrap';
+import { Button, Form, Col } from 'react-bootstrap';
 
 const CreateRequestPage = () => {
   const locations = [
@@ -151,6 +151,184 @@ const CreateRequestPage = () => {
           <Form.Label>How many individuals are in your household?</Form.Label>
           <Form.Control placeholder="Your answer" />
         </Form.Group>
+
+        <Form.Group controlId="Urgency">
+          <Form.Label>
+            How urgent is your need? Please allow us 48 hours to respond to your
+            request.
+          </Form.Label>
+          <Col sm={10}>
+            <Form.Check
+              type="radio"
+              label="In the next 72 hours"
+              name="urgency"
+              id="72hours"
+            />
+            <Form.Check
+              type="radio"
+              label="Over the next few days"
+              name="urgency"
+              id="fewdays"
+            />
+            <Form.Check
+              type="radio"
+              label="Useful if available"
+              name="urgency"
+              id="anytime"
+            />
+          </Col>
+        </Form.Group>
+
+        <Form.Group controlId="Delivery-Support">
+          <Form.Label>
+            Would you like financial support with your delivery?
+          </Form.Label>
+          <p>
+            We can fund supplies up to a certain amount per request (While
+            funding lasts) for folks who are quarantined without pay, sick,
+            disabled, elderly, undocumented, queer, Black, Indigenous, and/or
+            people of color.
+          </p>
+          <Col sm={10}>
+            <Form.Check
+              className="link-radio"
+              type="radio"
+              name="delivery-support"
+              id="pay-donate"
+              style={{ display: 'inline-block', float: 'left' }}
+            />
+            <label htmlFor="pay-donate" style={{ width: '80%' }}>
+              Pay with your own money and donate to support your community
+              members:{' '}
+              <a href="https://www.gofundme.com/f/covid19-eastside-survival-fund">
+                https://www.gofundme.com/f/covid19-eastside-survival-fund
+              </a>
+            </label>
+            <Form.Check
+              type="radio"
+              label="Pay with your own money (coordinate with delivery person)"
+              name="delivery-support"
+              id="pay"
+            />
+            <Form.Check
+              type="radio"
+              label="Request support with your delivery items"
+              name="delivery-support"
+              id="need-support"
+            />
+          </Col>
+        </Form.Group>
+
+        <Form.Group controlId="Social-Privileges">
+          <Form.Label>
+            Can you tell us about your social location, privileges you do or
+            don’t have, whether you are Black, Indigenous, Person of Color
+            (BIPOC), identify as a survivor of domestic or sexual violence, etc.
+          </Form.Label>
+          <Form.Control placeholder="Your answer" />
+        </Form.Group>
+
+        <Form.Group controlId="Share-Contact">
+          <Form.Label>
+            Is it okay to share your contact number, address, and grocery list
+            with the volunteer who is doing the delivery?
+          </Form.Label>
+          <Col sm={10}>
+            <Form.Check
+              type="radio"
+              label="Yes"
+              name="share-contact"
+              id="yes"
+            />
+            <Form.Check type="radio" label="No" name="share-contact" id="no" />
+          </Col>
+        </Form.Group>
+
+        <Form.Group controlId="Share-Contact">
+          <Form.Label>
+            Is it okay to share your contact number, address, and grocery list
+            with the volunteer who is doing the delivery?
+          </Form.Label>
+          <Col sm={10}>
+            <Form.Check
+              type="radio"
+              label="Yes"
+              name="share-contact"
+              id="yes"
+            />
+            <Form.Check type="radio" label="No" name="share-contact" id="no" />
+          </Col>
+        </Form.Group>
+
+        <Form.Group controlId="Checkin">
+          <Form.Label>
+            Would you like us to check in via text or call every few weeks to
+            support you in your health and wellbeing?
+          </Form.Label>
+          <Col sm={10}>
+            <Form.Check
+              type="radio"
+              label="Yes, by text"
+              name="checkin"
+              id="text"
+            />
+            <Form.Check
+              type="radio"
+              label="Yes, by phone"
+              name="checkin"
+              id="phone"
+            />
+            <Form.Check
+              type="radio"
+              label="No, thank you"
+              name="checkin"
+              id="no"
+            />
+          </Col>
+        </Form.Group>
+
+        <Form.Group controlId="Question">
+          <Form.Label>
+            Are there things you would like us to know? (any support or
+            resources you would like to offer, questions, comments, concerns).
+          </Form.Label>
+          <Form.Control placeholder="Your answer" />
+        </Form.Group>
+
+        <Form.Group controlId="join-group">
+          <Form.Label>
+            Are you interested in joining your neighborhood mutual aid pod or
+            need assistance in setting up your own mutual aid pod to support
+            yourself and your neighbors with current/ future needs? If so,
+            please go this link to join our Neighborhood Mutual Aid Pods Group:
+            tinyurl.com/KCMutualAidPod
+          </Form.Label>
+          <Col sm={10}>
+            <Form.Check type="radio" label="Yes" name="join-group" id="yes" />
+            <Form.Check type="radio" label="No" name="join-group" id="no" />
+          </Col>
+        </Form.Group>
+
+        <Form.Group controlId="Question2">
+          <Form.Label>
+            Is there anything else you would like us to know about resources you
+            can offer?
+          </Form.Label>
+          <p>
+            In the near future, we are considering expanding the types of mutual
+            aid we offer. These might include emotional support, household chore
+            assistance, childcare, dog walking, etc. Please note access details
+            when possible, like: are you able to be scent-free (
+            <a href="http://thinkbeforeyoustink.com/howtogofragrancefree.html">
+              http://thinkbeforeyoustink.com/howtogofragrancefree.html
+            </a>
+            )? Can you speak several languages, or sign languages? Do you have a
+            wheelchair accessible van?
+          </p>
+          <Form.Control placeholder="Your answer" />
+        </Form.Group>
+
+        {/* TODO show poster here */}
 
         <Button onClick={() => console.log('hello world')} variant="primary">
           Submit

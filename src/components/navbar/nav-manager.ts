@@ -18,7 +18,7 @@ const PROTECTED_NAV_STATE = {
 
 export function getDisplayComponentForNav(state, { navId, subNavId }) {
   const navState = _.defaultTo(subNavId, navId);
-  if (state.auth.hasLogin) {
+  if (state.auth.access) {
     return PROTECTED_NAV_STATE[navState] || MyRequests;
   } else {
     return PUBLIC_NAV_STATE[navState] || Home;

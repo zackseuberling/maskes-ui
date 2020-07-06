@@ -7,16 +7,16 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { openLoginModal } from '../global-modals/login/login-modal.actions';
-
+import { openAuthModal } from '../global-modals/auth/store/actions/actions';
+import { BsFillPersonFill } from "react-icons/bs"
 interface ILoginModalProps {
   hasLogin?: boolean;
-  openLoginModal?(): any;
+  openAuthModal?(): any;
 }
 
 class AppNavbar extends Component<ILoginModalProps> {
   render() {
-    const { hasLogin, openLoginModal } = this.props;
+    const { hasLogin, openAuthModal } = this.props;
     return (
       <Navbar bg="light" expand="lg">
         <Navbar.Brand as={NavLink} to="/">
@@ -50,10 +50,10 @@ class AppNavbar extends Component<ILoginModalProps> {
           {!hasLogin && (
             <Button
               className="LoginButton"
-              onClick={openLoginModal}
-              variant="outline-secondary"
+              onClick={openAuthModal}
+              variant="outline-dark"
             >
-              Login
+              <BsFillPersonFill onClick={openAuthModal} />
             </Button>
           )}
 
@@ -73,5 +73,5 @@ const mapStateToProps = (state, props) => {
 };
 
 export default connect(mapStateToProps, {
-  openLoginModal,
+  openAuthModal,
 })(AppNavbar);

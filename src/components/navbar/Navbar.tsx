@@ -56,22 +56,20 @@ class AppNavbar extends Component<ILoginModalProps> {
               <BsFillPersonFill onClick={openAuthModal} />
             </Button>
           )}
-
-          {hasLogin && <div className="LoginButton">Welcome back!</div>}
-
           <Button variant="info">Donate</Button>
+          {hasLogin && <Button href="/logout" className="LoginButton" variant="outline-danger" >Logout</Button>}
         </Form>
       </Navbar>
     );
   }
 }
 
-const mapStateToProps = (state, props) => {
+const mapStateToProps = (state) => {
   return {
-    hasLogin: state.auth.hasLogin || false,
+    hasLogin: state.auth.access !== null,
   };
 };
 
 export default connect(mapStateToProps, {
-  openAuthModal,
+  openAuthModal
 })(AppNavbar);

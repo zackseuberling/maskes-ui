@@ -1,11 +1,8 @@
 import React from 'react';
-
-import LoginModal from './login/Login';
-
+import Auth from './auth/Auth';
 const GlobalModals = () => (
   <div>
-    <LoginModal />
+    <Auth />
   </div>
 );
-
 export default GlobalModals;

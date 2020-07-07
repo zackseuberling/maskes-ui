@@ -1,41 +1,64 @@
-import React from 'react';
-
+import React, { useEffect } from 'react';
+import Spinner from 'react-bootstrap/Spinner';
+import { connect } from 'react-redux';
+import { fetchRequests } from './store/actions/actions';
 import Table from 'react-bootstrap/Table';
+import Container from 'react-bootstrap/Container';
 
-const RequestTableList = () => (
-  <React.Fragment>
-    <h3>Requests</h3>
-    <Table striped bordered hover size="sm">
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>First Name</th>
-          <th>Last Name</th>
-          <th>Username</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr onClick={() => console.log('click on the request')}>
-          <td>1</td>
-          <td>Mark</td>
-          <td>Otto</td>
-          <td>@mdo</td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td>Jacob</td>
-          <td>Thornton</td>
-          <td>@fat</td>
-        </tr>
-        <tr>
-          <td>3</td>
-          <td>Larry the Bird</td>
-          <td>Larry the Bird 2</td>
-          <td>@twitter</td>
-        </tr>
-      </tbody>
-    </Table>
-  </React.Fragment>
-);
+const RequestTableList = (props) => {
 
-export default RequestTableList;
+  const { requests, loading, token, fetchRequests } = props;
+  const { results } = requests
+
+  useEffect(() => {
+    fetchRequests(1, token)
+  }, [fetchRequests, token])
+  let requests_list = []
+  //Todo: add pagination
+
+  if (!loading && results) {
+    requests_list = results.map(request => (
+      <tr key={request.id} onClick={() => console.log('click on the request')}>
+        <td>{request.id}</td>
+        <td>{request.status}</td>
+        <td style={{ width: '80%' }}>{request.items_list}</td>
+        <td>{new Date(request.created_date).toLocaleDateString()}</td>
+      </tr>
+    ))
+  }
+
+  return (
+    <Container fluid>
+      <h3>Requests</h3>
+      {loading
+        ? <Spinner animation="grow" />
+        : <Table striped bordered hover size="sm">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Status</th>
+              <th>List of Items</th>
+              <th>Date Created</th>
+            </tr>
+          </thead>
+          <tbody>
+            {requests_list}
+          </tbody>
+        </Table>
+      }
+
+    </Container>
+  );
+
+};
+
+const mapStateToProps = (state) => {
+  return {
+    hasLogin: state.auth.access !== null,
+    token: state.auth.access,
+    loading: state.requestList.loading,
+    requests: state.requestList.requests
+  }
+}
+
+export default connect(mapStateToProps, { fetchRequests })(RequestTableList);

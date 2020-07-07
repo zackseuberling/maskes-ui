@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 
 import './Navbar.css';
 import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { NavLink } from 'react-router-dom';
@@ -38,27 +37,28 @@ class AppNavbar extends Component<ILoginModalProps> {
                 </Nav.Link>
               </React.Fragment>
             )}
-
             {hasLogin && (
               <Nav.Link as={NavLink} to="/my-requests">
                 Manage requests
               </Nav.Link>
             )}
           </Nav>
+
+          <Nav className="mr-2">
+            {!hasLogin && (
+              <Button
+                onClick={openAuthModal}
+                variant="outline-dark"
+                className="m-2"
+              >
+                <BsFillPersonFill onClick={openAuthModal} />
+              </Button>
+            )}
+            <Button variant="info" className="m-2">Donate</Button>
+            {hasLogin && <Button href="/logout" variant="outline-danger" className="m-2">Logout</Button>}
+          </Nav>
+
         </Navbar.Collapse>
-        <Form inline>
-          {!hasLogin && (
-            <Button
-              className="LoginButton"
-              onClick={openAuthModal}
-              variant="outline-dark"
-            >
-              <BsFillPersonFill onClick={openAuthModal} />
-            </Button>
-          )}
-          <Button variant="info">Donate</Button>
-          {hasLogin && <Button href="/logout" className="LoginButton" variant="outline-danger" >Logout</Button>}
-        </Form>
       </Navbar>
     );
   }

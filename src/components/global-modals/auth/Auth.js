@@ -125,6 +125,18 @@ const Auth = (props) => {
                     {hasAccount ? login_form : register_form}
                     {hasAccount ?(<Button variant="primary" block type="submit">Login</Button>)
                                 :(<Button variant="primary" block type="submit">Register</Button>)}
+                    {isLoading && (
+                    <Button variant="primary" disabled block>
+                        <Spinner
+                            as="span"
+                            animation="grow"
+                            size="sm"
+                            role="status"
+                            aria-hidden="true"
+                            className="mr-2"
+                        /> Loading...
+                    </Button>
+                )}
                 </Form>
             </Modal.Body>
 
@@ -140,18 +152,6 @@ const Auth = (props) => {
                     </Aux>
                 )}
 
-                {isLoading && (
-                    <Button variant="primary" disabled block>
-                        <Spinner
-                            as="span"
-                            animation="grow"
-                            size="sm"
-                            role="status"
-                            aria-hidden="true"
-                            className="mr-2"
-                        /> Loading...
-                    </Button>
-                )}
             </Modal.Footer>
         </Modal>
     );

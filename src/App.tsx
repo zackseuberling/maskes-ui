@@ -1,21 +1,60 @@
-import React from 'react';
-
 import './App.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import React, { useEffect } from 'react';
+import { Route, Switch } from 'react-router-dom';
+import { connect } from 'react-redux';
+import Layout from './hoc/Layout/Layout';
+import Logout from './components/Auth/Logout';
 
-import AppRoot from './components/root/AppRoot';
-import { Provider } from 'react-redux';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
-import store from './store';
+import Home from './containers/Home/Home';
+import GetHelp from './containers/GetHelp/GetHelp';
+import Volunteer from './containers/Volunteer/Volunteer';
 
-function App() {
-  return (
-    <Provider store={store}>
-      <Router basename={process.env.PUBLIC_URL}>
-        <Route path="/:navId?/:subNavId?" component={AppRoot}></Route>
-      </Router>
-    </Provider>
+import ManageRequests from './containers/Requests/Requests';
+import CreateRequestPage from './components/Request/CreateRequest/CreateRequestPage';
+import ViewRequestDetail from './containers/Requests/RequestDetail/RequestDetail';
+
+
+import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
+import { withRouter } from 'react-router';
+import * as navManager from './components/Navbar/nav-manager';
+import { authCheckLoginState } from './components/Auth/store/actions/actions';
+
+const App = ({ component, authCheckLoginState, hasLogin }) => {
+  useEffect(() => {
+    authCheckLoginState()
+  })
+  const protected_routes = (
+    <Switch>
+      <ProtectedRoute exact path='/my-requests' component={ManageRequests} />
+      <ProtectedRoute exact path='/my-requests/create-request' component={CreateRequestPage} />
+      <ProtectedRoute exact path='/my-requests/:requestId' component={ViewRequestDetail} />
+      <Route exact path="/logout" component={Logout} />
+    </Switch>
   );
-}
+  const public_routes = (
+    <Switch>
+      <Route exact path='/' component={Home} />
+      <Route exact path='/get-help' component={GetHelp} />
+      <Route exact path='/volunteer' component={Volunteer} />
+    </Switch>
+  );
 
-export default App;
+  return (
+    <Layout>
+      {public_routes}
+      {protected_routes}
+      {/* <Route path="/:navId?/:subNavId?" component={component} /> */}
+    </Layout>
+  )
+};
+
+const mapStateToProps = (state, props) => {
+  const params = props.match.params;
+
+  return {
+    component: navManager.getDisplayComponentForNav(state, params),
+    hasLogin: state.auth.access !== null
+  };
+};
+
+export default withRouter(connect(mapStateToProps, { authCheckLoginState })(App));

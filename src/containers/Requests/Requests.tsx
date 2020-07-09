@@ -1,7 +1,7 @@
 import React from 'react';
 
-import CreateRequests from './create-requests/CreateRequests';
-import RequestTableList from './request-table-list/RequestTableList';
+import CreateRequests from './CreateRequests';
+import RequestTableList from './RequestList/RequestList';
 
 const MyRequests = () => (
   <div>

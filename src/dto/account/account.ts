@@ -9,7 +9,7 @@ export class Account {
         accessToken: v4(),
         roles: ['volunteer'],
       },
-      _.pick(options, ['id', 'username', 'password'])
+      _.pick(options, ['id', 'first_name', 'last_name', 'username', 'password'])
     );
   }
 }

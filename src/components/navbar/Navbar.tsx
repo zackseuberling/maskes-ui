@@ -2,21 +2,20 @@ import React, { Component } from 'react';
 
 import './Navbar.css';
 import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { openLoginModal } from '../global-modals/login/login-modal.actions';
-
+import { openAuthModal } from '../Auth/store/actions/actions';
+import { BsFillPersonFill } from "react-icons/bs"
 interface ILoginModalProps {
   hasLogin?: boolean;
-  openLoginModal?(): any;
+  openAuthModal?(): any;
 }
 
 class AppNavbar extends Component<ILoginModalProps> {
   render() {
-    const { hasLogin, openLoginModal } = this.props;
+    const { hasLogin, openAuthModal } = this.props;
     return (
       <Navbar bg="light" expand="lg">
         <Navbar.Brand as={NavLink} to="/">
@@ -38,40 +37,39 @@ class AppNavbar extends Component<ILoginModalProps> {
                 </Nav.Link>
               </React.Fragment>
             )}
-
             {hasLogin && (
               <Nav.Link as={NavLink} to="/my-requests">
                 Manage requests
               </Nav.Link>
             )}
           </Nav>
+
+          <Nav className="mr-2">
+            {!hasLogin && (
+              <Button
+                onClick={openAuthModal}
+                variant="outline-dark"
+                className="m-2"
+              >
+                <BsFillPersonFill onClick={openAuthModal} />
+              </Button>
+            )}
+            <Button variant="info" className="m-2">Donate</Button>
+            {hasLogin && <Button href="/logout" variant="outline-danger" className="m-2">Logout</Button>}
+          </Nav>
+
         </Navbar.Collapse>
-        <Form inline>
-          {!hasLogin && (
-            <Button
-              className="LoginButton"
-              onClick={openLoginModal}
-              variant="outline-secondary"
-            >
-              Login
-            </Button>
-          )}
-
-          {hasLogin && <div className="LoginButton">Welcome back!</div>}
-
-          <Button variant="info">Donate</Button>
-        </Form>
       </Navbar>
     );
   }
 }
 
-const mapStateToProps = (state, props) => {
+const mapStateToProps = (state) => {
   return {
-    hasLogin: state.auth.hasLogin || false,
+    hasLogin: state.auth.access !== null,
   };
 };
 
 export default connect(mapStateToProps, {
-  openLoginModal,
+  openAuthModal
 })(AppNavbar);

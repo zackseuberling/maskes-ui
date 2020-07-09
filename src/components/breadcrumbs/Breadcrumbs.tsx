@@ -6,13 +6,13 @@ import Breadcrumb from 'react-bootstrap/Breadcrumb';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 
-interface IAppBreadcrumb {
+interface IBreadcrumbs {
   goTo(newRoute: string): any;
   params: String[];
   showBreadcrumbs?: boolean;
 }
 
-class AppBreadcrumb extends Component<IAppBreadcrumb> {
+class Breadcrumbs extends Component<IBreadcrumbs> {
   render() {
     const { goTo, showBreadcrumbs, params } = this.props;
 
@@ -50,4 +50,4 @@ const mapStateToProps = (state, props) => {
   };
 };
 
-export default withRouter(connect(mapStateToProps)(AppBreadcrumb));
+export default withRouter(connect(mapStateToProps)(Breadcrumbs));

@@ -1,5 +1,5 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux';
-import logger from 'redux-logger';
+// import logger from 'redux-logger';
 // import globalModals from '../components/global-modals/login/login-modal.reducers';
 import auth from '../components/Auth/store/reducer/reducer';
 import requestList from '../containers/Requests/RequestList/store/reducer/reducer';

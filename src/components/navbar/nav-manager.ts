@@ -1,9 +1,9 @@
 import _ from 'lodash';
-import Home from '../home/Home';
-import GetHelp from '../get-help/GetHelp';
-import Volunteer from '../volunteer/Volunteer';
-import MyRequests from '../manage-requests/manage-request-page/ManageRequests';
-import CreateRequestPage from '../manage-requests/create-request-page/CreateRequestPage';
+import Home from '../../containers/Home/Home';
+import GetHelp from '../../containers/GetHelp/GetHelp';
+import Volunteer from '../../containers/Volunteer/Volunteer';
+import MyRequests from '../../containers/Requests/Requests';
+import CreateRequestPage from '../Request/CreateRequest/CreateRequestPage';
 
 const PUBLIC_NAV_STATE = {
   'get-help': GetHelp,

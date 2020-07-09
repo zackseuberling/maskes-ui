@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { Account } from '../../../../dto/account/account';
+import { Account } from '../../../dto/account/account';
 
 const fakeUserList: Account[] = [];
 let isLogin: boolean = false;

@@ -6,7 +6,7 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { openAuthModal } from '../global-modals/auth/store/actions/actions';
+import { openAuthModal } from '../Auth/store/actions/actions';
 import { BsFillPersonFill } from "react-icons/bs"
 interface ILoginModalProps {
   hasLogin?: boolean;

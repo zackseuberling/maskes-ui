@@ -8,7 +8,7 @@ import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import Spinner from 'react-bootstrap/Spinner';
 import Alert from 'react-bootstrap/Alert';
-import Aux from '../../../hoc/Aux';
+import Aux from '../../hoc/Aux/Aux';
 // import * as auth_api from './store/auth';
 import { hideAuthModal, onAuth } from './store/actions/actions';
 

@@ -6,7 +6,7 @@ import Table from 'react-bootstrap/Table';
 import Container from 'react-bootstrap/Container';
 import { withRouter } from 'react-router';
 
-const ViewRequestDetail = (props) => {
+const RequestDetail = (props) => {
   const { request, loading, token, fetchRequestDetail } = props;
 
   useEffect(() => {
@@ -48,4 +48,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default withRouter(connect(mapStateToProps, { fetchRequestDetail })(ViewRequestDetail));
+export default withRouter(connect(mapStateToProps, { fetchRequestDetail })(RequestDetail));

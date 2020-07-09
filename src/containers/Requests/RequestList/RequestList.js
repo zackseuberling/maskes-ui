@@ -6,7 +6,7 @@ import { fetchRequests } from './store/actions/actions';
 import Table from 'react-bootstrap/Table';
 import Container from 'react-bootstrap/Container';
 
-const RequestTableList = (props) => {
+const RequestList = (props) => {
 
   const { requests, loading, token, fetchRequests } = props;
   const { results } = requests
@@ -68,4 +68,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, { fetchRequests })(RequestTableList);
+export default connect(mapStateToProps, { fetchRequests })(RequestList);

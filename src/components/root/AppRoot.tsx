@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-import { Route } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import Navbar from '../navbar/Navbar';
@@ -31,21 +31,19 @@ const AppRoot = ({ component, authCheckLoginState, hasLogin }) => {
       <GlobalModals />
       <Navbar />
       {hasLogin ? <Breadcrumbs /> : null}
-      <Route exact path='/' component={Home} />
-      <Route exact path='/get-help' component={GetHelp} />
-      <Route exact path='/volunteer' component={Volunteer} />
-      <ProtectedRoute exact path='/my-requests' component={ManageRequests} />
-      <ProtectedRoute exact path='/my-requests/create-request' component={CreateRequestPage} />
-      <ProtectedRoute exact path='/my-requests/:requestId' component={ViewRequestDetail} />
-
+      <Switch>
+        <Route exact path='/' component={Home} />
+        <Route exact path='/get-help' component={GetHelp} />
+        <Route exact path='/volunteer' component={Volunteer} />
+        <ProtectedRoute exact path='/my-requests' component={ManageRequests} />
+        <ProtectedRoute exact path='/my-requests/create-request' component={CreateRequestPage} />
+        <ProtectedRoute exact path='/my-requests/:requestId' component={ViewRequestDetail} />
+        <Route exact path="/logout" component={Logout} />
+      </Switch>
       {/* <Route path="/:navId?/:subNavId?" component={component} /> */}
-
-      <Route exact path="/logout" component={Logout} />
     </div>
   )
 };
-
-
 
 const mapStateToProps = (state, props) => {
   const params = props.match.params;

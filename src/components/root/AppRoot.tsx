@@ -36,7 +36,7 @@ const AppRoot = ({ component, authCheckLoginState, hasLogin }) => {
       <Route exact path='/volunteer' component={Volunteer} />
       <ProtectedRoute exact path='/my-requests' component={ManageRequests} />
       <ProtectedRoute exact path='/my-requests/create-request' component={CreateRequestPage} />
-      <ProtectedRoute path='/my-requests/:requestId' component={ViewRequestDetail} />
+      <ProtectedRoute exact path='/my-requests/:requestId' component={ViewRequestDetail} />
 
       {/* <Route path="/:navId?/:subNavId?" component={component} /> */}
 

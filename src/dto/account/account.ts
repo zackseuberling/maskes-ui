@@ -2,7 +2,7 @@ import { v4 } from 'node-uuid';
 import _ from 'lodash';
 
 export class Account {
-  constructor(options) {
+  constructor(options = {}) {
     _.assign(
       {
         id: v4(),

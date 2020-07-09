@@ -6,6 +6,7 @@ import MyRequests from '../../containers/Requests/Requests';
 import CreateRequestPage from '../Request/CreateRequest/CreateRequestPage';
 
 const PUBLIC_NAV_STATE = {
+  'create-request': CreateRequestPage, // TODO: remove this
   'get-help': GetHelp,
   home: Home,
   volunteer: Volunteer,

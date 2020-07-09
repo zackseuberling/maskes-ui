@@ -18,7 +18,6 @@ const RequestTableList = (props) => {
   //Todo: add pagination
 
   const history = useHistory();
-  console.log(history)
   const selectRequestHandler = (requestId) => {
     history.push('/my-requests/' + requestId)
   }

@@ -8,7 +8,6 @@ import { withRouter } from 'react-router';
 
 const ViewRequestDetail = (props) => {
   const { request, loading, token, fetchRequestDetail } = props;
-  console.log(props)
 
   useEffect(() => {
     fetchRequestDetail(props.match.params.requestId, token)

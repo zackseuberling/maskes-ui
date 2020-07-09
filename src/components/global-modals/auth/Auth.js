@@ -100,6 +100,18 @@ const Auth = (props) => {
         onAuth(first_name, last_name, email, password, hasAccount);
     }
 
+    let loading_button = (
+        <Button variant="primary" disabled block>
+            <Spinner
+                as="span"
+                animation="grow"
+                size="sm"
+                role="status"
+                aria-hidden="true"
+                className="mr-2"
+            /> Loading...
+        </Button>)
+
     return (
         <Modal
             show={showAuthModal}
@@ -123,28 +135,14 @@ const Auth = (props) => {
                 {!hasAccount && hasError && <Alert variant="danger">Failed to register. Please try again! {hasError.message}</Alert>}
                 <Form onSubmit={handleSubmit}>
                     {hasAccount ? login_form : register_form}
-                    {hasAccount ?(<Button variant="primary" block type="submit">Login</Button>)
-                                :(<Button variant="primary" block type="submit">Register</Button>)}
-                    {isLoading && (
-                    <Button variant="primary" disabled block>
-                        <Spinner
-                            as="span"
-                            animation="grow"
-                            size="sm"
-                            role="status"
-                            aria-hidden="true"
-                            className="mr-2"
-                        /> Loading...
-                    </Button>
-                )}
+                    {hasAccount ?(isLoading?loading_button:<Button variant="primary" block type="submit">Login</Button>)
+                                :(isLoading?loading_button:<Button variant="primary" block type="submit">Register</Button>)}
                 </Form>
             </Modal.Body>
 
             <Modal.Footer>
                 {!isLoading && (
                     <Aux>
-                        
-                        
                         {hasAccount
                             ?(<p className="text-right text-muted">Don't have an account? <a href="#login" onClick={switchAuthModeHandler}>Sign up</a></p>)
                             :(<p className="text-right text-muted">Already have an account? <a href="#signup"  onClick={switchAuthModeHandler}>Log in</a></p>)}

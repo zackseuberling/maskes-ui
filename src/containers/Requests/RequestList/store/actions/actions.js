@@ -1,6 +1,7 @@
 import * as actionTypes from './actionTypes';
 import axios from 'axios';
 
+// FETCH REQUESTS
 export const fetchRequestsStart = () => {
     return {
         type: actionTypes.FETCH_REQUESTS_START
@@ -37,6 +38,49 @@ export const fetchRequests = (page, token) => {
             })
             .catch(error => {
                 dispatch(fetchRequestsFail(error))
+            })
+    }
+};
+
+// CREATE REQUEST
+export const createRequestStart = () => {
+    return {
+        type: actionTypes.CREATE_REQUEST_START
+    };
+}
+
+export const createRequestSuccess = (payload) => {
+    return {
+        type: actionTypes.CREATE_REQUEST_SUCCESS,
+        payload: payload
+    };
+}
+
+export const createRequestFail = (error) => {
+    return {
+        type: actionTypes.CREATE_REQUEST_FAIL,
+        error: error
+    };
+}
+
+export const createRequest = (body, token) => {
+    return dispatch => {
+        dispatch(createRequestStart());
+        const url = 'http://127.0.0.1:8000/requests/';
+        const config = {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        };
+        console.log(body);
+
+        axios.post(url, body, config)
+            .then(response => {
+                const payload = response.data;
+                dispatch(createRequestSuccess(payload))
+            })
+            .catch(error => {
+                dispatch(createRequestFail(error))
             })
     }
 };

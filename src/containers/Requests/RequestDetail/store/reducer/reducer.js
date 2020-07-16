@@ -4,12 +4,14 @@ import { updateObject } from '../../../../../shared/utility';
 const initialState = {
     request: [],
     loading: false,
+    name: '',
 }
 
 const fetchRequestDetailSuccess = (state, action) => {
     return updateObject(state, {
         request: action.payload,
-        loading: false
+        loading: false,
+        name: action.payload.name,
     });
 }
 

@@ -31,7 +31,7 @@ class Breadcrumbs extends Component<IBreadcrumbs> {
                 }}
                 key={value}
               >
-                {value}
+                {value.replace('-', ' ')}
               </Breadcrumb.Item>
             );
           })}

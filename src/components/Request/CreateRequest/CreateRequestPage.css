@@ -1,11 +1,20 @@
+.create-request {
+  background-color: #f8f9fa;
+  padding: 20px;
+  border-radius: 25px;
+  margin-bottom: 30px;
+}
 .create-request-form {
   margin: auto;
-  width: 90%;
+  margin-bottom: 50px;
+  width: 95%;
 }
 
 .create-your-request-title {
-  margin-bottom: 40px;
-  margin-left: 50px;
+  margin-top: 20px;
+  margin-left:10px;
+  margin-bottom: 20px;
+  font-weight: bold;
 }
 
 .form-label {

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import Aux from '../../hoc/Aux/Aux';
-import { Button, Jumbotron, Card, Container } from 'react-bootstrap';
+import { Button, Card, Container } from 'react-bootstrap';
 
 const Requests = (props) => {
   const history = useHistory();

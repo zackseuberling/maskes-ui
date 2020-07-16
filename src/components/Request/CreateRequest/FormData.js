@@ -47,8 +47,8 @@ export const urgency = [
 ]
 
 export const financial_support = [
-    'Pay with your own money (coordinate with delivery person)',
     'Request support with your delivery items',
+    'Pay with your own money (coordinate with delivery person)',
     'Pay with your own money and donate to support your community members',
 ]
 

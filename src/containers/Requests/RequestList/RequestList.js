@@ -64,7 +64,7 @@ const mapStateToProps = (state) => {
     token: state.auth.access,
     loading: state.requestList.loading,
     requests: state.requestList.requests,
-    name: state.requestList.name
+    name: state.auth.name
   }
 }
 

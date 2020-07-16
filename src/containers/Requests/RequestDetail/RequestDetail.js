@@ -63,7 +63,7 @@ const mapStateToProps = (state) => {
     token: state.auth.access,
     loading: state.requestDetail.loading,
     request: state.requestDetail.request,
-    name: state.requestDetail.name,
+    name: state.auth.name,
   }
 }
 

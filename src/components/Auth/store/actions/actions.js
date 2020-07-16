@@ -58,7 +58,6 @@ export const onAuth = (first_name, last_name, email, password, hasAccount) => {
             email: email,
             password: password
         };
-        console.log(body);
         let url = 'http://127.0.0.1:8000/auth/jwt/create/'
 
         if (!hasAccount) {
@@ -67,7 +66,6 @@ export const onAuth = (first_name, last_name, email, password, hasAccount) => {
 
         axios.post(url, body, config)
             .then(res => {
-                console.log(res.data)
                 const expiresIn = 3600 * 1000
                 const expirationDate = new Date(new Date().getTime() + expiresIn)
                 localStorage.setItem('access', res.data.access);

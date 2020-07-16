@@ -1,14 +1,13 @@
 import React, { useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
 import Spinner from 'react-bootstrap/Spinner';
 import { connect } from 'react-redux';
 import { fetchRequests } from './store/actions/actions';
 import Table from 'react-bootstrap/Table';
 import Container from 'react-bootstrap/Container';
+import Requests from '../Requests';
 
 const RequestList = (props) => {
-
-  const { requests, loading, token, fetchRequests } = props;
+  const { requests, loading, token, fetchRequests, name, history, match } = props;
   const { results } = requests
 
   useEffect(() => {
@@ -17,15 +16,14 @@ const RequestList = (props) => {
   let requests_list = []
   //Todo: add pagination
 
-  const history = useHistory();
   const selectRequestHandler = (requestId) => {
-    history.push('/my-requests/' + requestId)
+    history.push(`${match.path}/${requestId}`)
   }
 
   if (!loading && results) {
-    requests_list = results.map(request => (
+    requests_list = results.map((request, index) => (
       <tr key={request.id} onClick={() => selectRequestHandler(request.id)}>
-        <td>{request.id}</td>
+        <td>{index + 1}</td>
         <td>{request.status}</td>
         <td style={{ width: '80%' }}>{request.items_list}</td>
         <td>{new Date(request.created_date).toLocaleDateString()}</td>
@@ -34,27 +32,28 @@ const RequestList = (props) => {
   }
 
   return (
+    <Requests name={name}>
+      <Container fluid>
+        <h3>Requests</h3>
+        {loading
+          ? <Spinner animation="grow" />
+          : <Table striped bordered hover size="sm">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Status</th>
+                <th>List of Items</th>
+                <th>Date Created</th>
+              </tr>
+            </thead>
+            <tbody>
+              {requests_list}
+            </tbody>
+          </Table>
+        }
 
-    <Container fluid>
-      <h3>Requests</h3>
-      {loading
-        ? <Spinner animation="grow" />
-        : <Table striped bordered hover size="sm">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Status</th>
-              <th>List of Items</th>
-              <th>Date Created</th>
-            </tr>
-          </thead>
-          <tbody>
-            {requests_list}
-          </tbody>
-        </Table>
-      }
-
-    </Container>
+      </Container>
+    </Requests>
   );
 
 };
@@ -64,7 +63,8 @@ const mapStateToProps = (state) => {
     hasLogin: state.auth.access !== null,
     token: state.auth.access,
     loading: state.requestList.loading,
-    requests: state.requestList.requests
+    requests: state.requestList.requests,
+    name: state.requestList.name
   }
 }
 

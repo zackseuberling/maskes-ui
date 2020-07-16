@@ -72,8 +72,6 @@ export const createRequest = (body, token) => {
                 'Authorization': `Bearer ${token}`
             }
         };
-        console.log(body);
-
         axios.post(url, body, config)
             .then(response => {
                 const payload = response.data;

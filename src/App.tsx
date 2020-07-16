@@ -9,9 +9,9 @@ import Home from './containers/Home/Home';
 import GetHelp from './containers/GetHelp/GetHelp';
 import Volunteer from './containers/Volunteer/Volunteer';
 
-import ManageRequests from './containers/Requests/Requests';
-import CreateRequestPage from './components/Request/CreateRequest/CreateRequestPage';
-import ViewRequestDetail from './containers/Requests/RequestDetail/RequestDetail';
+import CreateRequest from './components/Request/CreateRequest/CreateRequest';
+import RequestDetail from './containers/Requests/RequestDetail/RequestDetail';
+import RequestList from './containers/Requests/RequestList/RequestList';
 
 
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
@@ -25,9 +25,9 @@ const App = ({ component, authCheckLoginState, hasLogin }) => {
   })
   const protected_routes = (
     <Switch>
-      <ProtectedRoute exact path='/my-requests' component={ManageRequests} />
-      <ProtectedRoute exact path='/my-requests/create-request' component={CreateRequestPage} />
-      <ProtectedRoute exact path='/my-requests/:requestId' component={ViewRequestDetail} />
+      <ProtectedRoute exact path='/my-requests' component={RequestList} />
+      <ProtectedRoute exact path='/my-requests/create-request' component={CreateRequest} />
+      <ProtectedRoute exact path='/my-requests/:requestId' component={RequestDetail} />
       <Route exact path="/logout" component={Logout} />
     </Switch>
   );

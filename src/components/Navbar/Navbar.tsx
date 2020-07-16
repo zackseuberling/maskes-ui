@@ -10,12 +10,14 @@ import { openAuthModal } from '../Auth/store/actions/actions';
 import { BsFillPersonFill } from "react-icons/bs"
 interface ILoginModalProps {
   hasLogin?: boolean;
+  is_requester?: boolean;
+  is_volunteer?: boolean;
   openAuthModal?(): any;
 }
 
 class AppNavbar extends Component<ILoginModalProps> {
   render() {
-    const { hasLogin, openAuthModal } = this.props;
+    const { hasLogin, openAuthModal, is_requester, is_volunteer } = this.props;
     return (
       <Navbar bg="light" expand="lg">
         <Navbar.Brand as={NavLink} to="/">
@@ -37,9 +39,14 @@ class AppNavbar extends Component<ILoginModalProps> {
                 </Nav.Link>
               </React.Fragment>
             )}
-            {hasLogin && (
+            {hasLogin && is_requester && (
               <Nav.Link as={NavLink} to="/my-requests">
-                Manage requests
+                Requests
+              </Nav.Link>
+            )}
+            {hasLogin && is_volunteer && (
+              <Nav.Link as={NavLink} to="/my-volunteer">
+                Volunteer
               </Nav.Link>
             )}
           </Nav>
@@ -67,6 +74,8 @@ class AppNavbar extends Component<ILoginModalProps> {
 const mapStateToProps = (state) => {
   return {
     hasLogin: state.auth.access !== null,
+    is_requester: state.auth.is_requester,
+    is_volunteer: state.auth.is_volunteer,
   };
 };
 

@@ -19,6 +19,9 @@ export const authSuccess = (payload) => {
     return {
         type: actionTypes.AUTH_SUCCESS,
         access: payload.access,
+        is_requester: payload.is_requester,
+        is_volunteer: payload.is_volunteer,
+        name: payload.name,
     };
 }
 
@@ -32,6 +35,9 @@ export const authFail = (error) => {
 export const logout = () => {
     localStorage.removeItem('access');
     localStorage.removeItem('expirationDate');
+    localStorage.removeItem('is_requester');
+    localStorage.removeItem('is_volunteer');
+    localStorage.removeItem('name');
     return {
         type: actionTypes.AUTH_LOGOUT
     };
@@ -70,6 +76,9 @@ export const onAuth = (first_name, last_name, email, password, hasAccount) => {
                 const expirationDate = new Date(new Date().getTime() + expiresIn)
                 localStorage.setItem('access', res.data.access);
                 localStorage.setItem('expirationDate', expirationDate)
+                localStorage.setItem('is_requester', res.data.is_requester)
+                localStorage.setItem('is_volunteer', res.data.is_volunteer)
+                localStorage.setItem('name', res.data.first_name)
                 dispatch(authSuccess(res.data));
                 dispatch(hideAuthModal())
                 dispatch(checkAuthTimeout(expiresIn))
@@ -83,12 +92,18 @@ export const onAuth = (first_name, last_name, email, password, hasAccount) => {
 export const authCheckLoginState = () => {
     return dispatch => {
         const access = localStorage.getItem('access');
+        const payload = {
+            access: access,
+            is_requester: (localStorage.getItem('is_requester') === "true"),
+            is_volunteer: (localStorage.getItem('is_volunteer') === "true"),
+            name: localStorage.getItem('name')
+        }
         if (access) {
             const expirationDate = new Date(localStorage.getItem('expirationDate'));
             if (expirationDate < new Date()) {
                 dispatch(logout());
             } else {
-                dispatch(authSuccess({ access: access }));
+                dispatch(authSuccess(payload));
                 dispatch(checkAuthTimeout(expirationDate.getTime() - new Date().getTime()))
             }
 

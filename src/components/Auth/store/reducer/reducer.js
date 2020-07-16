@@ -6,6 +6,9 @@ const initialState = {
     refresh: null,
     error: null,
     loading: false,
+    name: null,
+    is_volunteer: false,
+    is_requester: false
 }
 
 const reducer = (state = initialState, action) => {
@@ -22,6 +25,9 @@ const reducer = (state = initialState, action) => {
             return updateObject(state, {
                 access: action.access,
                 refresh: action.refresh,
+                is_requester: action.is_requester,
+                is_volunteer: action.is_volunteer,
+                name: action.name,
                 error: null,
                 loading: false
             })
@@ -32,7 +38,13 @@ const reducer = (state = initialState, action) => {
                 loading: false
             })
         case actionTypes.AUTH_LOGOUT:
-            return updateObject(state, { access: null, refresh: null })
+            return updateObject(state, {
+                access: null,
+                refresh: null,
+                name: null,
+                is_volunteer: false,
+                is_requester: false
+            })
         default:
             return state;
     }

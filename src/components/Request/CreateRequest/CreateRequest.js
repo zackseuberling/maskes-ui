@@ -150,7 +150,7 @@ const CreateRequest = ({ createRequest, token }) => {
         <Card className='mt-3 mb-3' style={{ padding: '20px' }}>
           <Form.Group controlId="Contact Preference" required>
             <Form.Label>
-              What would be the quickest method of reaching you?{' '}
+              What would be the quickest method of reaching you?{' '}<span className="required">*</span>
             </Form.Label>
             {createRadioOptions(requestData.contact_preference, contact_preference, "contact_preference", true)}
           </Form.Group>
@@ -159,14 +159,14 @@ const CreateRequest = ({ createRequest, token }) => {
         <Card className='mt-3 mb-3' style={{ padding: '20px' }}>
           <Form.Group controlId="locations">
             <Form.Label>
-              Where in South King County or Eastside are you located?
-          </Form.Label>
+              Where in South King County or Eastside are you located?{' '}<span className="required">*</span>
+            </Form.Label>
             <p>
               This form is for South King County and Eastside. If you're in Seattle,
-              please complete this
+              please complete this:
               <a href="https://docs.google.com/forms/d/1rOkXW6ElVT0MH9oSI-TuW8L5szCt-ULbZhWebARRZNI/viewform" target="_blank" rel="noopener noreferrer">
                 {' '}https://docs.google.com/forms/d/1rOkXW6ElVT0MH9oSI-TuW8L5szCt-ULbZhWebARRZNI/viewform
-              </a>:
+              </a>
             </p>
             {createDropdownOptions(requestData.locations, locations)}
           </Form.Group>
@@ -175,7 +175,7 @@ const CreateRequest = ({ createRequest, token }) => {
         <Card className='mt-3 mb-3' style={{ padding: '20px' }}>
           <Form.Group controlId="Contact Info">
             <Form.Group controlId="address1">
-              <Form.Label>Contact Number</Form.Label>
+              <Form.Label>Contact Number{' '}<span className="required">*</span></Form.Label>
               <Form.Control
                 placeholder="123-456-7890"
                 name='phone'
@@ -186,7 +186,7 @@ const CreateRequest = ({ createRequest, token }) => {
             </Form.Group>
 
             <Form.Group controlId="address1">
-              <Form.Label>Address</Form.Label>
+              <Form.Label>Address{' '}<span className="required">*</span></Form.Label>
               <Form.Control
                 placeholder="1234 Main St"
                 name='address1'
@@ -203,13 +203,12 @@ const CreateRequest = ({ createRequest, token }) => {
                 name='address2'
                 value={address2}
                 onChange={onChange}
-                required
               />
             </Form.Group>
 
             <Form.Row>
               <Form.Group as={Col} controlId="city">
-                <Form.Label>City</Form.Label>
+                <Form.Label>City{' '}<span className="required">*</span></Form.Label>
                 <Form.Control
                   name='city'
                   value={city}
@@ -218,7 +217,7 @@ const CreateRequest = ({ createRequest, token }) => {
                 />
               </Form.Group>
               <Form.Group as={Col} controlId="zip_code">
-                <Form.Label>Zip</Form.Label>
+                <Form.Label>Zip{' '}<span className="required">*</span></Form.Label>
                 <Form.Control
                   name='zip_code'
                   value={zip_code}
@@ -235,7 +234,8 @@ const CreateRequest = ({ createRequest, token }) => {
             <Form.Label>
               If you live outside of our service area, can we send your request
               details to another local mutual aid organization who we trust?
-          </Form.Label>
+              {' '}<span className="required">*</span>
+            </Form.Label>
             <p>
               If you say yes, it will be will be faster and simpler to get you
               your delivery! If you say no and you live outside of our range, we
@@ -255,7 +255,7 @@ const CreateRequest = ({ createRequest, token }) => {
         <Card className='mt-3 mb-3' style={{ padding: '20px' }}>
           <Form.Group controlId="Food Preference">
             <Form.Label>
-              Food Preference?
+              Food Preference?{' '}<span className="required">*</span>
             </Form.Label>
             {createCheckboxOptions(requestData.food_preference, "preferred_food")}
           </Form.Group>
@@ -267,8 +267,8 @@ const CreateRequest = ({ createRequest, token }) => {
               We are on a volunteer basis and actively fundraising. At this moment
               we are set up to prioritize delivering ONLY ESSENTIAL/URGENT/
               IMMEDIATE needs of our community members. What are the essential/
-              urgent items you need?
-          </Form.Label>
+              urgent items you need? {' '}<span className="required">*</span>
+            </Form.Label>
             <p>
               Items can be general like "milk," or specific like "a 24-pack of the
               purple Always brand overnight menstrual pads with wings." We will do
@@ -291,8 +291,8 @@ const CreateRequest = ({ createRequest, token }) => {
           <Form.Group controlId="Food Restrictrions">
             <Form.Label>
               Do you have any restrictions, allergies or intolerances? If there
-              are no allergies/ restrictions, enter none.
-          </Form.Label>
+              are no allergies/ restrictions, enter none. {' '}<span className="required">*</span>
+            </Form.Label>
             <Form.Control
               placeholder="Your answer"
               name="food_restrictions"
@@ -304,7 +304,10 @@ const CreateRequest = ({ createRequest, token }) => {
 
         <Card className='mt-3 mb-3' style={{ padding: '20px' }}>
           <Form.Group controlId="household-size">
-            <Form.Label>How many individuals are in your household?</Form.Label>
+            <Form.Label>
+              How many individuals are in your household?
+             {' '}<span className="required">*</span>
+            </Form.Label>
             <Form.Control
               type="number"
               placeholder="Your answer"
@@ -320,7 +323,8 @@ const CreateRequest = ({ createRequest, token }) => {
             <Form.Label>
               How urgent is your need? Please allow us 48 hours to respond to your
               request.
-          </Form.Label>
+              {' '}<span className="required">*</span>
+            </Form.Label>
             {createRadioOptions(requestData.urgency, urgency, 'urgency', true)}
           </Form.Group>
         </Card>
@@ -329,7 +333,8 @@ const CreateRequest = ({ createRequest, token }) => {
           <Form.Group controlId="Delivery-Support">
             <Form.Label>
               Would you like financial support with your delivery?
-          </Form.Label>
+              {' '}<span className="required">*</span>
+            </Form.Label>
             <p>
               We can fund supplies up to a certain amount per request (While
               funding lasts) for folks who are quarantined without pay, sick,
@@ -347,7 +352,8 @@ const CreateRequest = ({ createRequest, token }) => {
               Can you tell us about your social location, privileges you do or
               don’t have, whether you are Black, Indigenous, Person of Color
               (BIPOC), identify as a survivor of domestic or sexual violence, etc.
-          </Form.Label>
+              {' '}<span className="required">*</span>
+            </Form.Label>
             <Form.Control
               placeholder="Your answer"
               name="special_info"
@@ -362,7 +368,8 @@ const CreateRequest = ({ createRequest, token }) => {
             <Form.Label>
               Is it okay to share your contact number, address, and grocery list
               with the volunteer who is doing the delivery?
-          </Form.Label>
+              {' '}<span className="required">*</span>
+            </Form.Label>
             {createRadioOptions(["Yes", "No"], share_info, "share_info", true)}
           </Form.Group>
         </Card>
@@ -372,7 +379,8 @@ const CreateRequest = ({ createRequest, token }) => {
             <Form.Label>
               Would you like us to check in via text or call every few weeks to
               support you in your health and wellbeing?
-          </Form.Label>
+              {' '}<span className="required">*</span>
+            </Form.Label>
             {createRadioOptions(requestData.need_checkin, need_checkin, "need_checkin", true)}
           </Form.Group>
         </Card>
@@ -434,7 +442,7 @@ const CreateRequest = ({ createRequest, token }) => {
           <Card.Text>
             We know that violence and abuse thrives in isolation, so do keep reaching out to your friends and family and creating online spaces to connect. If you or your loved ones need more resources and support, reach out to any of these organizations: API Chaya, The Northwest Network of Bi, Trans, Lesbian, and Gay Survivors of Abuse, The Arc of King County, MCRC Seattle, CAIR Washington, National Domestic Violence Hotline King County Sexual Assault Resource Center, MAPS AMEN, National Human Trafficking Hotline: 1-888-373-7888.
           </Card.Text>
-          <Button variant="outline-info" href='https://www.apichaya.org/' target="_blank" rel="noopener noreferrer">Go to apichaya</Button>
+          <Button variant="outline-info" size="sm" href='https://www.apichaya.org/' target="_blank" rel="noopener noreferrer">Go to apichaya.org</Button>
           <br />
           <Card.Img
             variant="bottom"
@@ -456,7 +464,7 @@ const CreateRequest = ({ createRequest, token }) => {
           />
         </Card>
 
-        <Button type="submit" className='mt-3' block>Submit</Button>
+        <Button type="submit" size="lg" className='mt-3' block>Submit</Button>
       </Form>
     </Container>
   );

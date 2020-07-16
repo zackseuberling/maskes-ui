@@ -6,7 +6,7 @@ const ProtectedRoute = ({ component: Component, hasLogin, loading, ...rest }) =>
     <Route
         {...rest}
         render={props => !hasLogin && !loading
-            ? (<Redirect to='/' />)
+            ? (<Redirect to='/my-requests' />)
             : (<Component {...props} />)}
     />
 );

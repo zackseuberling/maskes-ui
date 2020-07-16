@@ -3,10 +3,10 @@ import Home from '../../containers/Home/Home';
 import GetHelp from '../../containers/GetHelp/GetHelp';
 import Volunteer from '../../containers/Volunteer/Volunteer';
 import MyRequests from '../../containers/Requests/Requests';
-import CreateRequestPage from '../Request/CreateRequest/CreateRequestPage';
+import CreateRequest from '../Request/CreateRequest/CreateRequest';
 
 const PUBLIC_NAV_STATE = {
-  'create-request': CreateRequestPage, // TODO: remove this
+  'create-request': CreateRequest, // TODO: remove this
   'get-help': GetHelp,
   home: Home,
   volunteer: Volunteer,
@@ -14,7 +14,7 @@ const PUBLIC_NAV_STATE = {
 
 // TODO: handle full nav state here
 const PROTECTED_NAV_STATE = {
-  'create-request': CreateRequestPage,
+  'create-request': CreateRequest,
 };
 
 export function getDisplayComponentForNav(state, { navId, subNavId }) {

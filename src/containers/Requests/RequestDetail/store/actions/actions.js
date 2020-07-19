@@ -24,7 +24,7 @@ export const fetchRequestDetailFail = (error) => {
 export const fetchRequestDetail = (requestId, token) => {
     return dispatch => {
         dispatch(fetchRequestDetailStart());
-        const url = `http://127.0.0.1:8000/requests/${requestId}/`;
+        const url = `http://127.0.0.1:8000/requests/requester/${requestId}/`;
         const config = {
             headers: {
                 'Authorization': `Bearer ${token}`

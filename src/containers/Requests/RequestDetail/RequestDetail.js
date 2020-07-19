@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { fetchRequestDetail } from './store/actions/actions';
 import Table from 'react-bootstrap/Table';
 import Container from 'react-bootstrap/Container';
-import { withRouter } from 'react-router';
 import Requests from '../Requests';
 
 const RequestDetail = (props) => {
@@ -67,4 +66,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default withRouter(connect(mapStateToProps, { fetchRequestDetail })(RequestDetail));
+export default connect(mapStateToProps, { fetchRequestDetail })(RequestDetail);

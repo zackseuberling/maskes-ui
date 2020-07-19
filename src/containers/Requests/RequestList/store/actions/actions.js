@@ -25,7 +25,7 @@ export const fetchRequestsFail = (error) => {
 export const fetchRequests = (page, token) => {
     return dispatch => {
         dispatch(fetchRequestsStart());
-        const url = `http://127.0.0.1:8000/requests/?page=${page}`;
+        const url = `http://127.0.0.1:8000/requests/requester/?page=${page}`;
         const config = {
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -66,7 +66,7 @@ export const createRequestFail = (error) => {
 export const createRequest = (body, token) => {
     return dispatch => {
         dispatch(createRequestStart());
-        const url = 'http://127.0.0.1:8000/requests/';
+        const url = 'http://127.0.0.1:8000/requests/requester/';
         const config = {
             headers: {
                 'Authorization': `Bearer ${token}`

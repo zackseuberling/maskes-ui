@@ -1,75 +1,65 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import Spinner from 'react-bootstrap/Spinner';
 import Button from 'react-bootstrap/Button';
 import { Row, Col, Form } from 'react-bootstrap';
 import { connect } from 'react-redux';
+import { fetchVolunteerRequests } from './store/actions/actions';
 import { BsBoxArrowInRight } from 'react-icons/bs';
 import Table from 'react-bootstrap/Table';
 import Container from 'react-bootstrap/Container';
 import Volunteer from '../Volunteer';
 
 const VolunteerList = (props) => {
-    const { name, match } = props
+    const { requests, loading, token, name, match, history, fetchVolunteerRequests } = props
+    const { results } = requests
 
-    const [requests, setRequests] = useState([]);
+    const [requestsList, setRequestsList] = useState([]);
 
-    const toggleChosen = (id) => setRequests(
-        requests.map((request, index) =>
-            (index === id)
-                ? {
+    useEffect(() => {
+        fetchVolunteerRequests(1, token);
+    }, [fetchVolunteerRequests, token])
+
+    useEffect(() => {
+        if (results) {
+            setRequestsList(
+                results.map((request) => ({
                     ...request,
-                    is_chosen: !request.is_chosen
-                }
-                : request)
+                    is_chosen: false
+                }))
+            )
+        }
+    }, [results])
+
+    const toggleChosen = (id) => setRequestsList(
+        requestsList.map((request, index) => (index === id)
+            ? { ...request, is_chosen: !request.is_chosen }
+            : request
+        )
     );
 
-    const data = [
-        {
-            location: 'Kent',
-            household_number: '4',
-            urgency: 'ASAP',
-            created_date: new Date().toLocaleDateString()
-        },
-        {
-            location: 'Renton',
-            household_number: '7',
-            urgency: 'Over the next few days',
-            created_date: new Date().toLocaleDateString()
-        },
-        {
-            location: 'Federal Way',
-            household_number: '3',
-            urgency: 'Useful if available',
-            created_date: new Date().toLocaleDateString()
-        },
-    ];
+    let display = [];
+    if (!loading && results) {
+        display = requestsList.map((request, index) => (
+            <tr key={index} style={request.is_chosen ? { backgroundColor: '#E1F6F1' } : null}>
+                <td>{index + 1}</td>
+                <td>{request.locations}</td>
+                <td>{request.household_number}</td>
+                <td>{request.urgency}</td>
+                <td>{new Date(request.created_date).toLocaleDateString()}</td>
+                <td>{request.volunteer_status}</td>
+                <td style={{ width: '100px' }}>
+                    <Button size='sm' block
+                        disabled={request.is_chosen}
+                        variant={request.is_chosen ? "disable" : "link"}
+                        onClick={() => toggleChosen(index)}
+                    >{request.is_chosen ? "Signed Up" : "Avaiable"}</Button>
+                </td>
+                <td style={{ textAlign: 'center' }}><Link onClick={() => history.push(`${match.url}/${request.id}`)}><BsBoxArrowInRight style={{ width: '20px', height: '20px' }} /></Link></td>
+            </tr>
+        ));
+    }
 
-    const [loading, setLoading] = useState(true)
-    useEffect(() => {
-        setRequests(data.map((request) => ({ ...request, is_chosen: false })));
-        setTimeout(() => {
-            setLoading(false)
-        }, [500])
-        // eslint-disable-next-line
-    }, [])
-
-    let display = requests.map((request, index) => (
-        <tr key={index} style={request.is_chosen ? { backgroundColor: '#E1F6F1' } : null}>
-            <td>{index + 1}</td>
-            <td>{request.location}</td>
-            <td>{request.household_number}</td>
-            <td>{request.urgency}</td>
-            <td>{request.created_date}</td>
-            <td style={{ width: '100px' }}>
-                <Button size='sm' block
-                    disabled={request.is_chosen}
-                    variant={request.is_chosen ? "disable" : "link"}
-                    onClick={() => toggleChosen(index)}
-                >{request.is_chosen ? "Signed Up" : "Avaiable"}</Button>
-            </td>
-            <td style={{ textAlign: 'center' }}><a href={`${match.url}/${index}`}><BsBoxArrowInRight style={{ width: '20px', height: '20px' }} /></a></td>
-        </tr>
-    ));
 
     return (
         <Volunteer name={name}>
@@ -121,6 +111,7 @@ const VolunteerList = (props) => {
                                 <th>Family Size</th>
                                 <th>Urgent Needs</th>
                                 <th>Date Created</th>
+                                <th>Volunteer Status</th>
                                 <th>Status</th>
                                 <th></th>
                             </tr>
@@ -140,11 +131,10 @@ const mapStateToProps = (state) => {
     return {
         hasLogin: state.auth.access !== null,
         token: state.auth.access,
-        name: state.auth.name
-        // loading: state.volunteerList.loading,
-        // requests: state.volunteerList.requests,
-
+        name: state.auth.name,
+        loading: state.volunteerList.loading,
+        requests: state.volunteerList.requests,
     }
 }
 
-export default connect(mapStateToProps, null)(VolunteerList);
+export default connect(mapStateToProps, { fetchVolunteerRequests })(VolunteerList);

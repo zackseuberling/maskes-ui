@@ -34,7 +34,7 @@ const RequestDetail = (props) => {
         <tr><td>Checkin</td><td>{request.need_checkin}</td></tr>
         <tr><td>Extra Info</td><td>{request.extra_info}</td></tr>
         <tr><td>Mutual Aid Pod</td><td>{request.ma_pod_setup ? "Yes" : "No"}</td></tr>
-        <tr><td>Resources Offer</td><td>{request.offer_resource}</td></tr>
+        <tr><td>Resources Offer</td><td>{request.offer_resources}</td></tr>
       </tbody>
     )
   }

@@ -5,27 +5,25 @@ import { connect } from 'react-redux';
 import { fetchVolunteerRequests } from './store/actions/actions';
 import { BsBoxArrowInRight } from 'react-icons/bs';
 import Table from 'react-bootstrap/Table';
+import Alert from 'react-bootstrap/Alert';
 import Container from 'react-bootstrap/Container';
 import Volunteer from '../Volunteer';
 import SearchForm from '../../../components/Volunteer/SearchForm/SearchForm';
+import { Pagination } from 'semantic-ui-react'
 
 const VolunteerList = (props) => {
-    const { requests, loading, token, name, match, history, fetchVolunteerRequests } = props
-    const { results } = requests
+    const { requests, loading, token, error, name, match, history, fetchVolunteerRequests } = props
+    const { results, count } = requests
+    const totalPages = Math.ceil(count / 20)
 
     const [requestsList, setRequestsList] = useState([]);
-
-    const [searchValues, setSearchValues] = useState({
-        date: '',
-        location: '',
-        urgent: '',
-    })
-
+    const [activePage, setActivePage] = useState(1);
+    const [searchValues, setSearchValues] = useState({ date: '', location: '', urgent: '' })
     const { date, location, urgent } = searchValues;
 
     useEffect(() => {
-        fetchVolunteerRequests(1, token, searchValues);
-    }, [fetchVolunteerRequests, token, searchValues])
+        fetchVolunteerRequests(activePage, token, searchValues);
+    }, [fetchVolunteerRequests, token, searchValues, activePage])
 
     useEffect(() => {
         if (results) {
@@ -42,8 +40,8 @@ const VolunteerList = (props) => {
                 <td>{request.household_number}</td>
                 <td>{request.urgency}</td>
                 <td>{new Date(request.created_date).toLocaleDateString()}</td>
-                <td style={{ width: '130px' }}>{
-                    (request.volunteer_status === "Available")
+                <td style={{ width: '130px' }}>
+                    {(request.volunteer_status === "Available")
                         ? <Button size='sm' block
                             variant="link"
                             onClick={() => history.push(`${match.url}/${request.id}`)}>
@@ -51,18 +49,37 @@ const VolunteerList = (props) => {
                         : <Button size='sm' block
                             variant="disable"
                             onClick={() => alert('This request is unavailable, please choose another one.')}>{request.volunteer_status}</Button>
-                }</td>
+                    }
+                </td>
             </tr>
         ));
     }
 
     const onChange = (event) => setSearchValues({ ...searchValues, [event.target.name]: event.target.value });
 
+    const onPageChange = (event, pageInfo) => {
+        setActivePage(pageInfo.activePage);
+    }
+
+    const pagination = (totalPages > 1) ? <Pagination
+        boundaryRange={0}
+        activePage={activePage}
+        totalPages={totalPages}
+        onPageChange={onPageChange}
+        ellipsisItem={null}
+        firstItem={null}
+        lastItem={null}
+        siblingRange={1}
+        className='mt-2 mb-3'
+    /> : null
+
     return (
         <Volunteer name={name}>
             <Container fluid>
                 <h3>Open Requests</h3>
                 <SearchForm urgent={urgent} location={location} date={date} onChange={onChange} />
+                {pagination}
+                {error ? <Alert variant="danger">{error.message}</Alert> : null}
                 {loading
                     ? <Spinner animation="border" style={{ marginLeft: '40%' }} />
                     : <Table striped bordered hover size="sm" responsive='sm'>
@@ -81,6 +98,7 @@ const VolunteerList = (props) => {
                         </tbody>
                     </Table>
                 }
+                {pagination}
             </Container>
         </Volunteer>
     );
@@ -94,6 +112,7 @@ const mapStateToProps = (state) => {
         name: state.auth.name,
         loading: state.volunteerList.loading,
         requests: state.volunteerList.requests,
+        error: state.volunteerList.error,
     }
 }
 

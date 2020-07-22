@@ -1,20 +1,29 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Spinner from 'react-bootstrap/Spinner';
 import { connect } from 'react-redux';
 import { fetchRequests } from './store/actions/actions';
 import Table from 'react-bootstrap/Table';
 import Container from 'react-bootstrap/Container';
+import Alert from 'react-bootstrap/Alert';
 import Requests from '../Requests';
+import { Pagination } from 'semantic-ui-react';
 
 const RequestList = (props) => {
-  const { requests, loading, token, fetchRequests, name, history, match } = props;
-  const { results } = requests
+  const { requests, loading, token, error, fetchRequests, name, history, match } = props;
+  const { results, count } = requests
+  const totalPages = Math.ceil(count / 20)
+
+  const [activePage, setActivePage] = useState(1);
 
   useEffect(() => {
-    fetchRequests(1, token)
-  }, [fetchRequests, token])
+    fetchRequests(activePage, token)
+  }, [fetchRequests, token, activePage])
   let requests_list = []
   //Todo: add pagination
+
+  const onPageChange = (event, pageInfo) => {
+    setActivePage(pageInfo.activePage);
+  }
 
   const selectRequestHandler = (requestId) => {
     history.push(`${match.path}/${requestId}`)
@@ -31,10 +40,24 @@ const RequestList = (props) => {
     ))
   }
 
+  const pagination = (totalPages > 1) ? <Pagination
+    boundaryRange={0}
+    activePage={activePage}
+    totalPages={totalPages}
+    onPageChange={onPageChange}
+    ellipsisItem={null}
+    firstItem={null}
+    lastItem={null}
+    siblingRange={1}
+    className='mt-2 mb-3'
+  /> : null
+
   return (
     <Requests name={name}>
       <Container fluid>
         <h3>Requests</h3>
+        {pagination}
+        {error && <Alert variant="danger">{error.message}</Alert>}
         {loading
           ? <Spinner animation="grow" />
           : <Table striped bordered hover size="sm">
@@ -51,6 +74,7 @@ const RequestList = (props) => {
             </tbody>
           </Table>
         }
+        {pagination}
 
       </Container>
     </Requests>
@@ -64,7 +88,9 @@ const mapStateToProps = (state) => {
     token: state.auth.access,
     loading: state.requestList.loading,
     requests: state.requestList.requests,
-    name: state.auth.name
+    name: state.auth.name,
+    error: state.requestList.error,
+
   }
 }
 

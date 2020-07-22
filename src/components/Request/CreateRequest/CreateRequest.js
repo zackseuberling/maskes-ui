@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import * as requestData from './FormData';
+import * as requestData from '../../Form/FormData';
 import maPoster from '../../../assets/images/poster.jpg';
 import apiChaya from '../../../assets/images/api-chaya.jpg';
 import banner from '../../../assets/images/banner.jpg';

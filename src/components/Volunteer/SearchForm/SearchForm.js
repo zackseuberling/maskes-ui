@@ -1,5 +1,6 @@
 import React from 'react';
 import { Row, Col, Form } from 'react-bootstrap';
+import * as searchData from '../../Form/FormData';
 
 const SearchForm = (props) => {
     const { location, urgent, date, onChange } = props;
@@ -11,9 +12,9 @@ const SearchForm = (props) => {
                         <Form.Label>ASAP/Urgent Needs</Form.Label>
                         <Form.Control as="select" name="urgent" value={urgent} onChange={onChange}>
                             <option value=''>All...</option>
-                            <option value='In the next 72 hours'>ASAP</option>
-                            <option value='Over the next few days'>Over the next few days</option>
-                            <option value='Useful if available'>Useful if available</option>
+                            {searchData.urgency.map((urgent) => (
+                                <option key={urgent} value={urgent}>{urgent}</option>
+                            ))}
                         </Form.Control>
                     </Form.Group>
                 </Col>
@@ -22,9 +23,9 @@ const SearchForm = (props) => {
                         <Form.Label>Location</Form.Label>
                         <Form.Control as="select" name='location' value={location} onChange={onChange}>
                             <option value=''>All...</option>
-                            <option value='Kent'>Kent</option>
-                            <option value='Renton'>Renton</option>
-                            <option value='Federal Way'>Federal Way</option>
+                            {searchData.locations.map((location) => (
+                                <option key={location} value={location}>{location}</option>
+                            ))}
                         </Form.Control>
                     </Form.Group>
                 </Col>

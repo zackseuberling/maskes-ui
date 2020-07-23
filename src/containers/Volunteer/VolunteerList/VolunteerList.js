@@ -18,8 +18,8 @@ const VolunteerList = (props) => {
 
     const [requestsList, setRequestsList] = useState([]);
     const [activePage, setActivePage] = useState(1);
-    const [searchValues, setSearchValues] = useState({ date: '', location: '', urgent: '' })
-    const { date, location, urgent } = searchValues;
+    const [searchValues, setSearchValues] = useState({ date: '', location: '', urgent: '', familySize: '' })
+    const { date, location, urgent, familySize } = searchValues;
 
     useEffect(() => {
         fetchVolunteerRequests(activePage, token, searchValues);
@@ -77,7 +77,7 @@ const VolunteerList = (props) => {
         <Volunteer name={name}>
             <Container fluid>
                 <h3>Open Requests</h3>
-                <SearchForm urgent={urgent} location={location} date={date} onChange={onChange} />
+                <SearchForm urgent={urgent} location={location} date={date} familySize={familySize} onChange={onChange} />
                 {pagination}
                 {error ? <Alert variant="danger">{error.message}</Alert> : null}
                 {loading

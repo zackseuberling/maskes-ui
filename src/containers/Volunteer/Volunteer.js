@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container } from 'react-bootstrap';
+import { Container, Button } from 'react-bootstrap';
 
 const Volunteer = (props) => {
     return (
@@ -7,6 +7,7 @@ const Volunteer = (props) => {
             <Container >
                 <h4>Hello {props.name}!</h4>
                 <p>We need your help!</p>
+                {!props.myVolunteer ? <Button onClick={props.onMyVolunteer}>My Volunteer</Button> : null}
             </Container>
             <hr />
             <Container className='mt-3'>

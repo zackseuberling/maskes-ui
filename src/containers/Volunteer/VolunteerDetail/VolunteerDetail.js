@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import Aux from '../../../hoc/Aux/Aux';
 import { Spinner, Button, Container, Table } from 'react-bootstrap';
 import Volunteer from '../Volunteer';
@@ -7,11 +8,33 @@ import { fetchVolunteerRequestDetail } from './store/actions/actions';
 
 const VolunteerDetail = (props) => {
 
-    const { request, loading, token, fetchVolunteerRequestDetail, name } = props;
+    const { request, loading, token, match, fetchVolunteerRequestDetail, name, isMyVolunteer } = props;
+    const history = useHistory();
+
+    const [myVolunteer, setMyVolunteer] = useState(false)
+
+    useEffect(() => {
+        if (isMyVolunteer) {
+            setMyVolunteer(isMyVolunteer)
+        }
+    }, [isMyVolunteer])
 
     useEffect(() => {
         fetchVolunteerRequestDetail(props.match.params.requestId, token)
     }, [fetchVolunteerRequestDetail, token, props.match.params.requestId])
+
+
+    const onMyVolunteer = (event) => {
+        setMyVolunteer(!myVolunteer);
+        if (!myVolunteer) {
+            console.log(history)
+            history.push('/volunteer/my-volunteer')
+        }
+    }
+
+    const volunteerSignupHandler = () => {
+
+    }
 
     let display = []
     if (!loading && request) {
@@ -38,7 +61,7 @@ const VolunteerDetail = (props) => {
 
 
     return (
-        <Volunteer name={name}>
+        <Volunteer name={name} onMyVolunteer={onMyVolunteer} myVolunteer={myVolunteer}>
             <Container fluid>
                 <h3>Request Detail</h3>
                 {loading

@@ -40,3 +40,47 @@ export const fetchVolunteerRequestDetail = (requestId, token) => {
             })
     }
 };
+
+export const volunteeringStart = () => {
+    return {
+        type: actionTypes.VOLUNTEERING_START
+    };
+}
+
+export const volunteeringFail = (error) => {
+    return {
+        type: actionTypes.VOLUNTEERING_FAIL,
+        error: error
+    };
+}
+
+export const volunteeringSuccess = (payload) => {
+    return {
+        type: actionTypes.VOLUNTEERING_SUCCESS,
+        payload: payload
+    };
+}
+
+export const volunteering = (requestId, token) => {
+    return dispatch => {
+        dispatch(volunteeringStart());
+        const url = 'http://127.0.0.1:8000/requests/volunteering/'
+        const body = {
+            request: requestId,
+            status: 'Signed Up'
+        }
+        const config = {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        };
+        axios.post(url, body, config)
+            .then(response => {
+                const payload = response.data;
+                dispatch(volunteeringSuccess(payload));
+            })
+            .catch(error => {
+                dispatch(volunteeringFail(error));
+            })
+    }
+}

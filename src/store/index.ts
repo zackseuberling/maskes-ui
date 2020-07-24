@@ -6,6 +6,7 @@ import requestList from '../containers/Requests/RequestList/store/reducer/reduce
 import requestDetail from '../containers/Requests/RequestDetail/store/reducer/reducer';
 import volunteerList from '../containers/Volunteer/VolunteerList/store/reducer/reducer';
 import volunteerDetail from '../containers/Volunteer/VolunteerDetail/store/reducer/reducer';
+import myVolunteer from '../containers/Volunteer/MyVolunteer/store/reducer/reducer';
 import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
@@ -15,7 +16,8 @@ const rootReducer = combineReducers({
   requestList,
   requestDetail,
   volunteerList,
-  volunteerDetail
+  volunteerDetail,
+  myVolunteer,
 });
 
 const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)));

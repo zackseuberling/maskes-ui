@@ -12,7 +12,7 @@ import store from './store';
 const app = (
   <Provider store={store}>
     <Router>
-      <Route path="/:navId?/:subNavId?" component={App}></Route>
+      <Route path="/:navId?/:subNavId?/:subSubNavId?/" component={App}></Route>
     </Router>
   </Provider>
 );

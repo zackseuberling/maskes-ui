@@ -4,11 +4,11 @@ import Aux from '../../../hoc/Aux/Aux';
 import { Spinner, Button, Container, Table } from 'react-bootstrap';
 import Volunteer from '../Volunteer';
 import { connect } from 'react-redux';
-import { fetchVolunteerRequestDetail } from './store/actions/actions';
+import { fetchVolunteerRequestDetail, volunteering } from './store/actions/actions';
 
 const VolunteerDetail = (props) => {
 
-    const { request, loading, token, match, fetchVolunteerRequestDetail, name, isMyVolunteer } = props;
+    const { request, loading, token, match, fetchVolunteerRequestDetail, volunteering, name, isMyVolunteer } = props;
     const history = useHistory();
 
     const [myVolunteer, setMyVolunteer] = useState(false)
@@ -20,20 +20,20 @@ const VolunteerDetail = (props) => {
     }, [isMyVolunteer])
 
     useEffect(() => {
-        fetchVolunteerRequestDetail(props.match.params.requestId, token)
-    }, [fetchVolunteerRequestDetail, token, props.match.params.requestId])
+        fetchVolunteerRequestDetail(match.params.requestId, token)
+    }, [fetchVolunteerRequestDetail, token, match.params.requestId])
 
 
     const onMyVolunteer = (event) => {
         setMyVolunteer(!myVolunteer);
         if (!myVolunteer) {
-            console.log(history)
             history.push('/volunteer/my-volunteer')
         }
     }
 
-    const volunteerSignupHandler = () => {
-
+    const volunteerSignupHandler = requestId => {
+        volunteering(requestId, token);
+        history.push('/volunteer/my-volunteer');
     }
 
     let display = []
@@ -48,14 +48,17 @@ const VolunteerDetail = (props) => {
                         <tr><td>Food Restrictions</td><td>{request.food_restrictions}</td></tr>
                         <tr><td>Household Size</td><td>{request.household_number}</td></tr>
                         <tr><td>Urgency</td><td>{request.urgency}</td></tr>
+                        <tr><td>Volunteer Status</td><td>{request.volunteer_status}</td></tr>
                     </tbody>
                 </Table>
 
-                <Button size='lg'
+                {request.volunteer_status === 'Available' ? <Button size='lg'
                     className='mt-1 mb-3'
-                    onClick={() => alert('Thank you for signing up this request')}
-                >Volunteer</Button>
-            </Aux>
+                    variant='success'
+                    onClick={() => volunteerSignupHandler(request.id)}
+                >Volunteer</Button> : null
+                }
+            </Aux >
         );
     }
 
@@ -85,4 +88,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, { fetchVolunteerRequestDetail })(VolunteerDetail);
+export default connect(mapStateToProps, { fetchVolunteerRequestDetail, volunteering })(VolunteerDetail);

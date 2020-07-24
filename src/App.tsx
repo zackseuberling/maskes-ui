@@ -16,6 +16,7 @@ import RequestList from './containers/Requests/RequestList/RequestList';
 import VolunteerList from './containers/Volunteer/VolunteerList/VolunteerList';
 import VolunteerDetail from './containers/Volunteer/VolunteerDetail/VolunteerDetail';
 import MyVolunteer from './containers/Volunteer/MyVolunteer/MyVolunteer';
+import MyVolunteerDetail from './containers/Volunteer/MyVolunteer/MyVolunteerDetail';
 
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import { withRouter } from 'react-router';
@@ -38,6 +39,7 @@ const App = ({ component, authCheckLoginState, is_requester, is_volunteer }) => 
     <Switch>
       <ProtectedRoute exact path='/volunteer' component={VolunteerList} />
       <ProtectedRoute exact path='/volunteer/my-volunteer' component={MyVolunteer} />
+      <ProtectedRoute exact path='/volunteer/my-volunteer/:volunteerId' component={MyVolunteerDetail} />
       <ProtectedRoute exact path='/volunteer/:requestId' component={VolunteerDetail} />
       <ProtectedRoute exact path="/logout" component={Logout} />
     </Switch>

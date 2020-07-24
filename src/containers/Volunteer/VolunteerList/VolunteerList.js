@@ -45,24 +45,23 @@ const VolunteerList = (props) => {
     if (!loading && results) {
         if (myVolunteer && results[0].request_info) {
             display = results.map((volunteer, index) => (
-                <tr key={index} style={volunteer.status === 'Signed Up' ? { backgroundColor: '#E1F6F1' } : null}>
+                <tr key={index} style={volunteer.status === 'Delivered' ? { backgroundColor: '#E1F6F1' } : null}>
                     <td>{volunteer.id}</td>
                     <td>{volunteer.request_info.locations}</td>
                     <td>{volunteer.request_info.household_number}</td>
                     <td>{volunteer.request_info.urgency}</td>
                     <td>{new Date(volunteer.request_info.created_date).toLocaleDateString()}</td>
                     <td style={{ width: '130px' }}>
-
                         <Button size='sm' block
                             variant="link"
-                            onClick={() => history.push(`${volunteer.request_info.id}`)}>
+                            onClick={() => history.push(`my-volunteer/${volunteer.id}`)}>
                             {volunteer.status + ' '}<BsCheck style={{ width: '20px', height: '20px' }} /></Button>
                     </td>
                 </tr>
             ));
         } else {
             display = requestsList.map((request, index) => (
-                <tr key={index} style={request.is_chosen ? { backgroundColor: '#E1F6F1' } : null}>
+                <tr key={index} style={request.volunteer_status === 'Unavailable' ? { backgroundColor: '#808080' } : null}>
                     <td>{request.id}</td>
                     <td>{request.locations}</td>
                     <td>{request.household_number}</td>
@@ -118,6 +117,7 @@ const VolunteerList = (props) => {
                 {myVolunteer ? null : <SearchForm urgent={urgent} location={location} date={date} familySize={familySize} onChange={onChange} />}
                 {pagination}
                 {error ? <Alert variant="danger">{error.message}</Alert> : null}
+
                 {loading
                     ? <Spinner animation="border" style={{ marginLeft: '40%' }} />
                     : <Table striped bordered hover size="sm" responsive='sm'>

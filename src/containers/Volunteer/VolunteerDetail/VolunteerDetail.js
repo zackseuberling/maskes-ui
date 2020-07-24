@@ -42,8 +42,8 @@ const VolunteerDetail = (props) => {
             <Aux>
                 <Table bordered striped hover size="sm" responsive='sm'>
                     <tbody >
-                        <tr><td>Created Date</td><td>{new Date(request.created_date).toLocaleDateString()}</td></tr>
-                        <tr><td>locations</td><td>{request.locations}</td></tr>
+                        <tr><td>Request Date</td><td>{new Date(request.created_date).toLocaleDateString()}</td></tr>
+                        <tr><td>Location</td><td>{request.locations}</td></tr>
                         <tr><td>List of Items</td><td style={{ width: '80%' }}>{request.items_list}</td></tr>
                         <tr><td>Food Restrictions</td><td>{request.food_restrictions}</td></tr>
                         <tr><td>Household Size</td><td>{request.household_number}</td></tr>
@@ -54,9 +54,9 @@ const VolunteerDetail = (props) => {
 
                 {request.volunteer_status === 'Available' ? <Button size='lg'
                     className='mt-1 mb-3'
-                    variant='success'
+                    variant='outline-primary'
                     onClick={() => volunteerSignupHandler(request.id)}
-                >Volunteer</Button> : null
+                >Volunteer!</Button> : null
                 }
             </Aux >
         );

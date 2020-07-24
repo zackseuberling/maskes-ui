@@ -44,14 +44,15 @@ const MyVolunteerDetail = (props) => {
             <Aux>
                 <Table bordered striped hover size="sm" responsive='sm'>
                     <tbody >
+                        <tr><td>Volunteer #</td><td>{volunteer.id}</td></tr>
                         <tr><td>Request #</td><td>{volunteer.request_detail.id}</td></tr>
-                        <tr><td>Created Date</td><td>{new Date(volunteer.request_detail.created_date).toLocaleDateString()}</td></tr>
-                        <tr><td>locations</td><td>{volunteer.request_detail.locations}</td></tr>
+                        <tr><td>Request Date</td><td>{new Date(volunteer.request_detail.created_date).toLocaleDateString()}</td></tr>
+                        <tr><td>Location</td><td>{volunteer.request_detail.locations}</td></tr>
                         <tr><td>List of Items</td><td style={{ width: '80%' }}>{volunteer.request_detail.items_list}</td></tr>
                         <tr><td>Food Restrictions</td><td>{volunteer.request_detail.food_restrictions}</td></tr>
                         <tr><td>Household Size</td><td>{volunteer.request_detail.household_number}</td></tr>
                         <tr><td>Urgency</td><td>{volunteer.request_detail.urgency}</td></tr>
-                        <tr><td>Volunteer Status</td><td>{volunteer.request_detail.volunteer_status}</td></tr>
+                        <tr><td>Volunteer Status</td><td style={volunteer.status === 'Delivered' ? { color: 'green' } : null}>{volunteer.status}</td></tr>
                     </tbody>
                 </Table>
 
@@ -66,7 +67,7 @@ const MyVolunteerDetail = (props) => {
                             className='mt-1 mb-3'
                             variant='danger'
                             onClick={volunteerDeleteHandler}
-                        >Delete</Button>
+                        >Cancel</Button>
                     </div>)
 
                     : null}

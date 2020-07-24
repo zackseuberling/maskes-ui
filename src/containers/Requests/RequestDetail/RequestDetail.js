@@ -20,7 +20,7 @@ const RequestDetail = (props) => {
         <tr><td>Created Date</td><td>{new Date(request.created_date).toLocaleDateString()}</td></tr>
         <tr><td>Phone</td><td>{request.phone}</td></tr>
         <tr><td>Address</td><td>{`${request.address1} ${request.address2}, ${request.city}, WA ${request.zip_code}`}</td></tr>
-        <tr><td>locations</td><td>{request.locations}</td></tr>
+        <tr><td>Locations</td><td>{request.locations}</td></tr>
         <tr><td>Contact Preference</td><td>{request.contact_preference}</td></tr>
         <tr><td>Prefered Foods</td><td>{request.prefered_food}</td></tr>
         <tr><td>List of Items</td><td style={{ width: '80%' }}>{request.items_list}</td></tr>
@@ -42,7 +42,7 @@ const RequestDetail = (props) => {
   return (
     <Requests name={name}>
       <Container fluid>
-        <h3>Request Detail</h3>
+        <h3>My Request Detail</h3>
         {loading
           ? <Spinner animation="grow" />
           : <Table striped bordered hover size="sm">

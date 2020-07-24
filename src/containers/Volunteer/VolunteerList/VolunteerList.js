@@ -2,21 +2,25 @@ import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import Spinner from 'react-bootstrap/Spinner';
 import Button from 'react-bootstrap/Button';
+import Card from 'react-bootstrap/Card';
+import CardColumns from 'react-bootstrap/CardColumns';
 import { connect } from 'react-redux';
 import { fetchVolunteerRequests } from './store/actions/actions';
-import { BsBoxArrowInRight, BsCheck } from 'react-icons/bs';
-import Table from 'react-bootstrap/Table';
+import { BsBoxArrowInRight, BsCheck, BsChevronRight } from 'react-icons/bs';
+import Accordion from 'react-bootstrap/Accordion';
 import Alert from 'react-bootstrap/Alert';
 import Container from 'react-bootstrap/Container';
 import Volunteer from '../Volunteer';
 import SearchForm from '../../../components/Volunteer/SearchForm/SearchForm';
-import { Pagination } from 'semantic-ui-react'
+import { Pagination } from 'semantic-ui-react';
+import './VolunteerList.css';
+
 
 const VolunteerList = (props) => {
     const { requests, loading, token, error, name, match, fetchVolunteerRequests, isMyVolunteer } = props
     const history = useHistory();
     const { results, count } = requests
-    const totalPages = Math.ceil(count / 20)
+    const totalPages = Math.ceil(count / 21)
 
     const [requestsList, setRequestsList] = useState([]);
     const [activePage, setActivePage] = useState(1);
@@ -45,45 +49,63 @@ const VolunteerList = (props) => {
     if (!loading && results) {
         if (myVolunteer && results[0].request_info) {
             display = results.map((volunteer, index) => (
-                <tr key={index} style={volunteer.status === 'Delivered' ? { backgroundColor: '#E1F6F1' } : null}>
-                    <td>{volunteer.id}</td>
-                    <td>{volunteer.request_info.locations}</td>
-                    <td>{volunteer.request_info.household_number}</td>
-                    <td>{volunteer.request_info.urgency}</td>
-                    <td>{new Date(volunteer.request_info.created_date).toLocaleDateString()}</td>
-                    <td style={{ width: '130px' }}>
+                <Card key={index} style={volunteer.status === 'Delivered' ? { backgroundColor: '#E1F6F1' } : null}>
+                    <Card.Body>
+                        <Card.Title>Volunteer #{volunteer.id}</Card.Title>
+
+                        <Accordion defaultActiveKey="0">
+                            <Card>
+                                <Accordion.Toggle as={Card.Header} eventKey="1">
+                                    Request #{volunteer.request_info.id}
+                                </Accordion.Toggle>
+                                <Accordion.Collapse eventKey="1">
+                                    <Card.Body>
+                                        <Card.Text>Location: {volunteer.request_info.locations}</Card.Text>
+                                        <Card.Text>Family of: {volunteer.request_info.household_number}</Card.Text>
+                                        <Card.Text>Urgent Needs: {volunteer.request_info.urgency}</Card.Text>
+                                        <Card.Text>Request Date: {new Date(volunteer.request_info.created_date).toLocaleDateString()}</Card.Text>
+                                    </Card.Body>
+                                </Accordion.Collapse>
+                            </Card>
+                        </Accordion>
+                        <Card.Text>Date: {new Date(volunteer.created_date).toLocaleDateString()}</Card.Text>
                         <Button size='sm' block
+                            style={volunteer.status === 'Delivered' ? { color: 'green' } : null}
                             variant="link"
                             onClick={() => history.push(`my-volunteer/${volunteer.id}`)}>
-                            {volunteer.status + ' '}<BsCheck style={{ width: '20px', height: '20px' }} /></Button>
-                    </td>
-                </tr>
+                            {volunteer.status + ' '}
+                            {volunteer.status === 'Delivered'
+                                ? <BsCheck style={{ width: '20px', height: '20px' }} />
+                                : <BsChevronRight style={{ width: '10px', height: '10px' }} />}
+
+                        </Button>
+                    </Card.Body>
+                </Card>
             ));
         } else {
             display = requestsList.map((request, index) => (
-                <tr key={index} style={request.volunteer_status === 'Unavailable' ? { backgroundColor: '#808080' } : null}>
-                    <td>{request.id}</td>
-                    <td>{request.locations}</td>
-                    <td>{request.household_number}</td>
-                    <td>{request.urgency}</td>
-                    <td>{new Date(request.created_date).toLocaleDateString()}</td>
-                    <td style={{ width: '130px' }}>
+                <Card key={index}>
+                    <Card.Body>
+                        <Card.Title>Request #{request.id}</Card.Title>
+                        <Card.Text>Location: {request.locations}</Card.Text>
+                        <Card.Text>Family Size: {request.household_number}</Card.Text>
+                        <Card.Text>Urgent Needs: {request.urgency}</Card.Text>
                         {(request.volunteer_status === "Available")
-                            ? <Button size='sm' block
-                                variant="link"
+                            ? <Button size='sm' variant='outline-info'
                                 onClick={() => history.push(`${match.url}/${request.id}`)}>
-                                {request.volunteer_status + ' '}<BsBoxArrowInRight style={{ width: '20px', height: '20px' }} /></Button>
-                            : <Button size='sm' block
+                                {request.volunteer_status + ' '}
+                                <BsBoxArrowInRight style={{ width: '15px', height: '15px' }} /></Button>
+                            : <Button size='sm'
                                 variant="disable"
                                 onClick={() => alert('This request is unavailable, please choose another one.')}>{request.volunteer_status}</Button>
                         }
-                    </td>
-                </tr>
+                    </Card.Body>
+                    <Card.Footer>Date Created: {new Date(request.created_date).toLocaleDateString()}</Card.Footer>
+                </Card>
             ));
         };
-
-
     }
+
 
     const onChange = (event) => setSearchValues({ ...searchValues, [event.target.name]: event.target.value });
 
@@ -117,25 +139,9 @@ const VolunteerList = (props) => {
                 {myVolunteer ? null : <SearchForm urgent={urgent} location={location} date={date} familySize={familySize} onChange={onChange} />}
                 {pagination}
                 {error ? <Alert variant="danger">{error.message}</Alert> : null}
-
                 {loading
                     ? <Spinner animation="border" style={{ marginLeft: '40%' }} />
-                    : <Table striped bordered hover size="sm" responsive='sm'>
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Location</th>
-                                <th>Family Size</th>
-                                <th>Urgent Needs</th>
-                                <th>Date Created</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {display}
-                        </tbody>
-                    </Table>
-                }
+                    : <CardColumns className='card_columns'>{display}</CardColumns>}
                 {pagination}
             </Container>
         </Volunteer>

@@ -10,7 +10,7 @@ const Requests = (props) => {
       <Container className='mt-2'>
         <Container >
           <Card.Title>
-            <h4>
+            <h4 style={{ fontWeight: 'bold' }}>
               Hello {props.name}!
             </h4>
           </Card.Title>

@@ -7,7 +7,7 @@ const SearchForm = (props) => {
     return (
         <Form>
             <Row>
-                <Col md>
+                <Col md={6} lg={3}>
                     <Form.Group as={Col} controlId="searchUrgent">
                         <Form.Label>ASAP/Urgent Needs</Form.Label>
                         <Form.Control as="select" name="urgent" value={urgent} onChange={onChange}>
@@ -18,7 +18,7 @@ const SearchForm = (props) => {
                         </Form.Control>
                     </Form.Group>
                 </Col>
-                <Col md>
+                <Col md={6} lg={3}>
                     <Form.Group as={Col} controlId="searchLocation">
                         <Form.Label>Location</Form.Label>
                         <Form.Control as="select" name='location' value={location} onChange={onChange}>
@@ -29,7 +29,7 @@ const SearchForm = (props) => {
                         </Form.Control>
                     </Form.Group>
                 </Col>
-                <Col md>
+                <Col md={6} lg={3}>
                     <Form.Group as={Col} controlId="familySize">
                         <Form.Label>Family Size</Form.Label>
                         <Form.Control as='select' name='familySize' value={familySize} onChange={onChange}>
@@ -44,7 +44,7 @@ const SearchForm = (props) => {
                         </Form.Control>
                     </Form.Group>
                 </Col>
-                <Col md>
+                <Col md={6} lg={3}>
                     <Form.Group as={Col} controlId="searchDate">
                         <Form.Label>Date</Form.Label>
                         <Form.Control as="select" name='date' value={date} onChange={onChange}>

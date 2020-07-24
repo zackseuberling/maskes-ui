@@ -1,17 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import Spinner from 'react-bootstrap/Spinner';
+import Card from 'react-bootstrap/Card';
+import Accordion from 'react-bootstrap/Accordion';
+import { Row, Col } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { fetchRequests } from './store/actions/actions';
-import Table from 'react-bootstrap/Table';
+import CardColumns from 'react-bootstrap/CardColumns';
+import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
+import { BsBoxArrowInRight } from 'react-icons/bs';
 import Alert from 'react-bootstrap/Alert';
 import Requests from '../Requests';
 import { Pagination } from 'semantic-ui-react';
+import './RequestList.css'
 
 const RequestList = (props) => {
   const { requests, loading, token, error, fetchRequests, name, history, match } = props;
   const { results, count } = requests
-  const totalPages = Math.ceil(count / 20)
+  const totalPages = Math.ceil(count / 21)
 
   const [activePage, setActivePage] = useState(1);
 
@@ -29,15 +35,37 @@ const RequestList = (props) => {
     history.push(`${match.path}/${requestId}`)
   }
 
+  const request_status_style = {
+    'New': '#5bc0de',
+    'Pending': '#fcdc04',
+    'In Process': '#FF8C00',
+    'Completed': '#5cb85c',
+    'Transfered': '#342452',
+  }
+
   if (!loading && results) {
-    requests_list = results.map((request, index) => (
-      <tr key={request.id} onClick={() => selectRequestHandler(request.id)}>
-        <td>{index + 1}</td>
-        <td>{request.status}</td>
-        <td style={{ width: '80%' }}>{request.items_list}</td>
-        <td>{new Date(request.created_date).toLocaleDateString()}</td>
-      </tr>
-    ))
+    requests_list = results.map((request) => (
+
+      <Accordion key={request.id} defaultActiveKey="0">
+        <Card>
+          <Accordion.Toggle as={Card.Header} eventKey="1">
+            <Row>
+              <Col>Request #{request.id}</Col>
+              <Col style={
+                { color: request_status_style[request.status] }}>{request.status}</Col>
+            </Row>
+          </Accordion.Toggle>
+          <Accordion.Collapse eventKey="1">
+            <Card.Body>
+              <Card.Text>Created Date: {new Date(request.created_date).toLocaleDateString()}</Card.Text>
+              <Card.Text>Request List: {request.items_list}</Card.Text>
+              <Button block variant='link' onClick={() => selectRequestHandler(request.id)}>Detail <BsBoxArrowInRight style={{ width: '15px', height: '15px' }} /></Button>
+            </Card.Body>
+          </Accordion.Collapse>
+        </Card>
+      </Accordion>
+    )
+    );
   }
 
   const pagination = (totalPages > 1) ? <Pagination
@@ -60,20 +88,7 @@ const RequestList = (props) => {
         {error && <Alert variant="danger">{error.message}</Alert>}
         {loading
           ? <Spinner animation="grow" />
-          : <Table striped bordered hover size="sm">
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Status</th>
-                <th>List of Items</th>
-                <th>Date Created</th>
-              </tr>
-            </thead>
-            <tbody>
-              {requests_list}
-            </tbody>
-          </Table>
-        }
+          : <CardColumns className='card_columns'>{requests_list}</CardColumns>}
         {pagination}
 
       </Container>

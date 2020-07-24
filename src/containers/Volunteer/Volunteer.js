@@ -5,9 +5,9 @@ const Volunteer = (props) => {
     return (
         <Container className='mt-2'>
             <Container >
-                <h4>Hello {props.name}!</h4>
+                <h4 style={{ fontWeight: 'bold' }}>Hello {props.name}!</h4>
                 <p>We need your help!</p>
-                {!props.myVolunteer ? <Button onClick={props.onMyVolunteer}>My Volunteer</Button> : null}
+                {!props.myVolunteer ? <Button variant='outline-dark' onClick={props.onMyVolunteer}>My Volunteer</Button> : null}
             </Container>
             <hr />
             <Container className='mt-3'>

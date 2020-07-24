@@ -4,7 +4,7 @@ export const locations = [
     'Bellevue',
     'Bothell',
     'Burien',
-    'Convington',
+    'Covington',
     'Des Moines',
     'Duvall',
     'Fall City',

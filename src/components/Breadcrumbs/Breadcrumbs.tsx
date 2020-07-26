@@ -26,11 +26,11 @@ class Breadcrumbs extends Component<IBreadcrumbs> {
                 onClick={() => {
                   if (!isLastElement) {
                     let url = '';
-                    for (let i = 0; i <= params.indexOf(value); i++) {
+                    for (let i = 0; i < params.indexOf(value); i++) {
                       url += params[i] + '/'
                     }
 
-                    goTo('/' + url);
+                    goTo(`/${url}${value}`);
                   }
                 }}
                 key={value}

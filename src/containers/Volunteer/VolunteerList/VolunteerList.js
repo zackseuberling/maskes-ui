@@ -97,7 +97,7 @@ const VolunteerList = (props) => {
                                 <BsBoxArrowInRight style={{ width: '15px', height: '15px' }} /></Button>
                             : <Button size='sm'
                                 variant="disable"
-                                onClick={() => alert('This request is unavailable, please choose another one.')}>{request.volunteer_status}</Button>
+                                onClick={() => history.push(`${match.url}/${request.id}`)}>{request.volunteer_status}</Button>
                         }
                     </Card.Body>
                     <Card.Footer>Date Created: {new Date(request.created_date).toLocaleDateString()}</Card.Footer>

@@ -5,11 +5,12 @@ import { Spinner, Button, Container, Table } from 'react-bootstrap';
 import ReimbursementForm from '../../../components/Volunteer/ReimbursementForm/ReimbursementForm';
 import Volunteer from '../Volunteer';
 import { connect } from 'react-redux';
-import { fetchVolunteerDetail } from './store/actions/actions';
+import { fetchVolunteerDetail, deleteVolunteer } from './store/actions/actions';
+import DeleteModal from '../../../components/Modal/DeleteModal/DeleteModal';
 
 const MyVolunteerDetail = (props) => {
 
-    const { volunteer, loading, token, match, fetchVolunteerDetail, name, isMyVolunteer } = props;
+    const { volunteer, loading, token, match, fetchVolunteerDetail, deleteVolunteer, name, isMyVolunteer } = props;
     const history = useHistory();
 
     const [myVolunteer, setMyVolunteer] = useState(false)
@@ -32,8 +33,23 @@ const MyVolunteerDetail = (props) => {
         }
     }
 
+
+    const [show, setShow] = useState(false);
+    const [deleteId, setDeleteId] = useState(null)
+
+    const closeDeleteModalHandler = () => setShow(false);
+    const showDeleteModalHandler = (volunteerId, token) => {
+        setShow(true);
+        setDeleteId(volunteerId);
+    };
+
     const volunteerDeleteHandler = () => {
-        alert('Opps! Thank you for your consideration')
+        deleteVolunteer(deleteId, token);
+        history.push('/volunteer/my-volunteer/')
+    }
+
+    const confirmDeliveredHandler = () => {
+        //todo
     }
 
     const [delivered, setDelivered] = useState(false)
@@ -66,7 +82,7 @@ const MyVolunteerDetail = (props) => {
                         <Button
                             className='mt-1 mb-3'
                             variant='danger'
-                            onClick={volunteerDeleteHandler}
+                            onClick={() => showDeleteModalHandler(volunteer.id, token)}
                         >Cancel</Button>
                     </div>)
 
@@ -90,6 +106,7 @@ const MyVolunteerDetail = (props) => {
 
     return (
         <Volunteer name={name} onMyVolunteer={onMyVolunteer} myVolunteer={myVolunteer}>
+            <DeleteModal show={show} closeModalHandler={closeDeleteModalHandler} deleteHandler={volunteerDeleteHandler} />
             <Container fluid>
                 <h3>My Volunteer Detail</h3>
                 {loading
@@ -113,4 +130,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, { fetchVolunteerDetail })(MyVolunteerDetail);
+export default connect(mapStateToProps, { fetchVolunteerDetail, deleteVolunteer })(MyVolunteerDetail);

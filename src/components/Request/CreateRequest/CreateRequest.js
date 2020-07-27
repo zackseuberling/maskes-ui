@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import * as requestData from '../../Form/FormData';
 import maPoster from '../../../assets/images/poster.jpg';
 import apiChaya from '../../../assets/images/api-chaya.jpg';
@@ -9,7 +10,9 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { createRequest } from '../../../containers/Requests/RequestList/store/actions/actions';
 
-const CreateRequest = ({ createRequest, token }) => {
+const CreateRequest = (props) => {
+  const { createRequest, token } = props;
+  const history = useHistory();
   const [formData, setFormData] = useState({
     phone: '',
     address1: '',
@@ -130,6 +133,7 @@ const CreateRequest = ({ createRequest, token }) => {
     };
 
     createRequest(body, token);
+    history.push('/my-requests');
   }
 
   return (

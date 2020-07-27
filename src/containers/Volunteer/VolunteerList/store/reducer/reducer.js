@@ -4,6 +4,7 @@ import { updateObject } from '../../../../../shared/utility';
 const initialState = {
     requests: [],
     loading: false,
+    error: null
 }
 
 // FETCH REQUEST

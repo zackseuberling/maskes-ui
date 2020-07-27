@@ -5,15 +5,22 @@ import { Spinner, Button, Container, Table } from 'react-bootstrap';
 import ReimbursementForm from '../../../components/Volunteer/ReimbursementForm/ReimbursementForm';
 import Volunteer from '../Volunteer';
 import { connect } from 'react-redux';
-import { fetchVolunteerDetail, deleteVolunteer } from './store/actions/actions';
+import { fetchVolunteerDetail, deleteVolunteer, updateVolunteer } from './store/actions/actions';
 import DeleteModal from '../../../components/Modal/DeleteModal/DeleteModal';
+import UpdateModal from '../../../components/Modal/UpdateModal/UpdateModal';
 
 const MyVolunteerDetail = (props) => {
 
-    const { volunteer, loading, token, match, fetchVolunteerDetail, deleteVolunteer, name, isMyVolunteer } = props;
+    const { volunteer, loading, token, match, name, isMyVolunteer,
+        fetchVolunteerDetail, deleteVolunteer, updateVolunteer } = props;
+
     const history = useHistory();
 
     const [myVolunteer, setMyVolunteer] = useState(false)
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [showUpdateModal, setShowUpdateModal] = useState(false);
+    const [deleteId, setDeleteId] = useState(null)
+    const [updateId, setUpdateId] = useState({})
 
     useEffect(() => {
         if (isMyVolunteer) {
@@ -23,7 +30,7 @@ const MyVolunteerDetail = (props) => {
 
     useEffect(() => {
         fetchVolunteerDetail(match.params.volunteerId, token)
-    }, [fetchVolunteerDetail, token, match.params.volunteerId])
+    }, [fetchVolunteerDetail, token, match.params.volunteerId, updateId])
 
 
     const onMyVolunteer = (event) => {
@@ -33,15 +40,16 @@ const MyVolunteerDetail = (props) => {
         }
     }
 
-
-    const [show, setShow] = useState(false);
-    const [deleteId, setDeleteId] = useState(null)
-
-    const closeDeleteModalHandler = () => setShow(false);
-    const showDeleteModalHandler = (volunteerId, token) => {
-        setShow(true);
+    const closeDeleteModalHandler = () => setShowDeleteModal(false);
+    const closeUpdateModalHandler = () => setShowUpdateModal(false);
+    const showDeleteModalHandler = (volunteerId) => {
+        setShowDeleteModal(true);
         setDeleteId(volunteerId);
     };
+    const showUpdateModalHandler = (volunteerId, requestId) => {
+        setShowUpdateModal(true);
+        setUpdateId({ ...updateId, volunteerId: volunteerId, requestId: requestId })
+    }
 
     const volunteerDeleteHandler = () => {
         deleteVolunteer(deleteId, token);
@@ -49,10 +57,10 @@ const MyVolunteerDetail = (props) => {
     }
 
     const confirmDeliveredHandler = () => {
-        //todo
+        updateVolunteer(updateId, token);
+        setShowUpdateModal(false);
+        setUpdateId(null);
     }
-
-    const [delivered, setDelivered] = useState(false)
 
     let display = []
     if (!loading && volunteer.request_detail) {
@@ -72,23 +80,21 @@ const MyVolunteerDetail = (props) => {
                     </tbody>
                 </Table>
 
-                {!delivered
-                    // volunteer.status === 'Signed Up'
+                {volunteer.status === 'Signed Up'
                     ? (<div>
                         <Button
                             className='mt-1 mb-3 mr-2'
-                            onClick={() => setDelivered(!delivered)}
+                            onClick={() => showUpdateModalHandler(volunteer.id, volunteer.request_detail.id)}
                         >Confirm Delivered</Button>
                         <Button
                             className='mt-1 mb-3'
                             variant='danger'
-                            onClick={() => showDeleteModalHandler(volunteer.id, token)}
+                            onClick={() => showDeleteModalHandler(volunteer.id)}
                         >Cancel</Button>
                     </div>)
 
                     : null}
-                {delivered
-                    // volunteer.status === 'Delivered'
+                {volunteer.status === 'Delivered'
                     ? <div>
                         <Button
                             className='mt-1 mb-3 mr-2'
@@ -103,10 +109,10 @@ const MyVolunteerDetail = (props) => {
         );
     }
 
-
     return (
         <Volunteer name={name} onMyVolunteer={onMyVolunteer} myVolunteer={myVolunteer}>
-            <DeleteModal show={show} closeModalHandler={closeDeleteModalHandler} deleteHandler={volunteerDeleteHandler} />
+            <DeleteModal showDeleteModal={showDeleteModal} closeModalHandler={closeDeleteModalHandler} deleteHandler={volunteerDeleteHandler} />
+            <UpdateModal showUpdateModal={showUpdateModal} closeModalHandler={closeUpdateModalHandler} updateHanlder={confirmDeliveredHandler} />
             <Container fluid>
                 <h3>My Volunteer Detail</h3>
                 {loading
@@ -130,4 +136,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, { fetchVolunteerDetail, deleteVolunteer })(MyVolunteerDetail);
+export default connect(mapStateToProps, { fetchVolunteerDetail, deleteVolunteer, updateVolunteer })(MyVolunteerDetail);

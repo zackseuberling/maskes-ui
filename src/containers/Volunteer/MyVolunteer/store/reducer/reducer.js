@@ -48,6 +48,27 @@ const deleteVolunteerFail = (state, action) => {
     });
 };
 
+//UPDATE VOLUNTEER
+const updateVolunteerSuccess = (state, action) => {
+    return updateObject(state, {
+        status: action.status,
+        loading: false,
+    });
+};
+
+const updateVolunteerStart = (state, action) => {
+    return updateObject(state, {
+        loading: true,
+    });
+};
+
+const updateVolunteerFail = (state, action) => {
+    return updateObject(state, {
+        loading: false,
+        error: action.error
+    });
+};
+
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
@@ -58,6 +79,10 @@ const reducer = (state = initialState, action) => {
         case actionTypes.DELETE_VOLUNTEER_SUCCESS: return deleteVolunteerSuccess(state, action);
         case actionTypes.DELETE_VOLUNTEER_START: return deleteVolunteerStart(state, action);
         case actionTypes.DELETE_VOLUNTEER_FAIL: return deleteVolunteerFail(state, action);
+
+        case actionTypes.UPDATE_VOLUNTEER_SUCCESS: return updateVolunteerSuccess(state, action);
+        case actionTypes.UPDATE_VOLUNTEER_START: return updateVolunteerStart(state, action);
+        case actionTypes.UPDATE_VOLUNTEER_FAIL: return updateVolunteerFail(state, action);
 
         default: return state;
     }

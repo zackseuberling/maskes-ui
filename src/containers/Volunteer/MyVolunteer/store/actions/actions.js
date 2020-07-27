@@ -21,8 +21,6 @@ export const fetchVolunteerDetailFail = (error) => {
     };
 }
 
-
-
 export const fetchVolunteerDetail = (volunteerId, token) => {
     return dispatch => {
         dispatch(fetchVolunteerDetailStart());
@@ -86,5 +84,52 @@ export const deleteVolunteer = (volunteerId, token) => {
             })
     }
 };
+
+//UPDATE VOLUNTEER
+export const updateVolunteerStart = () => {
+    return {
+        type: actionTypes.UPDATE_VOLUNTEER_START
+    };
+}
+
+export const updateVolunteerSuccess = (status) => {
+    return {
+        type: actionTypes.UPDATE_VOLUNTEER_SUCCESS,
+        status: status
+    };
+}
+
+export const updateVolunteerFail = (error) => {
+    return {
+        type: actionTypes.UPDATE_VOLUNTEER_FAIL,
+        error: error
+    };
+}
+
+
+export const updateVolunteer = ({ volunteerId, requestId }, token) => {
+    return dispatch => {
+        dispatch(updateVolunteerStart());
+        const url = `http://127.0.0.1:8000/requests/volunteering/${volunteerId}/`;
+        const config = {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        };
+        const body = {
+            request: requestId,
+            status: "Delivered"
+        }
+        axios.put(url, body, config)
+            .then(response => {
+                const status = response.request.status;
+                dispatch(updateVolunteerSuccess(status))
+            })
+            .catch(error => {
+                dispatch(updateVolunteerFail(error))
+            })
+    }
+};
+
 
 

@@ -49,7 +49,7 @@ const VolunteerList = (props) => {
     if (!loading && results) {
         if (myVolunteer && results[0].request_info) {
             display = results.map((volunteer, index) => (
-                <Card key={index} style={volunteer.status === 'Delivered' ? { backgroundColor: '#E1F6F1' } : null}>
+                <Card className='card_shadow' key={index} style={volunteer.status === 'Delivered' ? { backgroundColor: '#E1F6F1' } : null}>
                     <Card.Body>
                         <Card.Title>Volunteer #{volunteer.id}</Card.Title>
 
@@ -84,7 +84,7 @@ const VolunteerList = (props) => {
             ));
         } else {
             display = requestsList.map((request, index) => (
-                <Card key={index}>
+                <Card key={index} className='card_shadow'>
                     <Card.Body>
                         <Card.Title>Request #{request.id}</Card.Title>
                         <Card.Text>Location: {request.locations}</Card.Text>
@@ -107,7 +107,10 @@ const VolunteerList = (props) => {
     }
 
 
-    const onChange = (event) => setSearchValues({ ...searchValues, [event.target.name]: event.target.value });
+    const onChange = (event) => {
+        setSearchValues({ ...searchValues, [event.target.name]: event.target.value });
+        setActivePage(1);
+    }
 
     const onPageChange = (event, pageInfo) => {
         setActivePage(pageInfo.activePage);
@@ -120,17 +123,19 @@ const VolunteerList = (props) => {
         }
     }
 
-    const pagination = (totalPages > 1) ? <Pagination
-        boundaryRange={0}
-        activePage={activePage}
-        totalPages={totalPages}
-        onPageChange={onPageChange}
-        ellipsisItem={null}
-        firstItem={null}
-        lastItem={null}
-        siblingRange={1}
-        className='mt-2 mb-3'
-    /> : null
+    const pagination = (totalPages > 1)
+        ? <Pagination
+            boundaryRange={0}
+            activePage={activePage}
+            totalPages={totalPages}
+            onPageChange={onPageChange}
+            ellipsisItem={null}
+            firstItem={null}
+            lastItem={null}
+            siblingRange={1}
+            className='mt-2 mb-3'
+        />
+        : null
 
     return (
         <Volunteer name={name} onMyVolunteer={onMyVolunteer} myVolunteer={myVolunteer}>

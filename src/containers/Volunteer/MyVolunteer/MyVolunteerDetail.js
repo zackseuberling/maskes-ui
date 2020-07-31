@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import Aux from '../../../hoc/Aux/Aux';
 import { Spinner, Button, Container, Table } from 'react-bootstrap';
-import ReimbursementForm from '../../../components/Volunteer/ReimbursementForm/ReimbursementForm';
+import Reimbursement from '../../Reimbursement/Reimbursement';
 import Volunteer from '../Volunteer';
 import { connect } from 'react-redux';
 import { fetchVolunteerDetail, deleteVolunteer, updateVolunteer } from './store/actions/actions';
@@ -61,6 +61,7 @@ const MyVolunteerDetail = (props) => {
         updateVolunteer(updateId, token);
         setShowUpdateModal(false);
     }
+
 
     let display = []
     if (!loading && volunteer.request_detail) {
@@ -125,14 +126,10 @@ const MyVolunteerDetail = (props) => {
                         </Aux>)
 
                     || (volunteer.status === 'Delivered'
-                        && <div>
-                            <Button
-                                className='mt-1 mb-3 mr-2'
-                                disabled
-                                variant='success'
-                            >Delivered</Button>
-                            <ReimbursementForm />
-                        </div>)
+                        && <Reimbursement
+                            volunteerId={volunteer.id}
+                            reimbursement={volunteer.reimbursement_detail}
+                        />)
                 }
 
             </Aux >

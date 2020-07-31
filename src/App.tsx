@@ -2,6 +2,7 @@ import './App.css';
 import React, { useEffect } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
+
 import Layout from './hoc/Layout/Layout';
 import Logout from './components/Auth/Logout';
 
@@ -25,7 +26,7 @@ import { authCheckLoginState } from './components/Auth/store/actions/actions';
 
 const App = ({ component, authCheckLoginState, is_requester, is_volunteer }) => {
   useEffect(() => {
-    authCheckLoginState()
+    authCheckLoginState();
   })
   const requester_routes = (
     <Switch>

@@ -10,7 +10,7 @@ import { BsBoxArrowInRight, BsCheck, BsChevronRight } from 'react-icons/bs';
 import Accordion from 'react-bootstrap/Accordion';
 import Container from 'react-bootstrap/Container';
 import Volunteer from '../Volunteer';
-import SearchForm from '../../../components/Volunteer/SearchForm/SearchForm';
+import SearchForm from '../../../components/Form/SearchForm';
 import { Pagination } from 'semantic-ui-react';
 
 import './VolunteerList.css';
@@ -49,9 +49,10 @@ const VolunteerList = (props) => {
     // }, [results, myVolunteer, requestsList])
 
     let display = [];
-    if (!loading && results) {
-        if (myVolunteer) {
+    if (myVolunteer) {
+        if (!loading && results.length !== 0) {
             //MY VOLUNTEER
+            console.log(results)
             if (results[0].request_info) {
                 display = results.map((volunteer, index) => (
                     <Card className='card_shadow' key={index} style={volunteer.status === 'Delivered' ? { backgroundColor: '#E1F6F1' } : null}>
@@ -89,10 +90,11 @@ const VolunteerList = (props) => {
                     </Card>
                 ));
             } else { display = <p>You haven't signed up for any volunteer yet!</p> }
+        }
 
-        } else {
-            //ALL VOLUNTEER
-
+    } else {
+        //ALL VOLUNTEER
+        if (!loading && results) {
             display = results.map((request, index) => (
                 <Accordion key={index}>
                     <Card className='card_shadow'>
@@ -141,8 +143,9 @@ const VolunteerList = (props) => {
                     </Card>
                 </Accordion>)
             );
-        };
-    }
+        }
+    };
+
 
 
     const onChange = (event) => {
@@ -188,7 +191,6 @@ const VolunteerList = (props) => {
             </Container>
         </Volunteer>
     );
-
 };
 
 const mapStateToProps = (state) => {

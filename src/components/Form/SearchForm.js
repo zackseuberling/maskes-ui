@@ -1,6 +1,6 @@
 import React from 'react';
 import { Row, Col, Form } from 'react-bootstrap';
-import * as searchData from '../../Form/FormData';
+import * as searchData from './FormData';
 
 const SearchForm = (props) => {
     const { location, urgent, date, familySize, onChange } = props;

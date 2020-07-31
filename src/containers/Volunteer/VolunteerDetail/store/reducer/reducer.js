@@ -43,7 +43,6 @@ const volunteeringFail = (state, action) => {
 const volunteeringSuccess = (state, action) => {
     return updateObject(state, {
         loading: true,
-
     });
 };
 

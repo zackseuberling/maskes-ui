@@ -19,7 +19,7 @@ class AppNavbar extends Component<ILoginModalProps> {
   render() {
     const { hasLogin, openAuthModal, is_requester, is_volunteer } = this.props;
     return (
-      <Navbar bg="light" expand="lg">
+      <Navbar bg="light" expand="md">
         <Navbar.Brand as={NavLink} to="/">
           COVID-19 Mutual Aid
         </Navbar.Brand>

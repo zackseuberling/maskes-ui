@@ -9,13 +9,12 @@ import CardColumns from 'react-bootstrap/CardColumns';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import { BsBoxArrowInRight } from 'react-icons/bs';
-import Alert from 'react-bootstrap/Alert';
 import Requests from '../Requests';
 import { Pagination } from 'semantic-ui-react';
-import './RequestList.css'
+import './RequestList.css';
 
 const RequestList = (props) => {
-  const { requests, loading, token, error, fetchRequests, name, history, match } = props;
+  const { requests, loading, token, fetchRequests, name, history, match } = props;
   const { results, count } = requests
   const totalPages = Math.ceil(count / 21)
 
@@ -25,7 +24,6 @@ const RequestList = (props) => {
     fetchRequests(activePage, token)
   }, [fetchRequests, token, activePage])
   let requests_list = []
-  //Todo: add pagination
 
   const onPageChange = (event, pageInfo) => {
     setActivePage(pageInfo.activePage);
@@ -85,13 +83,13 @@ const RequestList = (props) => {
       <Container fluid>
         <h3>Requests</h3>
         {pagination}
-        {error && <Alert variant="danger">{error.message}</Alert>}
         {loading
           ? <Spinner animation="grow" />
           : <CardColumns className='card_columns'>{requests_list}</CardColumns>}
         {pagination}
 
       </Container>
+
     </Requests>
   );
 

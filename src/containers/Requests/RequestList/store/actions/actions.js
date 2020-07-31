@@ -1,5 +1,6 @@
 import * as actionTypes from './actionTypes';
 import axios from 'axios';
+import { setAlert } from '../../../../../components/Alert/store/actions/actions';
 
 // FETCH REQUESTS
 export const fetchRequestsStart = () => {
@@ -34,10 +35,11 @@ export const fetchRequests = (page, token) => {
         axios.get(url, config)
             .then(response => {
                 const payload = response.data;
-                dispatch(fetchRequestsSuccess(payload))
+                dispatch(fetchRequestsSuccess(payload));
             })
             .catch(error => {
-                dispatch(fetchRequestsFail(error))
+                dispatch(fetchRequestsFail(error));
+                dispatch(setAlert("Failed to fetch data from server", "danger"));
             })
     }
 };
@@ -75,10 +77,12 @@ export const createRequest = (body, token) => {
         axios.post(url, body, config)
             .then(response => {
                 const payload = response.data;
-                dispatch(createRequestSuccess(payload))
+                dispatch(createRequestSuccess(payload));
+                dispatch(setAlert(`Request #${payload.id} successfully created`, "success"));
             })
             .catch(error => {
-                dispatch(createRequestFail(error))
+                dispatch(createRequestFail(error));
+                dispatch(setAlert("Failed to create a request, please try again", "danger"));
             })
     }
 };

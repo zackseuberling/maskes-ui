@@ -1,5 +1,6 @@
 import * as actionTypes from './actionTypes';
 import axios from 'axios';
+import { setAlert } from '../../../../../components/Alert/store/actions/actions';
 
 export const fetchRequestDetailStart = () => {
     return {
@@ -36,7 +37,8 @@ export const fetchRequestDetail = (requestId, token) => {
                 dispatch(fetchRequestDetailSuccess(payload))
             })
             .catch(error => {
-                dispatch(fetchRequestDetailFail(error))
+                dispatch(fetchRequestDetailFail(error));
+                dispatch(setAlert("Failed to fetch data from server", "danger"));
             })
     }
 };

@@ -8,7 +8,8 @@ import { fetchVolunteerRequestDetail, volunteering } from './store/actions/actio
 
 const VolunteerDetail = (props) => {
 
-    const { request, loading, token, match, fetchVolunteerRequestDetail, volunteering, name, isMyVolunteer } = props;
+    const { request, loading, token, match,
+        fetchVolunteerRequestDetail, volunteering, name, isMyVolunteer } = props;
     const history = useHistory();
 
     const [myVolunteer, setMyVolunteer] = useState(false)
@@ -22,7 +23,6 @@ const VolunteerDetail = (props) => {
     useEffect(() => {
         fetchVolunteerRequestDetail(match.params.requestId, token)
     }, [fetchVolunteerRequestDetail, token, match.params.requestId])
-
 
     const onMyVolunteer = (event) => {
         setMyVolunteer(!myVolunteer);
@@ -84,7 +84,7 @@ const mapStateToProps = (state) => {
         name: state.auth.name,
         loading: state.volunteerDetail.loading,
         request: state.volunteerDetail.request,
-
+        error: state.volunteerDetail.error,
     }
 }
 

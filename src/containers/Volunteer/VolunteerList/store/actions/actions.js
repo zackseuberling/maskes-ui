@@ -1,5 +1,6 @@
 import * as actionTypes from './actionTypes';
 import axios from 'axios';
+import { setAlert } from '../../../../../components/Alert/store/actions/actions';
 
 // FETCH REQUESTS
 export const fetchVolunteerRequestsStart = () => {
@@ -50,6 +51,7 @@ export const fetchVolunteerRequests = (page, token, searchValues, isMyVolunteer)
                 })
                 .catch(error => {
                     dispatch(fetchVolunteerRequestsFail(error))
+                    dispatch(setAlert("Failed to fetch data from server", "danger"));
                 })
         }
 

@@ -5,6 +5,7 @@ const initialState = {
     requests: [],
     loading: false,
     name: '',
+    error: null,
 }
 
 // FETCH REQUEST
@@ -13,30 +14,29 @@ const fetchRequestsSuccess = (state, action) => {
         requests: action.payload,
         loading: false,
         name: action.payload.results[0].name,
+        error: null,
     });
 }
 
 const fetchRequestsStart = (state, action) => {
-    return updateObject(state, { loading: true });
+    return updateObject(state, { loading: true, error: null, });
 }
 
 const fetchRequestsFail = (state, action) => {
-    return updateObject(state, { loading: false });
+    return updateObject(state, { loading: false, error: action.error });
 }
 
 // CREATE REQUEST
 const createRequestSuccess = (state, action) => {
-    return updateObject(state, {
-        loading: false,
-    });
+    return updateObject(state, { loading: false, error: null });
 }
 
 const createRequestStart = (state, action) => {
-    return updateObject(state, { loading: true });
+    return updateObject(state, { loading: true, error: null });
 }
 
 const createRequestFail = (state, action) => {
-    return updateObject(state, { loading: false });
+    return updateObject(state, { loading: false, error: action.error });
 }
 
 // REDUCER

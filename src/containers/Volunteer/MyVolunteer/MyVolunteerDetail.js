@@ -9,6 +9,7 @@ import { fetchVolunteerDetail, deleteVolunteer, updateVolunteer } from './store/
 import DeleteModal from '../../../components/Modal/DeleteModal/DeleteModal';
 import UpdateModal from '../../../components/Modal/UpdateModal/UpdateModal';
 
+
 const MyVolunteerDetail = (props) => {
 
     const { volunteer, loading, token, match, name, isMyVolunteer,
@@ -20,7 +21,8 @@ const MyVolunteerDetail = (props) => {
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [showUpdateModal, setShowUpdateModal] = useState(false);
     const [deleteId, setDeleteId] = useState(null)
-    const [updateId, setUpdateId] = useState({})
+    const [updateId, setUpdateId] = useState(null)
+
 
     useEffect(() => {
         if (isMyVolunteer) {
@@ -30,8 +32,7 @@ const MyVolunteerDetail = (props) => {
 
     useEffect(() => {
         fetchVolunteerDetail(match.params.volunteerId, token)
-    }, [fetchVolunteerDetail, token, match.params.volunteerId, updateId])
-
+    }, [fetchVolunteerDetail, token, match.params.volunteerId])
 
     const onMyVolunteer = (event) => {
         setMyVolunteer(!myVolunteer);
@@ -53,13 +54,12 @@ const MyVolunteerDetail = (props) => {
 
     const volunteerDeleteHandler = () => {
         deleteVolunteer(deleteId, token);
-        history.push('/volunteer/my-volunteer/')
+        history.push('/volunteer/my-volunteer')
     }
 
     const confirmDeliveredHandler = () => {
         updateVolunteer(updateId, token);
         setShowUpdateModal(false);
-        setUpdateId(null);
     }
 
     let display = []
@@ -76,36 +76,66 @@ const MyVolunteerDetail = (props) => {
                         <tr><td>Food Restrictions</td><td>{volunteer.request_detail.food_restrictions}</td></tr>
                         <tr><td>Household Size</td><td>{volunteer.request_detail.household_number}</td></tr>
                         <tr><td>Urgency</td><td>{volunteer.request_detail.urgency}</td></tr>
-                        <tr><td>Volunteer Status</td><td style={volunteer.status === 'Delivered' ? { color: 'green' } : null}>{volunteer.status}</td></tr>
+                        <tr><td>Volunteer Status</td>
+                            <td
+                                style={volunteer.status === 'Delivered' ? { color: 'green' } :
+                                    volunteer.status === 'Signed Up' ? { color: 'orange' } :
+                                        volunteer.status === 'Ready' ? { color: '#0275d8' } : null}
+                            >
+                                {volunteer.status === 'Signed Up' ? "Pending review..." : volunteer.status}
+                            </td>
+                        </tr>
                     </tbody>
                 </Table>
 
-                {volunteer.status === 'Signed Up'
-                    ? (<div>
-                        <Button
-                            className='mt-1 mb-3 mr-2'
-                            onClick={() => showUpdateModalHandler(volunteer.id, volunteer.request_detail.id)}
-                        >Confirm Delivered</Button>
-                        <Button
-                            className='mt-1 mb-3'
-                            variant='danger'
-                            onClick={() => showDeleteModalHandler(volunteer.id)}
-                        >Cancel</Button>
-                    </div>)
+                {
+                    (volunteer.status === 'Signed Up'
+                        && <div>
+                            <Button
+                                disabled
+                                className='mt-1 mb-3 mr-2'
+                                variant='warning'>Waiting for admin...</Button>
+                            <Button
+                                className='mt-1 mb-3'
+                                variant='danger'
+                                onClick={() => showDeleteModalHandler(volunteer.id)}
+                            >Cancel</Button>
+                        </div>)
 
-                    : null}
-                {volunteer.status === 'Delivered'
-                    ? <div>
-                        <Button
-                            className='mt-1 mb-3 mr-2'
-                            disabled
-                            variant='success'
-                        >Delivered</Button>
-                        <ReimbursementForm />
-                    </div>
-                    : null}
+                    || (volunteer.status === 'Ready'
+                        && <Aux>
+                            <h5 style={{ fontWeight: 'bold' }}>Delivery Infomation</h5>
+                            <Table size="sm" responsive='sm'>
+                                <tbody>
+                                    <tr><td>Contact Phone</td><td>{volunteer.request_detail.phone}</td></tr>
+                                    <tr><td>Delivery Address</td><td>{`${volunteer.request_detail.address1} ${volunteer.request_detail.address2}, ${volunteer.request_detail.city}, WA ${volunteer.request_detail.zip_code}`}</td></tr>
+                                </tbody>
+                            </Table>
+                            <div>
+                                <Button
+                                    className='mt-1 mb-3 mr-2'
+                                    onClick={() => showUpdateModalHandler(volunteer.id, volunteer.request_detail.id)}
+                                >Confirm Delivered</Button>
+                                <Button
+                                    className='mt-1 mb-3'
+                                    variant='danger'
+                                    onClick={() => showDeleteModalHandler(volunteer.id)}
+                                >Cancel</Button>
+                            </div>
+                        </Aux>)
 
-            </Aux>
+                    || (volunteer.status === 'Delivered'
+                        && <div>
+                            <Button
+                                className='mt-1 mb-3 mr-2'
+                                disabled
+                                variant='success'
+                            >Delivered</Button>
+                            <ReimbursementForm />
+                        </div>)
+                }
+
+            </Aux >
         );
     }
 
@@ -132,7 +162,7 @@ const mapStateToProps = (state) => {
         name: state.auth.name,
         loading: state.myVolunteer.loading,
         volunteer: state.myVolunteer.volunteer,
-
+        error: state.myVolunteer.error,
     }
 }
 

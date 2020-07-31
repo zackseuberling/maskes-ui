@@ -1,22 +1,22 @@
 import * as actionTypes from '../actions/actionTypes';
-import { updateObject } from '../../../../../shared/utility';
 
 const initialState = [];
 
-const setAlert = (state, action) => {
+export const createAlert = (state, action) => {
     return [...state, action.payload]
-}
+};
 
-const removeAlert = (state, action) => {
-    return state.filter(alert => alert.id !== action.id);
-}
+export const removeAlert = (state, action) => {
+    return state.filter(alert => alert.id !== action.alertId);
+};
 
-export default function (state = initialState, action) {
-
+const reducer = (state = initialState, action) => {
     switch (action.type) {
-        case actionTypes.SET_ALERT: return setAlert(state, action)
+        case actionTypes.SET_ALERT: return createAlert(state, action)
         case actionTypes.REMOVE_ALERT: return removeAlert(state, action)
         default:
             return state;
     }
-}
+};
+
+export default reducer;

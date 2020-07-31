@@ -12,6 +12,7 @@ const RequestDetail = (props) => {
   useEffect(() => {
     fetchRequestDetail(props.match.params.requestId, token)
   }, [fetchRequestDetail, token, props.match.params.requestId])
+
   let request_detail = {}
   if (!loading && request) {
     request_detail = (
@@ -25,7 +26,6 @@ const RequestDetail = (props) => {
         <tr><td>Prefered Foods</td><td>{request.prefered_food}</td></tr>
         <tr><td>List of Items</td><td style={{ width: '80%' }}>{request.items_list}</td></tr>
         <tr><td>Food Restrictions</td><td>{request.food_restrictions}</td></tr>
-        <tr><td>Household Size</td><td>{request.household_number}</td></tr>
         <tr><td>Urgency</td><td>{request.urgency}</td></tr>
         <tr><td>Household Size</td><td>{request.household_number}</td></tr>
         <tr><td>Financial Support</td><td>{request.financial_support}</td></tr>
@@ -63,6 +63,7 @@ const mapStateToProps = (state) => {
     loading: state.requestDetail.loading,
     request: state.requestDetail.request,
     name: state.auth.name,
+    error: state.requestDetail.error,
   }
 }
 

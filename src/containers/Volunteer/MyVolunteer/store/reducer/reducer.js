@@ -11,12 +11,14 @@ const fetchVolunteerDetailSuccess = (state, action) => {
     return updateObject(state, {
         volunteer: action.payload,
         loading: false,
+        error: null,
     });
 };
 
 const fetchVolunteerDetailStart = (state, action) => {
     return updateObject(state, {
         loading: true,
+        error: null,
     });
 };
 
@@ -32,12 +34,14 @@ const deleteVolunteerSuccess = (state, action) => {
     return updateObject(state, {
         status: action.status,
         loading: false,
+        error: null,
     });
 };
 
 const deleteVolunteerStart = (state, action) => {
     return updateObject(state, {
         loading: true,
+        error: null,
     });
 };
 
@@ -53,12 +57,14 @@ const updateVolunteerSuccess = (state, action) => {
     return updateObject(state, {
         status: action.status,
         loading: false,
+        error: null,
     });
 };
 
 const updateVolunteerStart = (state, action) => {
     return updateObject(state, {
         loading: true,
+        error: null,
     });
 };
 

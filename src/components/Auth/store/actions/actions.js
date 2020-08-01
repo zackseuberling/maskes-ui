@@ -64,28 +64,55 @@ export const onAuth = (first_name, last_name, email, password, hasAccount) => {
             email: email,
             password: password
         };
+
         let url = 'http://127.0.0.1:8000/auth/jwt/create/'
 
-        if (!hasAccount) {
+        if (hasAccount) {
+            axios.post(url, body, config)
+                .then(res => {
+                    const expiresIn = 3600 * 1000
+                    const expirationDate = new Date(new Date().getTime() + expiresIn)
+                    localStorage.setItem('access', res.data.access);
+                    localStorage.setItem('expirationDate', expirationDate)
+                    localStorage.setItem('is_requester', res.data.is_requester)
+                    localStorage.setItem('is_volunteer', res.data.is_volunteer)
+                    localStorage.setItem('name', res.data.first_name)
+                    dispatch(authSuccess(res.data));
+                    dispatch(hideAuthModal())
+                    dispatch(checkAuthTimeout(expiresIn))
+                })
+                .catch(err => {
+                    dispatch(authFail(err));
+                })
+        } else {
             url = 'http://127.0.0.1:8000/users/'
+            axios.post(url, body, config)
+                .then(res => {
+                    console.log(res.data);
+                    url = 'http://127.0.0.1:8000/auth/jwt/create/'
+                    axios.post(url, body, config)
+                        .then(res => {
+                            const expiresIn = 3600 * 1000
+                            const expirationDate = new Date(new Date().getTime() + expiresIn)
+                            localStorage.setItem('access', res.data.access);
+                            localStorage.setItem('expirationDate', expirationDate)
+                            localStorage.setItem('is_requester', res.data.is_requester)
+                            localStorage.setItem('is_volunteer', res.data.is_volunteer)
+                            localStorage.setItem('name', res.data.first_name)
+                            dispatch(authSuccess(res.data));
+                            dispatch(hideAuthModal())
+                            dispatch(checkAuthTimeout(expiresIn))
+                        })
+                        .catch(err => {
+                            dispatch(authFail(err));
+                        })
+                })
+                .catch(err => {
+                    dispatch(authFail(err));
+                })
         }
 
-        axios.post(url, body, config)
-            .then(res => {
-                const expiresIn = 3600 * 1000
-                const expirationDate = new Date(new Date().getTime() + expiresIn)
-                localStorage.setItem('access', res.data.access);
-                localStorage.setItem('expirationDate', expirationDate)
-                localStorage.setItem('is_requester', res.data.is_requester)
-                localStorage.setItem('is_volunteer', res.data.is_volunteer)
-                localStorage.setItem('name', res.data.first_name)
-                dispatch(authSuccess(res.data));
-                dispatch(hideAuthModal())
-                dispatch(checkAuthTimeout(expiresIn))
-            })
-            .catch(err => {
-                dispatch(authFail(err));
-            })
+
     }
 }
 

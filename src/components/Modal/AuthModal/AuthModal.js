@@ -41,8 +41,8 @@ const AuthModal = (props) => {
             </Modal.Header>
 
             <Modal.Body>
-                {isLogin && error && <Alert variant="danger">Failed to login. Please retry! {error.message}</Alert>}
-                {!isLogin && error && <Alert variant="danger">Failed to register. Please try again! {error.message}</Alert>}
+                {isLogin && error && <Alert variant="danger">{error.response.data.detail}<br/> Please try again!</Alert>}
+                {!isLogin && error && <Alert variant="danger">{error.response.data.detail}<br/> Please try again!</Alert>}
                 <Form onSubmit={onSubmit}>
                     {isLogin ? <LoginForm isLoading={loading} onChange={onChange}/> : <RegisterForm isLoading={loading} onChange={onChange} />}
                     {isLogin ?(loading?loading_button:<Button variant="primary" block type="submit">Login</Button>)

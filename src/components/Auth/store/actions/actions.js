@@ -62,7 +62,9 @@ export const onAuth = (first_name, last_name, email, password, hasAccount) => {
             first_name: first_name,
             last_name: last_name,
             email: email,
-            password: password
+            password: password,
+            is_requester: true,
+            is_volunteer: false,
         };
 
         let url = 'http://127.0.0.1:8000/auth/jwt/create/'

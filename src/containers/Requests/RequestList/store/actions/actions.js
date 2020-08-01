@@ -39,7 +39,6 @@ export const fetchRequests = (page, token) => {
             })
             .catch(error => {
                 dispatch(fetchRequestsFail(error));
-                dispatch(setAlert("Failed to fetch data from server", "danger"));
             })
     }
 };

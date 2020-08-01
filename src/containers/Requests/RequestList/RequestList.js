@@ -64,6 +64,9 @@ const RequestList = (props) => {
       </Accordion>
     )
     );
+  } else {
+    requests_list = <p>You haven't made any request yet!</p>
+
   }
 
   const pagination = (totalPages > 1) ? <Pagination

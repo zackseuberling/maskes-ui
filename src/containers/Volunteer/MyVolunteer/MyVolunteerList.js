@@ -31,7 +31,8 @@ const MyVolunteerList = (props) => {
 
     let display = [];
 
-    if (!loading && results) {
+    if (!loading && results && results.length > 0) {
+
         display = results.map((volunteer, index) => (
             <Card className='card_shadow' key={index} style={volunteer.status === 'Delivered' ? { backgroundColor: '#E1F6F1' } : null}>
                 <Card.Body>

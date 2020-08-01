@@ -23,7 +23,7 @@ export const fetchVolunteerRequestsFail = (error) => {
     };
 }
 
-export const fetchVolunteerRequests = (page, token, searchValues, isMyVolunteer) => {
+export const fetchVolunteerRequests = (page, token, searchValues) => {
     return dispatch => {
         dispatch(fetchVolunteerRequestsStart());
 
@@ -33,28 +33,14 @@ export const fetchVolunteerRequests = (page, token, searchValues, isMyVolunteer)
                 'Authorization': `Bearer ${token}`
             }
         };
-        if (isMyVolunteer) {
-            url = `http://127.0.0.1:8000/requests/volunteering/`;
-            axios.get(url, config)
-                .then(response => {
-                    const payload = response.data;
-                    dispatch(fetchVolunteerRequestsSuccess(payload))
-                })
-                .catch(error => {
-                    dispatch(fetchVolunteerRequestsFail(error))
-                })
-        } else {
-            axios.post(url, searchValues, config)
-                .then(response => {
-                    const payload = response.data;
-                    dispatch(fetchVolunteerRequestsSuccess(payload))
-                })
-                .catch(error => {
-                    dispatch(fetchVolunteerRequestsFail(error))
-                    dispatch(setAlert("Failed to fetch data from server", "danger"));
-                })
-        }
-
-
+        axios.post(url, searchValues, config)
+            .then(response => {
+                const payload = response.data;
+                dispatch(fetchVolunteerRequestsSuccess(payload))
+            })
+            .catch(error => {
+                dispatch(fetchVolunteerRequestsFail(error))
+                dispatch(setAlert("Failed to fetch data from server", "danger"));
+            })
     }
 };

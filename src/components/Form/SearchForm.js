@@ -1,10 +1,15 @@
 import React from 'react';
-import { Row, Col, Form } from 'react-bootstrap';
+import { Row, Col, Form, InputGroup, Button } from 'react-bootstrap';
 import * as searchData from './FormData';
 
 const SearchForm = (props) => {
-    const { location, urgent, date, familySize, onChange } = props;
-    return (
+    const { location, urgent, date, familySize, onChange, onSubmit, searchRequestId, setSearchRequestId } = props;
+
+    const onRequestNoChange = (event) => {
+        setSearchRequestId(event.target.value);
+    }
+
+    return (<div>
         <Form>
             <Row>
                 <Col md={6} lg={3}>
@@ -55,6 +60,20 @@ const SearchForm = (props) => {
                 </Col>
             </Row>
         </Form>
+        <Form onSubmit={onSubmit}>
+            <InputGroup as={Col} className="mb-3 mt-3"  >
+                <Form.Control
+                    placeholder="Request #"
+                    name='requestId'
+                    value={searchRequestId}
+                    type='number'
+                    onChange={onRequestNoChange}
+                />
+                <InputGroup.Append>
+                    <Button type='submit' variant="outline-info">Search</Button>
+                </InputGroup.Append>
+            </InputGroup>
+        </Form></div>
     )
 };
 

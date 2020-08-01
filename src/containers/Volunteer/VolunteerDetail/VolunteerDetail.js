@@ -79,7 +79,6 @@ const VolunteerDetail = (props) => {
 
 const mapStateToProps = (state) => {
     return {
-        hasLogin: state.auth.access !== null,
         token: state.auth.access,
         name: state.auth.name,
         loading: state.volunteerDetail.loading,

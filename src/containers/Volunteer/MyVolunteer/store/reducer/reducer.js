@@ -7,6 +7,30 @@ const initialState = {
     status: null,
 };
 
+//FETCH VOLUNTEER LIST
+const fetchVolunteerListSuccess = (state, action) => {
+    return updateObject(state, {
+        volunteer: action.payload,
+        loading: false,
+        error: null,
+    });
+};
+
+const fetchVolunteerListStart = (state, action) => {
+    return updateObject(state, {
+        loading: true,
+        error: null,
+    });
+};
+
+const fetchVolunteerListFail = (state, action) => {
+    return updateObject(state, {
+        loading: false,
+        error: action.error
+    });
+};
+
+//FETCH VOLUNTEER DETAIL
 const fetchVolunteerDetailSuccess = (state, action) => {
     return updateObject(state, {
         volunteer: action.payload,
@@ -78,6 +102,10 @@ const updateVolunteerFail = (state, action) => {
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
+        case actionTypes.FETCH_VOLUNTEER_LIST_SUCCESS: return fetchVolunteerListSuccess(state, action);
+        case actionTypes.FETCH_VOLUNTEER_LIST_START: return fetchVolunteerListStart(state, action);
+        case actionTypes.FETCH_VOLUNTEER_LIST_FAIL: return fetchVolunteerListFail(state, action);
+
         case actionTypes.FETCH_VOLUNTEER_DETAIL_SUCCESS: return fetchVolunteerDetailSuccess(state, action);
         case actionTypes.FETCH_VOLUNTEER_DETAIL_START: return fetchVolunteerDetailStart(state, action);
         case actionTypes.FETCH_VOLUNTEER_DETAIL_FAIL: return fetchVolunteerDetailFail(state, action);

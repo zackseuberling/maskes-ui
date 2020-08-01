@@ -2,6 +2,49 @@ import { setAlert } from '../../../../../components/Alert/store/actions/actions'
 import * as actionTypes from './actionTypes';
 import axios from 'axios';
 
+//VOLUNTEER LIST
+export const fetchVolunteerListStart = () => {
+    return {
+        type: actionTypes.FETCH_VOLUNTEER_LIST_START
+    };
+}
+
+export const fetchVolunteerListSuccess = (payload) => {
+    return {
+        type: actionTypes.FETCH_VOLUNTEER_LIST_SUCCESS,
+        payload: payload
+    };
+}
+
+export const fetchVolunteerListFail = (error) => {
+    return {
+        type: actionTypes.FETCH_VOLUNTEER_LIST_FAIL,
+        error: error
+    };
+}
+
+export const fetchVolunteerList = (page, token) => {
+    return dispatch => {
+        dispatch(fetchVolunteerListStart());
+        const url = `http://127.0.0.1:8000/requests/volunteering/?page=${page}`;
+        const config = {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        };
+        axios.get(url, config)
+            .then(response => {
+                const payload = response.data;
+                dispatch(fetchVolunteerListSuccess(payload))
+            })
+            .catch(error => {
+                dispatch(fetchVolunteerListFail(error))
+                dispatch(setAlert("Failed to fetch data from server", "danger"));
+            })
+    }
+};
+
+//VOLUNTEER DETAIL
 export const fetchVolunteerDetailStart = () => {
     return {
         type: actionTypes.FETCH_VOLUNTEER_DETAIL_START

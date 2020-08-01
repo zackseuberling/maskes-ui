@@ -8,7 +8,7 @@ import Logout from './components/Auth/Logout';
 
 import Home from './containers/Home/Home';
 import GetHelp from './containers/GetHelp/GetHelp';
-import Volunteer from './containers/Volunteer/Volunteer';
+import GetInvolved from './containers/GetInvolved/GetInvolved';
 
 import CreateRequest from './components/Request/CreateRequest/CreateRequest';
 import RequestDetail from './containers/Requests/RequestDetail/RequestDetail';
@@ -16,7 +16,7 @@ import RequestList from './containers/Requests/RequestList/RequestList';
 
 import VolunteerList from './containers/Volunteer/VolunteerList/VolunteerList';
 import VolunteerDetail from './containers/Volunteer/VolunteerDetail/VolunteerDetail';
-import MyVolunteer from './containers/Volunteer/MyVolunteer/MyVolunteer';
+import MyVolunteerList from './containers/Volunteer/MyVolunteer/MyVolunteerList';
 import MyVolunteerDetail from './containers/Volunteer/MyVolunteer/MyVolunteerDetail';
 
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
@@ -39,7 +39,7 @@ const App = ({ component, authCheckLoginState, is_requester, is_volunteer }) => 
   const volunteer_routes = (
     <Switch>
       <ProtectedRoute exact path='/volunteer' component={VolunteerList} />
-      <ProtectedRoute exact path='/volunteer/my-volunteer' component={MyVolunteer} />
+      <ProtectedRoute exact path='/volunteer/my-volunteer' component={MyVolunteerList} />
       <ProtectedRoute exact path='/volunteer/my-volunteer/:volunteerId' component={MyVolunteerDetail} />
       <ProtectedRoute exact path='/volunteer/:requestId' component={VolunteerDetail} />
       <ProtectedRoute exact path="/logout" component={Logout} />
@@ -49,7 +49,8 @@ const App = ({ component, authCheckLoginState, is_requester, is_volunteer }) => 
     <Switch>
       <Route exact path='/' component={Home} />
       <Route exact path='/get-help' component={GetHelp} />
-      <Route exact path='/get-involved' component={Volunteer} />
+      <Route exact path='/get-involved' component={GetInvolved} />
+      <Route exact path="/logout" component={Logout} />
     </Switch>
   );
 

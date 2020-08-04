@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 import { fetchVolunteerDetail, deleteVolunteer, updateVolunteer } from './store/actions/actions';
 import DeleteModal from '../../../components/Modal/DeleteModal/DeleteModal';
 import UpdateModal from '../../../components/Modal/UpdateModal/UpdateModal';
+import './MyVolunteer.css';
 
 
 const MyVolunteerDetail = (props) => {
@@ -70,7 +71,7 @@ const MyVolunteerDetail = (props) => {
                 <Table bordered striped hover size="sm" responsive='sm'>
                     <tbody >
                         <tr><td>Volunteer #</td><td>{volunteer.id}</td></tr>
-                        <tr><td>Request #</td><td>{volunteer.request_detail.id}</td></tr>
+                        <tr><td>Request #</td><td><button type='button' className='link-button' onClick={() => history.push(`/volunteer/${volunteer.request_detail.id}`)}>{volunteer.request_detail.id}</button></td></tr>
                         <tr><td>Request Date</td><td>{new Date(volunteer.request_detail.created_date).toLocaleDateString()}</td></tr>
                         <tr><td>Location</td><td>{volunteer.request_detail.locations}</td></tr>
                         <tr><td>List of Items</td><td style={{ width: '80%' }}>{volunteer.request_detail.items_list}</td></tr>

@@ -32,7 +32,7 @@ const AuthModal = (props) => {
             centered
         >
 
-            {hasLogin ? <Redirect to='/my-requests'/> : null}
+            {hasLogin ? <Redirect to='/volunteer'/> : null}
 
             <Modal.Header closeButton>
                 <Modal.Title id="contained-modal-title-vcenter">

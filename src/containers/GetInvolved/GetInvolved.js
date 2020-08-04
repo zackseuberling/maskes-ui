@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, ResponsiveEmbed } from 'react-bootstrap';
+import { Container } from 'react-bootstrap';
 
 const GetInvolved = (props) => (
     <Container fluid='sm' style={{ height: "8020" }}>

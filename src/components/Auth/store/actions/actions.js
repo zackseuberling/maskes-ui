@@ -22,6 +22,7 @@ export const authSuccess = (payload) => {
         is_requester: payload.is_requester,
         is_volunteer: payload.is_volunteer,
         name: payload.name,
+        user_id: payload.user_id
     };
 }
 
@@ -38,6 +39,7 @@ export const logout = () => {
     localStorage.removeItem('is_requester');
     localStorage.removeItem('is_volunteer');
     localStorage.removeItem('name');
+    localStorage.removeItem('user_id');
     return {
         type: actionTypes.AUTH_LOGOUT
     };
@@ -79,6 +81,7 @@ export const onAuth = (first_name, last_name, email, password, hasAccount) => {
                     localStorage.setItem('is_requester', res.data.is_requester)
                     localStorage.setItem('is_volunteer', res.data.is_volunteer)
                     localStorage.setItem('name', res.data.first_name)
+                    localStorage.setItem('user_id', res.data.user_id)
                     dispatch(authSuccess(res.data));
                     dispatch(hideAuthModal())
                     dispatch(checkAuthTimeout(expiresIn))
@@ -101,6 +104,7 @@ export const onAuth = (first_name, last_name, email, password, hasAccount) => {
                             localStorage.setItem('is_requester', res.data.is_requester)
                             localStorage.setItem('is_volunteer', res.data.is_volunteer)
                             localStorage.setItem('name', res.data.first_name)
+                            localStorage.setItem('user_id', res.data.user_id)
                             dispatch(authSuccess(res.data));
                             dispatch(hideAuthModal())
                             dispatch(checkAuthTimeout(expiresIn))
@@ -125,7 +129,8 @@ export const authCheckLoginState = () => {
             access: access,
             is_requester: (localStorage.getItem('is_requester') === "true"),
             is_volunteer: (localStorage.getItem('is_volunteer') === "true"),
-            name: localStorage.getItem('name')
+            name: localStorage.getItem('name'),
+            user_id: localStorage.getItem('user_id')
         }
         if (access) {
             const expirationDate = new Date(localStorage.getItem('expirationDate'));

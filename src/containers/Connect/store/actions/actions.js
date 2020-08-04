@@ -1,4 +1,4 @@
-import axios from axios;
+import axios from 'axios';
 import * as actionTypes from './actionTypes';
 
 export const fetchCommentsStart = () => {
@@ -14,7 +14,7 @@ export const fetchCommentsSuccess = (payload) => {
     }
 }
 
-export const fetchCommentsFail = () => {
+export const fetchCommentsFail = (error) => {
     return {
         type: actionTypes.FETCH_COMMENTS_FAIL,
         error: error
@@ -24,18 +24,17 @@ export const fetchCommentsFail = () => {
 export const fetchComments = (requestId, token) => {
     return dispatch => {
         dispatch(fetchCommentsStart());
-        const url = 'http://localhost:8000/connect/comments/';
+        const url = 'http://localhost:8000/connect/comments/view_comments/';
         const config = {
             headers: {
                 "Authorization": `Bearer ${token}`,
             }
         }
         const body = {
-            request: requestId
+            requestId: requestId
         }
-        axios.get(url, body, config)
+        axios.post(url, body, config)
             .then(response => {
-                console.log(response);
                 const payload = response.data
                 dispatch(fetchCommentsSuccess(payload));
             })
@@ -60,7 +59,7 @@ export const createCommentSuccess = (payload) => {
     }
 }
 
-export const createCommentFail = () => {
+export const createCommentFail = (error) => {
     return {
         type: actionTypes.CREATE_COMMENT_FAIL,
         error: error
@@ -78,13 +77,13 @@ export const createComment = (requestId, content, token) => {
         }
         const body = {
             request: requestId,
-            content_content: content
+            comment_content: content
         }
         axios.post(url, body, config)
             .then(response => {
-                console.log(response);
                 const payload = response.data
                 dispatch(createCommentSuccess(payload));
+                dispatch(fetchComments(requestId, token))
             })
             .catch(error => {
                 console.log(error.response.data)
@@ -107,7 +106,7 @@ export const updateCommentSuccess = (payload) => {
     }
 }
 
-export const updateCommentFail = () => {
+export const updateCommentFail = (error) => {
     return {
         type: actionTypes.UPDATE_COMMENT_FAIL,
         error: error
@@ -124,14 +123,14 @@ export const updateComment = (requestId, commentId, content, token) => {
             }
         }
         const body = {
-            request: requestId,
-            content_content: content
+            comment_content: content,
+            request: requestId
         }
         axios.put(url, body, config)
             .then(response => {
-                console.log(response);
                 const payload = response.data
                 dispatch(updateCommentSuccess(payload));
+                dispatch(fetchComments(requestId, token));
             })
             .catch(error => {
                 console.log(error.response.data)
@@ -154,14 +153,14 @@ export const deleteCommentSuccess = (payload) => {
     }
 }
 
-export const deleteCommentFail = () => {
+export const deleteCommentFail = (error) => {
     return {
         type: actionTypes.DELETE_COMMENT_FAIL,
         error: error
     }
 }
 
-export const deleteComment = (commentId, token) => {
+export const deleteComment = (requestId, commentId, token) => {
     return dispatch => {
         dispatch(deleteCommentStart());
         const url = `http://localhost:8000/connect/comments/${commentId}/`;
@@ -172,9 +171,9 @@ export const deleteComment = (commentId, token) => {
         }
         axios.delete(url, config)
             .then(response => {
-                console.log(response);
                 const payload = response.data
                 dispatch(deleteCommentSuccess(payload));
+                dispatch(fetchComments(requestId, token))
             })
             .catch(error => {
                 console.log(error.response.data)

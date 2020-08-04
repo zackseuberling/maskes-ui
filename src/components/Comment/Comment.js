@@ -1,149 +1,166 @@
 import React, { useState } from 'react';
 import { Tabs, Tab } from 'react-bootstrap';
-import { Button, Comment as CommentSUI, Form, Checkbox } from 'semantic-ui-react'
+import { Button, Comment as CommentSUI, Form } from 'semantic-ui-react';
+import { Button as BSButton, Modal } from 'react-bootstrap'
+import { FiChevronDown } from "react-icons/fi";
+import { BsPencil, BsXSquare } from 'react-icons/bs';
+import moment from 'moment';
+import Aux from '../../hoc/Aux/Aux';
+import './Comment.css';
 
 const Comment = (props) => {
-    const [key, setKey] = useState('Comment');
-    const [collapsed, setCollapsed] = useState(true)
 
-    const handleCheckbox = (e, { checked }) => setCollapsed(checked)
+    const { comments, create, update, remove, loading, userId } = props
+
+    const [key, setKey] = useState('Comment');
+    const [commentContent, setCommentContent] = useState()
+
+    //Create Comment Form
+    const onChange = (e) => {
+        setCommentContent(e.target.value);
+    }
+
+    //Edit Comment Form
+    const toggleEditor = (i) => {
+        setCms(cms.map((cm, j) => (j === i) ? { ...cm, key: j, onEdit: !cm.onEdit } : { ...cm, key: j }))
+    }
+    const [cms, setCms] = useState(comments ? comments.results.map((cm, i) => ({ ...cm, key: i, onEdit: false })) : [])
+    const onChangeComment = (e, i) => {
+        setCms(cms.map((cm, j) => (j === i) ? { ...cm, key: j, comment_content: e.target.value } : { ...cm, key: j }))
+    };
+
+    //Delete Comment
+    //Confirm Delete Modal
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [deleteCommentId, setDeleteCommentId] = useState(null)
+    const deleteModal = (
+        < Modal show={showDeleteModal} centered onHide={() => setShowDeleteModal(false)} >
+            <Modal.Header closeButton>
+                <Modal.Title>Delete Comment</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>Are you sure you want to delete this comment?</Modal.Body>
+            <Modal.Footer>
+                <BSButton variant="secondary" onClick={() => setShowDeleteModal(false)}>
+                    Close
+          </BSButton>
+                <BSButton variant="danger" onClick={() => remove(deleteCommentId)}>
+                    Yes, Delete
+          </BSButton>
+            </Modal.Footer>
+        </Modal >
+    )
+
+
+    //Show/unshow replies
+    const [collapsed, setCollapsed] = useState(true)
+    const toggleColapsed = (e) => setCollapsed(!collapsed)
+
+
+    let display = []
+
+    const edit_button = <BsPencil />
+    const delete_button = <BsXSquare />
+
+    if (!loading && comments && comments.results.length > 0) {
+        display = cms.map((comment, index) => <CommentSUI key={comment.id}>
+            <CommentSUI.Avatar as='a' src='http://localhost:8000/media/default.jpg' />
+            <CommentSUI.Content>
+                <CommentSUI.Author as='a'>{comment.author_name}</CommentSUI.Author>
+                <CommentSUI.Metadata>
+                    <span>{moment(comment.created_date).fromNow()}</span>
+                    {comment.onEdit ?
+                        <CommentSUI.Actions>
+                            <CommentSUI.Action className='delete-btn'
+                                onClick={() => {
+                                    setShowDeleteModal(true);
+                                    setDeleteCommentId(comment.id)
+                                }}>
+                                {delete_button}
+                            </CommentSUI.Action>
+                        </CommentSUI.Actions> : null}
+                </CommentSUI.Metadata>
+                {!comment.onEdit
+                    ? <Aux>
+                        <CommentSUI.Text>
+                            {comments.results[index].comment_content}
+                        </CommentSUI.Text>
+                        <CommentSUI.Actions>
+                            <CommentSUI.Action onClick={toggleColapsed}>
+                                <CommentSUI.Metadata>
+                                    {comment.reply_count} {comment.reply_count > 1 ? 'Replies' : 'Reply'} {collapsed ? null : <FiChevronDown />}
+                                </CommentSUI.Metadata>
+
+                            </CommentSUI.Action>
+                            {(userId === comment.author)
+                                ? <CommentSUI.Action className='edit-btn'
+                                    onClick={(e) => toggleEditor(index)}>{edit_button}</CommentSUI.Action>
+                                : null}
+                        </CommentSUI.Actions>
+                    </Aux>
+                    : <Form reply onSubmit={() => update(comment.id, comment.comment_content)}>
+                        <Form.TextArea style={{ height: 60, marginTop: -15 }} onChange={(e) => onChangeComment(e, index)} value={comment.comment_content} />
+                        <BSButton type='submit' size='sm' className='mr-2'>Update</BSButton><BSButton onClick={(e) => toggleEditor(index)} variant='secondary' size='sm'>Cancel</BSButton>
+                    </Form>
+                }
+            </CommentSUI.Content>
+
+            <CommentSUI.Group collapsed={collapsed}>
+                <CommentSUI>
+                    <CommentSUI.Avatar as='a' src='http://localhost:8000/media/elliot.jpg' />
+                    <CommentSUI.Content>
+                        <CommentSUI.Author as='a'>Elliot Fu</CommentSUI.Author>
+                        <CommentSUI.Metadata>
+                            <span>1 day ago</span>
+                        </CommentSUI.Metadata>
+                        <CommentSUI.Text>No, it wont</CommentSUI.Text>
+                        <CommentSUI.Actions>
+                            <a href="?">Reply</a>
+                        </CommentSUI.Actions>
+                    </CommentSUI.Content>
+                </CommentSUI>
+                <CommentSUI>
+
+
+                    <CommentSUI.Avatar
+                        as='a'
+                        src='http://localhost:8000/media/jenny.jpg'
+                    />
+                    <CommentSUI.Content>
+                        <CommentSUI.Author as='a'>Jenny Hess</CommentSUI.Author>
+                        <CommentSUI.Metadata>
+                            <span>20 minutes ago</span>
+                        </CommentSUI.Metadata>
+                        <CommentSUI.Text>Maybe it would.</CommentSUI.Text>
+                        <CommentSUI.Actions>
+                            <a href="?">Reply</a>
+                        </CommentSUI.Actions>
+                    </CommentSUI.Content>
+
+                </CommentSUI>
+            </CommentSUI.Group>
+        </CommentSUI>)
+    } else { display = <div>No comment yet</div> }
 
     return (
-        <Tabs
-            id="controlled-tab-example"
-            className='mb-3'
-            activeKey={key}
-            onSelect={(k) => { setKey(k); console.log(k) }}
-        >
-            <Tab eventKey="Comment" title="Comment">
-                <CommentSUI.Group>
-                    <CommentSUI>
-                        <CommentSUI.Avatar src='https://react.semantic-ui.com/images/avatar/small/matt.jpg' />
-                        <CommentSUI.Content>
-                            <CommentSUI.Author as='a'>Matt</CommentSUI.Author>
-                            <CommentSUI.Metadata>
-                                <div>Today at 5:42PM</div>
-                            </CommentSUI.Metadata>
-                            <CommentSUI.Text>How artistic!</CommentSUI.Text>
-                            <CommentSUI.Actions>
-                                <CommentSUI.Action>Reply</CommentSUI.Action>
-                            </CommentSUI.Actions>
-                        </CommentSUI.Content>
-                    </CommentSUI>
-
-                    <CommentSUI>
-                        <CommentSUI.Avatar src='https://react.semantic-ui.com/images/avatar/small/elliot.jpg' />
-                        <CommentSUI.Content>
-                            <CommentSUI.Author as='a'>Elliot Fu</CommentSUI.Author>
-                            <CommentSUI.Metadata>
-                                <div>Yesterday at 12:30AM</div>
-                            </CommentSUI.Metadata>
-                            <CommentSUI.Text>
-                                <p>This has been very useful for my research. Thanks as well!</p>
-                            </CommentSUI.Text>
-                            <CommentSUI.Actions>
-                                <CommentSUI.Action>Reply</CommentSUI.Action>
-                            </CommentSUI.Actions>
-                        </CommentSUI.Content>
-                        <CommentSUI.Group>
-                            <CommentSUI>
-                                <CommentSUI.Avatar src='https://react.semantic-ui.com/images/avatar/small/jenny.jpg' />
-                                <CommentSUI.Content>
-                                    <CommentSUI.Author as='a'>Jenny Hess</CommentSUI.Author>
-                                    <CommentSUI.Metadata>
-                                        <div>Just now</div>
-                                    </CommentSUI.Metadata>
-                                    <CommentSUI.Text>Elliot you are always so right :)</CommentSUI.Text>
-                                    <CommentSUI.Actions>
-                                        <CommentSUI.Action>Reply</CommentSUI.Action>
-                                    </CommentSUI.Actions>
-                                </CommentSUI.Content>
-                            </CommentSUI>
-                        </CommentSUI.Group>
-                    </CommentSUI>
-
-                    <CommentSUI>
-                        <CommentSUI.Avatar src='https://react.semantic-ui.com/images/avatar/small/joe.jpg' />
-                        <CommentSUI.Content>
-                            <CommentSUI.Author as='a'>Joe Henderson</CommentSUI.Author>
-                            <CommentSUI.Metadata>
-                                <div>5 days ago</div>
-                            </CommentSUI.Metadata>
-                            <CommentSUI.Text>Dude, this is awesome. Thanks so much</CommentSUI.Text>
-                            <CommentSUI.Actions>
-                                <CommentSUI.Action>Reply</CommentSUI.Action>
-                            </CommentSUI.Actions>
-                        </CommentSUI.Content>
-                    </CommentSUI>
-
-                    <CommentSUI>
-                        <CommentSUI.Avatar as='a' src='https://react.semantic-ui.com/images/avatar/small/christian.jpg' />
-                        <CommentSUI.Content>
-                            <CommentSUI.Author as='a'>Christian Rocha</CommentSUI.Author>
-                            <CommentSUI.Metadata>
-                                <span>2 days ago</span>
-                            </CommentSUI.Metadata>
-                            <CommentSUI.Text>
-                                I'm very interested in this motherboard. Do you know if it'd
-                                work in a Intel LGA775 CPU socket?
-                            </CommentSUI.Text>
-                            <CommentSUI.Actions>
-                                <CommentSUI.Action>Reply</CommentSUI.Action>
-                                <CommentSUI.Action><Checkbox
-                                    style={{ color: 'grey', fontSize: '11px' }}
-                                    defaultChecked
-                                    label='Collapse Replies'
-                                    onChange={handleCheckbox}
-                                /></CommentSUI.Action>
-
-                            </CommentSUI.Actions>
-                        </CommentSUI.Content>
-
-                        <CommentSUI.Group collapsed={collapsed}>
-                            <CommentSUI>
-                                <CommentSUI.Avatar as='a' src='https://react.semantic-ui.com/images/avatar/small/elliot.jpg' />
-                                <CommentSUI.Content>
-                                    <CommentSUI.Author as='a'>Elliot Fu</CommentSUI.Author>
-                                    <CommentSUI.Metadata>
-                                        <span>1 day ago</span>
-                                    </CommentSUI.Metadata>
-                                    <CommentSUI.Text>No, it wont</CommentSUI.Text>
-                                    <CommentSUI.Actions>
-                                        <a href="?">Reply</a>
-                                    </CommentSUI.Actions>
-                                </CommentSUI.Content>
-                            </CommentSUI>
-                            <CommentSUI>
-
-
-                                <CommentSUI.Avatar
-                                    as='a'
-                                    src='https://react.semantic-ui.com/images/avatar/small/jenny.jpg'
-                                />
-                                <CommentSUI.Content>
-                                    <CommentSUI.Author as='a'>Jenny Hess</CommentSUI.Author>
-                                    <CommentSUI.Metadata>
-                                        <span>20 minutes ago</span>
-                                    </CommentSUI.Metadata>
-                                    <CommentSUI.Text>Maybe it would.</CommentSUI.Text>
-                                    <CommentSUI.Actions>
-                                        <a href="?">Reply</a>
-                                    </CommentSUI.Actions>
-                                </CommentSUI.Content>
-
-                            </CommentSUI>
-                        </CommentSUI.Group>
-                    </CommentSUI>
-
-                </CommentSUI.Group>
-            </Tab>
-            <Tab eventKey="create_comment" title="Add Comment">
-                <Form reply>
-                    <Form.TextArea />
-                    <Button content='Add Comment' labelPosition='left' icon='edit' primary />
-                </Form>
-            </Tab>
-        </Tabs>
+        <Aux>
+            {deleteModal}
+            <Tabs
+                id="controlled-tab-example"
+                className='mb-3'
+                activeKey={key}
+                onSelect={(k) => setKey(k)}
+            >
+                <Tab eventKey="Comment" title="Comment">
+                    <CommentSUI.Group>{display}</CommentSUI.Group>
+                </Tab>
+                <Tab eventKey="Add Comment" title="Add Comment">
+                    <Form reply onSubmit={() => create(commentContent)}>
+                        <Form.TextArea onChange={onChange} value={commentContent} />
+                        <Button type='submit' content='Add Comment' labelPosition='left' icon='edit' primary />
+                    </Form>
+                </Tab>
+            </Tabs>
+        </Aux>
     );
 };
 

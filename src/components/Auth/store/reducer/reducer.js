@@ -8,7 +8,8 @@ const initialState = {
     loading: false,
     name: null,
     is_volunteer: false,
-    is_requester: false
+    is_requester: false,
+    user_id: null,
 }
 
 const reducer = (state = initialState, action) => {
@@ -28,6 +29,7 @@ const reducer = (state = initialState, action) => {
                 is_requester: action.is_requester,
                 is_volunteer: action.is_volunteer,
                 name: action.name,
+                user_id: action.user_id,
                 error: null,
                 loading: false
             })

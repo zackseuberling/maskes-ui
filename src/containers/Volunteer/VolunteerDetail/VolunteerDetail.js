@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import Aux from '../../../hoc/Aux/Aux';
 import { Spinner, Button, Container, Table } from 'react-bootstrap';
 import Volunteer from '../Volunteer';
+import Connect from '../../../containers/Connect/Connect';
 import { connect } from 'react-redux';
 import { fetchVolunteerRequestDetail, volunteering } from './store/actions/actions';
 
@@ -42,6 +43,7 @@ const VolunteerDetail = (props) => {
             <Aux>
                 <Table bordered striped hover size="sm" responsive='sm'>
                     <tbody >
+                        <tr><td>Request #</td><td>{request.id}</td></tr>
                         <tr><td>Request Date</td><td>{new Date(request.created_date).toLocaleDateString()}</td></tr>
                         <tr><td>Location</td><td>{request.locations}</td></tr>
                         <tr><td>List of Items</td><td style={{ width: '80%' }}>{request.items_list}</td></tr>
@@ -58,6 +60,8 @@ const VolunteerDetail = (props) => {
                     onClick={() => volunteerSignupHandler(request.id)}
                 >Volunteer!</Button> : null
                 }
+
+                <Connect requestId={request.id} />
             </Aux >
         );
     }

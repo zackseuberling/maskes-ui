@@ -1,0 +1,16 @@
+.link-button {
+    background-color: transparent;
+    color: #0275d8;
+    border: none;
+    cursor: pointer;
+    display: inline;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .link-button:hover,
+  .link-button:focus {
+  font-weight: bold;
+  text-decoration: underline;
+  color: #0057a4;
+  }

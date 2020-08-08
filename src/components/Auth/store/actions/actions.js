@@ -53,7 +53,7 @@ export const checkAuthTimeout = (expirationTime) => {
     }
 }
 
-export const onAuth = (first_name, last_name, email, password, hasAccount) => {
+export const onAuth = (first_name, last_name, display_name, email, password, hasAccount, is_requester, is_volunteer) => {
     return dispatch => {
         dispatch(authStart());
 
@@ -63,10 +63,11 @@ export const onAuth = (first_name, last_name, email, password, hasAccount) => {
         const body = {
             first_name: first_name,
             last_name: last_name,
+            display_name: display_name,
             email: email,
             password: password,
-            is_requester: true,
-            is_volunteer: false,
+            is_requester: is_requester,
+            is_volunteer: is_volunteer,
         };
 
         let url = 'http://127.0.0.1:8000/auth/jwt/create/'

@@ -9,6 +9,7 @@ const Auth = (props) => {
     const [formData, setFormData] = useState({
         first_name: '',
         last_name: '',
+        display_name: '',
         email: '',
         password: '',
     })
@@ -19,14 +20,17 @@ const Auth = (props) => {
         setHasAccount(!hasAccount)
     }
 
-    const { first_name, last_name, email, password } = formData
+    const { first_name, last_name, display_name, email, password } = formData
+    const is_volunteer = false;
+    const is_requester = true;
+
     const { showAuthModal, hideAuthModal, onAuth, isLoading, hasError, hasLogin } = props;
 
     const onChange = (event) => setFormData({ ...formData, [event.target.name]: event.target.value });
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        onAuth(first_name, last_name, email, password, hasAccount);
+        onAuth(first_name, last_name, display_name, email, password, hasAccount, is_requester, is_volunteer);
     }
 
     return (

@@ -18,6 +18,7 @@ import VolunteerList from './containers/Volunteer/VolunteerList/VolunteerList';
 import VolunteerDetail from './containers/Volunteer/VolunteerDetail/VolunteerDetail';
 import MyVolunteerList from './containers/Volunteer/MyVolunteer/MyVolunteerList';
 import MyVolunteerDetail from './containers/Volunteer/MyVolunteer/MyVolunteerDetail';
+import SignUp from './containers/Volunteer/SignUp/SignUp';
 
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import { withRouter } from 'react-router';
@@ -50,6 +51,7 @@ const App = ({ component, authCheckLoginState, is_requester, is_volunteer }) => 
       <Route exact path='/' component={Home} />
       <Route exact path='/get-help' component={GetHelp} />
       <Route exact path='/get-involved' component={GetInvolved} />
+      <Route exact path='/volunteer/signup/' component={SignUp} />
       <Route exact path="/logout" component={Logout} />
     </Switch>
   );

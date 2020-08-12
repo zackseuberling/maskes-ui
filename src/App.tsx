@@ -1,6 +1,6 @@
 import './App.css';
 import React, { useEffect } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import Layout from './hoc/Layout/Layout';
@@ -9,6 +9,8 @@ import Logout from './components/Auth/Logout';
 import Home from './containers/Home/Home';
 import GetHelp from './containers/GetHelp/GetHelp';
 import GetInvolved from './containers/GetInvolved/GetInvolved';
+
+import UserProfile from './containers/UserProfile/UserProfile';
 
 import CreateRequest from './components/Request/CreateRequest/CreateRequest';
 import RequestDetail from './containers/Requests/RequestDetail/RequestDetail';
@@ -22,10 +24,9 @@ import SignUp from './containers/Volunteer/SignUp/SignUp';
 
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import { withRouter } from 'react-router';
-import * as navManager from './components/Navbar/nav-manager';
 import { authCheckLoginState } from './components/Auth/store/actions/actions';
 
-const App = ({ component, authCheckLoginState, is_requester, is_volunteer }) => {
+const App = ({ isAuthenticated, authCheckLoginState, is_requester, is_volunteer }) => {
   useEffect(() => {
     authCheckLoginState();
   })
@@ -42,8 +43,11 @@ const App = ({ component, authCheckLoginState, is_requester, is_volunteer }) => 
       <ProtectedRoute exact path='/volunteer' component={VolunteerList} />
       <ProtectedRoute exact path='/volunteer/my-volunteer' component={MyVolunteerList} />
       <ProtectedRoute exact path='/volunteer/my-volunteer/:volunteerId' component={MyVolunteerDetail} />
+      <Redirect from='/volunteer/signup' to='/volunteer' />
       <ProtectedRoute exact path='/volunteer/:requestId' component={VolunteerDetail} />
       <ProtectedRoute exact path="/logout" component={Logout} />
+      <Redirect exact from='/profile' to='/profile/me' />
+      <Route exact path='/profile/:userId' component={UserProfile} />
     </Switch>
   )
   const public_routes = (
@@ -51,27 +55,23 @@ const App = ({ component, authCheckLoginState, is_requester, is_volunteer }) => 
       <Route exact path='/' component={Home} />
       <Route exact path='/get-help' component={GetHelp} />
       <Route exact path='/get-involved' component={GetInvolved} />
-      <Route exact path='/volunteer/signup/' component={SignUp} />
+      <Route exact path='/volunteer/signup' component={SignUp} />
       <Route exact path="/logout" component={Logout} />
     </Switch>
   );
 
   return (
     <Layout>
-      {public_routes}
-      {is_requester ? requester_routes : null}
-      {is_volunteer ? volunteer_routes : null}
-      {/* <Route path="/:navId?/:subNavId?" component={component} /> */}
+      {!isAuthenticated ? public_routes : null}
+      {is_requester && isAuthenticated ? requester_routes : null}
+      {is_volunteer && isAuthenticated ? volunteer_routes : null}
     </Layout>
   )
 };
 
-const mapStateToProps = (state, props) => {
-  const params = props.match.params;
-
+const mapStateToProps = state => {
   return {
-    component: navManager.getDisplayComponentForNav(state, params),
-    hasLogin: state.auth.access !== null,
+    isAuthenticated: state.auth.access !== null,
     is_requester: state.auth.is_requester,
     is_volunteer: state.auth.is_volunteer,
   };

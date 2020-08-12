@@ -1,5 +1,5 @@
 {
-  "homepage": "https://djact.github.io/mask-ui-test-deploy/",
+  "homepage": "http://localhost:3000/",
   "name": "maskes-ui-typescript",
   "version": "0.1.0",
   "private": true,

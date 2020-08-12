@@ -65,7 +65,7 @@ const Comment = (props) => {
         display = cms.map((comment, index) => <CommentSUI key={comment.id}>
             <CommentSUI.Avatar as='a' src='http://localhost:8000/media/default.jpg' />
             <CommentSUI.Content>
-                <CommentSUI.Author as='a'>{comment.author_name}</CommentSUI.Author>
+                <CommentSUI.Author as='a' href={`/profile/${comment.author}`}>{comment.author_name}</CommentSUI.Author>
                 <CommentSUI.Metadata>
                     <span>{moment(comment.created_date).fromNow()}</span>
                     {comment.onEdit ?

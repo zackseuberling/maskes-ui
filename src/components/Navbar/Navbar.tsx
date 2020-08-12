@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-
 import './Navbar.css';
 import Button from 'react-bootstrap/Button';
 import Nav from 'react-bootstrap/Nav';
@@ -13,11 +12,12 @@ interface ILoginModalProps {
   is_requester?: boolean;
   is_volunteer?: boolean;
   openAuthModal?(): any;
+  history?: any;
 }
 
 class AppNavbar extends Component<ILoginModalProps> {
   render() {
-    const { hasLogin, openAuthModal, is_requester, is_volunteer } = this.props;
+    const { hasLogin, openAuthModal, is_requester, is_volunteer, history } = this.props;
     return (
       <Navbar bg="light" expand="md">
         <Navbar.Brand as={NavLink} to="/">
@@ -61,7 +61,7 @@ class AppNavbar extends Component<ILoginModalProps> {
                 <BsFillPersonFill onClick={openAuthModal} />
               </Button>
             )}
-            <Button variant="info" className="m-2">Donate</Button>
+            {is_volunteer ? <Button variant="info" className="m-2" onClick={() => history.push("/profile/me")}>Profile</Button> : null}
             {hasLogin && <Button href="/logout" variant="outline-danger" className="m-2">Logout</Button>}
           </Nav>
 

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { onAuth } from '../../../components/Auth/store/actions/actions';
 import VolunteerSignUpForm from '../../../components/Form/VolunteerSignUpForm';
@@ -18,7 +19,7 @@ const SignUp = (props) => {
     const is_requester = false;
 
     const { first_name, last_name, display_name, email, password } = formData;
-    const { onAuth, isLoading } = props;
+    const { onAuth, isLoading, isAuthenticated } = props;
 
     const onChange = (event) => setFormData({ ...formData, [event.target.name]: event.target.value });
 
@@ -28,14 +29,17 @@ const SignUp = (props) => {
     };
 
 
-    return <VolunteerSignUpForm
+    return isAuthenticated ? <Redirect to='/volunteer' /> : <VolunteerSignUpForm
         loading={isLoading}
-        onSubmit={handleSubmit}
+        handleSubmit={handleSubmit}
         onChange={onChange}
     />
 }
 const mapStateToProps = state => {
-    return { isLoading: state.auth.loading }
+    return {
+        isLoading: state.auth.loading,
+        isAuthenticated: state.auth.access !== null
+    }
 }
 
 export default connect(mapStateToProps, { onAuth })(SignUp);

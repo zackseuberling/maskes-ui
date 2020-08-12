@@ -3,10 +3,10 @@ import { Row, Col, Form, Container, Button } from 'react-bootstrap';
 import './VolunteerSignUpForm.css'
 
 const VolunteerSignUpForm = (props) => {
-    const { isLoading, onChange } = props
+    const { isLoading, onChange, handleSubmit } = props
     return (
         <Container className='signup-container'>
-            <Form className='signup-form'>
+            <Form className='signup-form' onSubmit={handleSubmit}>
                 <Row>
                     <Col>
                         <Form.Group controlId="formBasicFirstName">

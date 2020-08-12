@@ -94,7 +94,6 @@ export const onAuth = (first_name, last_name, display_name, email, password, has
             url = 'http://127.0.0.1:8000/users/'
             axios.post(url, body, config)
                 .then(res => {
-                    console.log(res.data);
                     url = 'http://127.0.0.1:8000/auth/jwt/create/'
                     axios.post(url, body, config)
                         .then(res => {

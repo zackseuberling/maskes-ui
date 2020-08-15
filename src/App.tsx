@@ -12,6 +12,8 @@ import GetInvolved from './containers/GetInvolved/GetInvolved';
 
 import ResetPassword from './containers/Password/ResetPassword';
 import ConfirmPassword from './containers/Password/ConfirmPassword';
+import ResetEmail from './containers/Email/ResetEmail';
+import ConfirmEmail from './containers/Email/ConfirmEmail';
 
 import UserProfile from './containers/UserProfile/UserProfile';
 
@@ -68,6 +70,8 @@ const App = ({ isAuthenticated, authCheckLoginState, is_requester, is_volunteer 
       {!isAuthenticated ? public_routes : null}
       <Route exact path='/password-reset' component={ResetPassword} />
       <Route exact path="/password-reset-confirm/:uid/:token" component={ConfirmPassword}></Route>
+      <Route exact path='/email-reset' component={ResetEmail} />
+      <Route exact path="/email-reset-confirm/:uid/:token" component={ConfirmEmail}></Route>
       {is_requester && isAuthenticated ? requester_routes : null}
       {is_volunteer && isAuthenticated ? volunteer_routes : null}
     </Layout>

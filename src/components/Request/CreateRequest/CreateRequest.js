@@ -62,7 +62,11 @@ const CreateRequest = (props) => {
   };
 
   useEffect(() => {
-    setFormData({ ...formData, prefered_food: checkedItems });
+    let mounted = true;
+    if (mounted) {
+      setFormData({ ...formData, prefered_food: checkedItems });
+    }
+    return () => mounted = false;
     // eslint-disable-next-line
   }, [checkedItems]);
 

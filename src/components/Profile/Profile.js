@@ -49,10 +49,10 @@ const Profile = (props) => {
         <Form onSubmit={(event) => nameChangeSubmitHandler(event, firstName, lastName, profile.display_name)}>
             <Row>
                 <Col sm={5}>
-                    <Form.Control required className='m-2' value={firstName} onChange={onChangeFirstName} />
+                    <Form.Control required className='m-2' value={firstName} placeholder="First Name" onChange={onChangeFirstName} />
                 </Col>
                 <Col sm={5} className="text-secondary">
-                    <Form.Control required className='m-2' value={lastName} onChange={onChangeLastName} />
+                    <Form.Control required className='m-2' value={lastName} placeholder="Last Name" onChange={onChangeLastName} />
                 </Col>
                 <Col sm={2} className="text-secondary pr-0">
                     {save_cancel_icons(toggleEditFullName)}
@@ -314,7 +314,13 @@ const Profile = (props) => {
                                 {profileData[0].onEdit || profile.phone === ""
                                     ? profile_edit_form('phone', 0)
                                     : <Col sm={6} className="text-secondary">
-                                        {!profile.phone_privacy || isOwner ? <Button className='edit-profile-link pl-0' variant='link' disabled={!isOwner} onClick={() => toggleProfileEditor(0)} >{profile.phone}</Button> : null}
+                                        {!profile.phone_privacy || isOwner ?
+                                            <Button
+                                                style={{ textAlign: 'left' }}
+                                                className='edit-profile-link pl-0'
+                                                variant='link'
+                                                disabled={!isOwner}
+                                                onClick={() => toggleProfileEditor(0)} >{profile.phone}</Button> : null}
                                     </Col>}
                                 {isOwner && <Col sm='auto' className="text-secondary my-auto">
                                     <Form>
@@ -338,7 +344,9 @@ const Profile = (props) => {
                                 {profileData[1].onEdit || profile.location === ""
                                     ? profile_edit_form("location", 1)
                                     : <Col sm={6} className="text-secondary">
-                                        {!profile.location_privacy || isOwner ? <Button className='edit-profile-link pl-0' style={{ textAlign: 'left' }} variant='link' disabled={!isOwner} onClick={() => toggleProfileEditor(1)} >{profile.location}</Button> : null}
+                                        {!profile.location_privacy || isOwner ?
+                                            <Button
+                                                className='edit-profile-link pl-0' style={{ textAlign: 'left' }} variant='link' disabled={!isOwner} onClick={() => toggleProfileEditor(1)} >{profile.location}</Button> : null}
                                     </Col>}
                                 {isOwner && <Col sm='auto' className="text-secondary my-auto">
                                     <Form>
@@ -357,11 +365,11 @@ const Profile = (props) => {
                     {isOwner && <Card className="mb-3">
                         <Card.Body>
                             <Row>
-                                <Button className="mb-0" variant='link'>Reset Email</Button>
+                                <Button className="mb-0" variant='link' onClick={() => history.push('/email-reset')}>Reset Email</Button>
                             </Row>
                             <hr />
                             <Row>
-                                <Button className="mb-0" variant='link' onClick={() => { history.push('/password-reset') }}>Reset Password</Button>
+                                <Button className="mb-0" variant='link' onClick={() => history.push('/password-reset')}>Reset Password</Button>
                             </Row>
 
                         </Card.Body>

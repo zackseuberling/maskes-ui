@@ -120,7 +120,7 @@ const Profile = (props) => {
         setPrivacy(privacy.map((pvc, j) => (j === i) ? { ...pvc, key: j, [e.target.id]: e.target.checked } : { ...pvc, key: j }))
         axios.put(url, body, config)
             .then(response => {
-                const payload = response.data
+
             })
             .catch(error => {
             })

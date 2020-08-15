@@ -50,7 +50,6 @@ const UserProfile = (props) => {
 
         axios.put(url, body, config)
             .then(response => {
-                const payload = response.data
                 props.history.push('/profile')
             })
             .catch(error => {
@@ -77,7 +76,6 @@ const UserProfile = (props) => {
         }
         axios.put(url, body, config)
             .then(response => {
-                const payload = response.data
                 props.history.push('/profile')
             })
             .catch(error => {

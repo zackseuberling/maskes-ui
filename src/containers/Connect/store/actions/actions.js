@@ -39,7 +39,6 @@ export const fetchComments = (requestId, token) => {
                 dispatch(fetchCommentsSuccess(payload));
             })
             .catch(error => {
-                console.log(error.response.data)
                 dispatch(fetchCommentsFail(error))
             })
     }
@@ -86,7 +85,6 @@ export const createComment = (requestId, content, token) => {
                 dispatch(fetchComments(requestId, token))
             })
             .catch(error => {
-                console.log(error.response.data)
                 dispatch(createCommentFail(error))
             })
     }
@@ -133,7 +131,6 @@ export const updateComment = (requestId, commentId, content, token) => {
                 dispatch(fetchComments(requestId, token));
             })
             .catch(error => {
-                console.log(error.response.data)
                 dispatch(updateCommentFail(error))
             })
     }
@@ -176,7 +173,6 @@ export const deleteComment = (requestId, commentId, token) => {
                 dispatch(fetchComments(requestId, token))
             })
             .catch(error => {
-                console.log(error.response.data)
                 dispatch(deleteCommentFail(error))
             })
     }

@@ -56,7 +56,7 @@ const AuthModal = (props) => {
                         {isLogin
                             ?(<p className="text-right text-muted">Don't have an account? <a href="#login" onClick={switchMode}>Sign up</a></p>)
                             :(<p className="text-right text-muted">Already have an account? <a href="#signup"  onClick={switchMode}>Log in</a></p>)}
-                            <p className="text-right text-muted mb-3">Forgot your password? <a href="/">Reset password</a></p>
+                            <p className="text-right text-muted mb-3">Forgot your password? <a href="/password-reset">Reset password</a></p>
                     </Aux>
                 )}
 

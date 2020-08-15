@@ -72,3 +72,13 @@
     font-size: 15px;
     margin-bottom: 1px;
 }
+
+.edit-profile-link {
+    color: #3a3a3a;
+}
+
+.edit-profile-link:hover {
+    color: #2b76b3;
+    text-decoration: underline;
+    text-shadow: 2px 2px 5px #e4e4e4;
+}

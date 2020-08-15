@@ -26,11 +26,9 @@ const UserProfile = (props) => {
         axios.get(url, config)
             .then(response => {
                 const payload = response.data
-                console.log(payload)
                 setProfile(payload)
             })
             .catch(error => {
-                console.log(error.response.data.detail)
                 setError(error.response.data.detail)
             })
     }, [token, userId])
@@ -53,13 +51,38 @@ const UserProfile = (props) => {
         axios.put(url, body, config)
             .then(response => {
                 const payload = response.data
-                console.log(payload)
                 props.history.push('/profile')
             })
             .catch(error => {
-                console.log(error.response.data.detail)
                 setError(error.response.data.detail)
+            });
+    }
+    const updateProfileHandler = (event, profileData) => {
+        event.preventDefault();
+        const url = `http://localhost:8000/profile/${myId}/`;
+        const config = {
+            headers: {
+                "Authorization": `Bearer ${token}`,
+                "Content-Type": "application/json"
+            }
+        }
+        const body = {
+            phone: profileData[0].phone,
+            location: profileData[1].location,
+            bio: profileData[2].bio,
+            facebook: profileData[3].facebook,
+            twitter: profileData[4].twitter,
+            venmo: profileData[5].venmo,
+            user: myId,
+        }
+        axios.put(url, body, config)
+            .then(response => {
+                const payload = response.data
+                props.history.push('/profile')
             })
+            .catch(error => {
+                setError(error.response.data.detail)
+            });
     }
 
     return (
@@ -69,11 +92,14 @@ const UserProfile = (props) => {
                 profile={profile}
                 myId={myId}
                 nameChangeSubmitHandler={nameChangeSubmitHandler}
+                updateProfileHandler={updateProfileHandler}
                 token={token}
+                history={props.history}
             /> : <Spinner />}
         </div>
 
     )
+
 };
 
 const mapStateToProps = state => {

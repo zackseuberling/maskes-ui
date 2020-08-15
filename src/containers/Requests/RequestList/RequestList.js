@@ -21,7 +21,11 @@ const RequestList = (props) => {
   const [activePage, setActivePage] = useState(1);
 
   useEffect(() => {
-    fetchRequests(activePage, token)
+    let mounted = true;
+    if (mounted) {
+      fetchRequests(activePage, token)
+    }
+    return () => mounted = false;
   }, [fetchRequests, token, activePage])
   let requests_list = []
 

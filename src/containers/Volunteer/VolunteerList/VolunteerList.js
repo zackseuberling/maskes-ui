@@ -28,7 +28,11 @@ const VolunteerList = (props) => {
     const { date, location, urgent, familySize } = searchValues;
 
     useEffect(() => {
-        fetchVolunteerRequests(activePage, token, searchValues);
+        let mounted = true;
+        if (mounted) {
+            fetchVolunteerRequests(activePage, token, searchValues);
+        }
+        return () => mounted = false
     }, [fetchVolunteerRequests, token, searchValues, activePage]);
 
 

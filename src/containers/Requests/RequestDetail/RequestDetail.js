@@ -10,7 +10,11 @@ const RequestDetail = (props) => {
   const { request, loading, token, fetchRequestDetail, name } = props;
 
   useEffect(() => {
-    fetchRequestDetail(props.match.params.requestId, token)
+    let mounted = true;
+    if (mounted) {
+      fetchRequestDetail(props.match.params.requestId, token)
+    };
+    return () => mounted = false;
   }, [fetchRequestDetail, token, props.match.params.requestId])
 
   let request_detail = {}

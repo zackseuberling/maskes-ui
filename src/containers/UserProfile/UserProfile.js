@@ -17,6 +17,8 @@ const UserProfile = (props) => {
     }
 
     useEffect(() => {
+        let mounted = true;
+
         const url = `http://localhost:8000/profile/${userId}/`
         const config = {
             headers: {
@@ -26,11 +28,13 @@ const UserProfile = (props) => {
         axios.get(url, config)
             .then(response => {
                 const payload = response.data
-                setProfile(payload)
+                if (mounted) { setProfile(payload) }
             })
             .catch(error => {
-                setError(error.response.data.detail)
+                if (mounted) { setError(error.response.data.detail) }
             })
+
+        return () => mounted = false;
     }, [token, userId])
 
     const nameChangeSubmitHandler = (event, first_name, last_name, display_name) => {

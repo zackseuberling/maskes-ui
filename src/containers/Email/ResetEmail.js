@@ -1,6 +1,6 @@
 import React from 'react';
 import EmailReset from '../../components/Auth/Email/EmailReset';
-import axios from 'axios';
+import axios from '../../shared/axios';
 import { connect } from 'react-redux';
 import { setAlert } from '../../components/Alert/store/actions/actions';
 
@@ -9,7 +9,7 @@ const ResetEmail = (props) => {
     const handleSubmit = (e, userEmail) => {
         e.preventDefault();
 
-        const url = `http://localhost:8000/users/reset_email/`
+        const url = `/users/reset_email/`
         const body = {
             email: userEmail
         }

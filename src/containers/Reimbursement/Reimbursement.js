@@ -4,6 +4,9 @@ import Aux from '../../hoc/Aux/Aux';
 import { Table, Button, Image, Popover, OverlayTrigger, Badge } from 'react-bootstrap';
 import ReimbursementForm from '../../components/Form/ReimbursementForm';
 import { requestReimbursement, fetchReimbursement } from './store/actions/actions';
+import './Reimbursement.css'
+
+
 const Reimbursement = (props) => {
 
     const { requestReimbursement, fetchReimbursement, volunteerId, reimbursement, token } = props
@@ -56,7 +59,7 @@ const Reimbursement = (props) => {
                                     </Popover>
                                 }
                             >
-                                <Button variant="link">Receipt</Button>
+                                <td className="receipt-link">Receipt</td>
                             </OverlayTrigger>
                         </tr>
 

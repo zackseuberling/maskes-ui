@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from '../../../../shared/axios';
 import * as actionTypes from './actionTypes';
 
 export const fetchCommentsStart = () => {
@@ -24,7 +24,7 @@ export const fetchCommentsFail = (error) => {
 export const fetchComments = (requestId, token) => {
     return dispatch => {
         dispatch(fetchCommentsStart());
-        const url = 'http://localhost:8000/connect/comments/view_comments/';
+        const url = '/connect/comments/view_comments/';
         const config = {
             headers: {
                 "Authorization": `Bearer ${token}`,
@@ -68,7 +68,7 @@ export const createCommentFail = (error) => {
 export const createComment = (requestId, content, token) => {
     return dispatch => {
         dispatch(createCommentStart());
-        const url = 'http://localhost:8000/connect/comments/';
+        const url = '/connect/comments/';
         const config = {
             headers: {
                 "Authorization": `Bearer ${token}`,
@@ -114,7 +114,7 @@ export const updateCommentFail = (error) => {
 export const updateComment = (requestId, commentId, content, token) => {
     return dispatch => {
         dispatch(updateCommentStart());
-        const url = `http://localhost:8000/connect/comments/${commentId}/`;
+        const url = `/connect/comments/${commentId}/`;
         const config = {
             headers: {
                 "Authorization": `Bearer ${token}`,
@@ -160,7 +160,7 @@ export const deleteCommentFail = (error) => {
 export const deleteComment = (requestId, commentId, token) => {
     return dispatch => {
         dispatch(deleteCommentStart());
-        const url = `http://localhost:8000/connect/comments/${commentId}/`;
+        const url = `/connect/comments/${commentId}/`;
         const config = {
             headers: {
                 "Authorization": `Bearer ${token}`,

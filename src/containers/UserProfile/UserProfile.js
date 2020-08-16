@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Spinner from 'react-bootstrap/Spinner';
 import { connect } from 'react-redux';
-import axios from 'axios';
+import axios from '../../shared/axios';
 import Profile from '../../components/Profile/Profile';
 const UserProfile = (props) => {
     const { token, myId } = props
@@ -19,7 +19,7 @@ const UserProfile = (props) => {
     useEffect(() => {
         let mounted = true;
 
-        const url = `http://localhost:8000/profile/${userId}/`
+        const url = `/profile/${userId}/`
         const config = {
             headers: {
                 "Authorization": `Bearer ${token}`,
@@ -39,7 +39,7 @@ const UserProfile = (props) => {
 
     const nameChangeSubmitHandler = (event, first_name, last_name, display_name) => {
         event.preventDefault();
-        const url = `http://localhost:8000/users/me/`
+        const url = `/users/me/`
         const config = {
             headers: {
                 "Authorization": `Bearer ${token}`,
@@ -62,7 +62,7 @@ const UserProfile = (props) => {
     }
     const updateProfileHandler = (event, profileData) => {
         event.preventDefault();
-        const url = `http://localhost:8000/profile/${myId}/`;
+        const url = `/profile/${myId}/`;
         const config = {
             headers: {
                 "Authorization": `Bearer ${token}`,

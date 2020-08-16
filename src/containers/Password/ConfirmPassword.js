@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import PasswordResetConfirm from '../../components/Auth/Password/PasswordResetConfirm';
-import axios from 'axios';
+import axios from '../../shared/axios';
 import { connect } from 'react-redux';
 import { logout } from '../../components/Auth/store/actions/actions';
 import { setAlert } from '../../components/Alert/store/actions/actions';
@@ -15,7 +15,7 @@ const ResetPassword = (props) => {
     const handleSubmit = (e, formData) => {
         e.preventDefault();
         if (formData.new_password === formData.re_new_password) {
-            const url = `http://127.0.0.1:8000/users/reset_password_confirm/`;
+            const url = `/users/reset_password_confirm/`;
             const body = formData;
             const config = {
                 headers: {

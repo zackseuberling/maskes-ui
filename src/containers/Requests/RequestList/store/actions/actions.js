@@ -1,5 +1,5 @@
 import * as actionTypes from './actionTypes';
-import axios from 'axios';
+import axios from '../../../../../shared/axios';
 import { setAlert } from '../../../../../components/Alert/store/actions/actions';
 
 // FETCH REQUESTS
@@ -26,7 +26,7 @@ export const fetchRequestsFail = (error) => {
 export const fetchRequests = (page, token) => {
     return dispatch => {
         dispatch(fetchRequestsStart());
-        const url = `http://127.0.0.1:8000/requests/requester/?page=${page}`;
+        const url = `/requests/requester/?page=${page}`;
         const config = {
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -67,7 +67,7 @@ export const createRequestFail = (error) => {
 export const createRequest = (body, token) => {
     return dispatch => {
         dispatch(createRequestStart());
-        const url = 'http://127.0.0.1:8000/requests/requester/';
+        const url = '/requests/requester/';
         const config = {
             headers: {
                 'Authorization': `Bearer ${token}`

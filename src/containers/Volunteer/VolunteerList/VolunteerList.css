@@ -35,3 +35,10 @@
 .request_accordion:hover {
     background-color: #fafafa;
 }
+
+.my-btn-link {
+    padding: 0px !important;
+    margin-bottom: 2px !important;
+    color: #01986f !important;
+    font-size: small !important;
+}

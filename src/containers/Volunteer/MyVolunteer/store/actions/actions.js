@@ -1,6 +1,6 @@
 import { setAlert } from '../../../../../components/Alert/store/actions/actions';
 import * as actionTypes from './actionTypes';
-import axios from 'axios';
+import axios from '../../../../../shared/axios';
 
 //VOLUNTEER LIST
 export const fetchVolunteerListStart = () => {
@@ -26,7 +26,7 @@ export const fetchVolunteerListFail = (error) => {
 export const fetchVolunteerList = (page, token) => {
     return dispatch => {
         dispatch(fetchVolunteerListStart());
-        const url = `http://127.0.0.1:8000/requests/volunteering/?page=${page}`;
+        const url = `/requests/volunteering/?page=${page}`;
         const config = {
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -68,7 +68,7 @@ export const fetchVolunteerDetailFail = (error) => {
 export const fetchVolunteerDetail = (volunteerId, token) => {
     return dispatch => {
         dispatch(fetchVolunteerDetailStart());
-        const url = `http://127.0.0.1:8000/requests/volunteering/${volunteerId}/`;
+        const url = `/requests/volunteering/${volunteerId}/`;
         const config = {
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -111,7 +111,7 @@ export const deleteVolunteerFail = (error) => {
 export const deleteVolunteer = (volunteerId, token) => {
     return dispatch => {
         dispatch(deleteVolunteerStart());
-        const url = `http://127.0.0.1:8000/requests/volunteering/${volunteerId}/`;
+        const url = `/requests/volunteering/${volunteerId}/`;
         const config = {
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -155,7 +155,7 @@ export const updateVolunteerFail = (error) => {
 export const updateVolunteer = ({ volunteerId, requestId }, token) => {
     return dispatch => {
         dispatch(updateVolunteerStart());
-        const url = `http://127.0.0.1:8000/requests/volunteering/${volunteerId}/`;
+        const url = `/requests/volunteering/${volunteerId}/`;
         const config = {
             headers: {
                 'Authorization': `Bearer ${token}`

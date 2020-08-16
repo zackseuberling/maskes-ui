@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Container, Row, Col, Card, Button, Form, ListGroup } from 'react-bootstrap';
 import "./Profile.css";
 import { BsPencil, BsX, BsCheck } from 'react-icons/bs';
-import axios from 'axios';
+import axios from '../../shared/axios';
 
 const Profile = (props) => {
     const { profile, myId, nameChangeSubmitHandler, updateProfileHandler, token, history } = props;
@@ -107,7 +107,7 @@ const Profile = (props) => {
 
     const onChangePrivacy = (e, i) => {
         // e.preventDefault();
-        const url = `http://localhost:8000/profile/${myId}/`;
+        const url = `/profile/${myId}/`;
         const config = {
             headers: {
                 "Authorization": `Bearer ${token}`,
@@ -183,10 +183,9 @@ const Profile = (props) => {
                                         <Col className="text-secondary mb-1" md="auto">
                                             {<Button
                                                 className='edit-profile-link pl-0'
-                                                style={{ textAlign: 'left' }}
+                                                style={{ textAlign: 'left', color: 'gray' }}
                                                 variant='link'
-                                                disabled={!isOwner}
-                                                onClick={() => toggleProfileEditor(3)} >
+                                                onClick={isOwner ? () => toggleProfileEditor(3) : () => window.open(`http://www.faceboook.com/${profile.facebook}`, "_blank")} >
                                                 {profile.facebook}
                                             </Button>}
                                         </Col>
@@ -211,10 +210,9 @@ const Profile = (props) => {
                                         <Col className="text-secondary mb-1" md="auto">
                                             {<Button
                                                 className='edit-profile-link pl-0'
-                                                style={{ textAlign: 'left' }}
+                                                style={{ textAlign: 'left', color: 'gray' }}
                                                 variant='link'
-                                                disabled={!isOwner}
-                                                onClick={() => toggleProfileEditor(4)} >
+                                                onClick={isOwner ? () => toggleProfileEditor(4) : () => window.open(`https://twitter.com/${profile.twitter}`, "_blank")} >
                                                 {profile.twitter}
                                             </Button>}
                                         </Col>}
@@ -238,10 +236,9 @@ const Profile = (props) => {
                                         <Col className="text-secondary  mb-1" md="auto">
                                             {<Button
                                                 className='edit-profile-link pl-0'
-                                                style={{ textAlign: 'left' }}
+                                                style={{ textAlign: 'left', color: 'gray' }}
                                                 variant='link'
-                                                disabled={!isOwner}
-                                                onClick={() => toggleProfileEditor(5)} >
+                                                onClick={isOwner ? () => toggleProfileEditor(5) : () => window.open(`https://venmo.com/${profile.venmo}`, "_blank")} >
                                                 {profile.venmo}
                                             </Button>}
                                         </Col>}
@@ -301,8 +298,6 @@ const Profile = (props) => {
                                         />
                                     </Form>
                                 </Col>}
-
-
                             </Row>
 
                             <hr />

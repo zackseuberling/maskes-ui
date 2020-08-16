@@ -1,7 +1,7 @@
 import { setAlert } from '../../../../components/Alert/store/actions/actions';
 import { fetchVolunteerDetail } from '../../../Volunteer/MyVolunteer/store/actions/actions';
 import * as actionTypes from './actionTypes';
-import axios from 'axios';
+import axios from '../../../../shared/axios';
 
 //FETCH REIMBURSEMENT
 export const fetchReimbursementStart = () => {
@@ -27,7 +27,7 @@ export const fetchReimbursementFail = (error) => {
 export const fetchReimbursement = (reimbursementId, token) => {
     return dispatch => {
         dispatch(fetchReimbursementStart());
-        const url = `http://127.0.0.1:8000/funds/reimbursement/${reimbursementId}/`;
+        const url = `/funds/reimbursement/${reimbursementId}/`;
         const config = {
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -70,7 +70,7 @@ export const deleteReimbursementFail = (error) => {
 export const deleteReimbursement = (reimbursementId, token) => {
     return dispatch => {
         dispatch(deleteReimbursementStart());
-        const url = `http://127.0.0.1:8000/funds/reimbursement/${reimbursementId}/`;
+        const url = `/funds/reimbursement/${reimbursementId}/`;
         const config = {
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -114,7 +114,7 @@ export const updateReimbursementFail = (error) => {
 export const updateReimbursement = ({ total_cost, reimbursement, receipt }, reimbursementId, token) => {
     return dispatch => {
         dispatch(updateReimbursementStart());
-        const url = `http://127.0.0.1:8000/funds/reimbursement/${reimbursementId}/`;
+        const url = `/funds/reimbursement/${reimbursementId}/`;
         const config = {
             headers: {
                 'Authorization': `Bearer ${token}`,
@@ -168,7 +168,7 @@ export const requestReimbursementFail = (error) => {
 export const requestReimbursement = ({ total_cost, reimbursement, receipt }, volunteerId, token) => {
     return dispatch => {
         dispatch(requestReimbursementStart());
-        const url = 'http://127.0.0.1:8000/funds/reimbursement/';
+        const url = '/funds/reimbursement/';
         const config = {
             headers: {
                 'Authorization': `Bearer ${token}`,

@@ -1,6 +1,6 @@
 import * as actionTypes from './actionTypes';
 import { setAlert } from '../../../../../components/Alert/store/actions/actions';
-import axios from 'axios';
+import axios from '../../../../../shared/axios';
 
 export const fetchVolunteerRequestDetailStart = () => {
     return {
@@ -25,7 +25,7 @@ export const fetchVolunteerRequestDetailFail = (error) => {
 export const fetchVolunteerRequestDetail = (requestId, token) => {
     return dispatch => {
         dispatch(fetchVolunteerRequestDetailStart());
-        const url = `http://127.0.0.1:8000/requests/volunteer/${requestId}/`;
+        const url = `/requests/volunteer/${requestId}/`;
         const config = {
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -67,7 +67,7 @@ export const volunteeringSuccess = (payload) => {
 export const volunteering = (requestId, token) => {
     return dispatch => {
         dispatch(volunteeringStart());
-        const url = 'http://127.0.0.1:8000/requests/volunteering/'
+        const url = '/requests/volunteering/'
         const body = {
             request: requestId,
             status: 'Signed Up'

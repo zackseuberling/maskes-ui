@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import EmailResetConfirm from '../../components/Auth/Email/EmailResetConfirm';
-import axios from 'axios';
+import axios from '../../shared/axios';
 import { connect } from 'react-redux';
 import { logout } from '../../components/Auth/store/actions/actions';
 import { setAlert } from '../../components/Alert/store/actions/actions';
@@ -15,7 +15,7 @@ const ResetEmail = (props) => {
     const handleSubmit = (e, formData) => {
         e.preventDefault();
         if (formData.new_email === formData.re_new_email) {
-            const url = `http://127.0.0.1:8000/users/reset_email_confirm/`;
+            const url = `/users/reset_email_confirm/`;
             const body = formData;
             const config = {
                 headers: {

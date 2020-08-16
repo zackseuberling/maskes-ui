@@ -1,5 +1,5 @@
 import * as actionTypes from './actionTypes';
-import axios from 'axios';
+import axios from '../../../../../shared/axios';
 import { setAlert } from '../../../../../components/Alert/store/actions/actions';
 
 // FETCH REQUESTS
@@ -27,7 +27,7 @@ export const fetchVolunteerRequests = (page, token, searchValues) => {
     return dispatch => {
         dispatch(fetchVolunteerRequestsStart());
 
-        let url = `http://127.0.0.1:8000/requests/volunteer/?page=${page}`;
+        let url = `/requests/volunteer/?page=${page}`;
         const config = {
             headers: {
                 'Authorization': `Bearer ${token}`

@@ -1,5 +1,5 @@
 import * as actionTypes from './actionTypes';
-import axios from 'axios';
+import axios from '../../../../../shared/axios';
 import { setAlert } from '../../../../../components/Alert/store/actions/actions';
 
 export const fetchRequestDetailStart = () => {
@@ -25,7 +25,7 @@ export const fetchRequestDetailFail = (error) => {
 export const fetchRequestDetail = (requestId, token) => {
     return dispatch => {
         dispatch(fetchRequestDetailStart());
-        const url = `http://127.0.0.1:8000/requests/requester/${requestId}/`;
+        const url = `/requests/requester/${requestId}/`;
         const config = {
             headers: {
                 'Authorization': `Bearer ${token}`

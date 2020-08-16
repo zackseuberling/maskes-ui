@@ -1,5 +1,5 @@
 import * as actionTypes from './actionTypes';
-import axios from 'axios';
+import axios from '../../../../shared/axios';
 
 export const openAuthModal = () => ({
     type: actionTypes.OPEN_AUTH_MODAL,
@@ -70,7 +70,7 @@ export const onAuth = (first_name, last_name, display_name, email, password, has
             is_volunteer: is_volunteer,
         };
 
-        let url = 'http://127.0.0.1:8000/auth/jwt/create/'
+        let url = '/auth/jwt/create/'
 
         if (hasAccount) {
             axios.post(url, body, config)
@@ -91,10 +91,10 @@ export const onAuth = (first_name, last_name, display_name, email, password, has
                     dispatch(authFail(err));
                 })
         } else {
-            url = 'http://127.0.0.1:8000/users/'
+            url = '/users/'
             axios.post(url, body, config)
                 .then(res => {
-                    url = 'http://127.0.0.1:8000/auth/jwt/create/'
+                    url = '/auth/jwt/create/'
                     axios.post(url, body, config)
                         .then(res => {
                             const expiresIn = 3600 * 1000

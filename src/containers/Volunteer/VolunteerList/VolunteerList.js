@@ -13,7 +13,7 @@ import Volunteer from '../Volunteer';
 import SearchForm from '../../../components/Form/SearchForm';
 import { Pagination } from 'semantic-ui-react';
 
-import '../Volunteer.css';
+import './VolunteerList.css';
 
 const VolunteerList = (props) => {
     const { requests, loading, token,
@@ -70,7 +70,15 @@ const VolunteerList = (props) => {
                                 onClick={() => history.push(`${match.url}/${request.id}`)}>{request.volunteer_status}</Button>
                         }
 
-                        {request.supporter !== null ? <Card.Text>Volunteer: {request.supporter}</Card.Text> : null}
+                        {request.supporter !== null ?
+                            <Card.Text className='my-auto'>
+                                Volunteer: <Button
+                                    className='my-btn-link'
+                                    variant='link'
+                                    onClick={() => history.push(`/profile/${request.supporter.id}`)}>
+                                    {request.supporter.display_name}
+                                </Button>
+                            </Card.Text> : null}
 
                     </Card.Body>
 

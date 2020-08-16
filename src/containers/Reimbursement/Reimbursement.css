@@ -1,0 +1,9 @@
+.receipt-link {
+    cursor: pointer;
+    color: #007BFF;
+}
+
+.receipt-link:hover {
+    text-decoration: underline;
+    color:#0065d2;
+}

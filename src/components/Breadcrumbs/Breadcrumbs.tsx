@@ -15,7 +15,6 @@ interface IBreadcrumbs {
 class Breadcrumbs extends Component<IBreadcrumbs> {
   render() {
     const { goTo, showBreadcrumbs, params } = this.props;
-
     return (
       showBreadcrumbs && (
         <Breadcrumb className="my-breadcrumb">
@@ -26,12 +25,17 @@ class Breadcrumbs extends Component<IBreadcrumbs> {
                 active={isLastElement}
                 onClick={() => {
                   if (!isLastElement) {
-                    goTo('/' + value);
+                    let url = '';
+                    for (let i = 0; i < params.indexOf(value); i++) {
+                      url += params[i] + '/'
+                    }
+
+                    goTo(`/${url}${value}`);
                   }
                 }}
                 key={value}
               >
-                {value}
+                {value.replace('-', ' ')}
               </Breadcrumb.Item>
             );
           })}

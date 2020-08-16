@@ -4,21 +4,25 @@ import { updateObject } from '../../../../../shared/utility';
 const initialState = {
     request: [],
     loading: false,
+    name: '',
+    error: null,
 }
 
 const fetchRequestDetailSuccess = (state, action) => {
     return updateObject(state, {
         request: action.payload,
-        loading: false
+        loading: false,
+        name: action.payload.name,
+        error: null,
     });
 }
 
 const fetchRequestDetailStart = (state, action) => {
-    return updateObject(state, { loading: true });
+    return updateObject(state, { loading: true, error: null });
 }
 
 const fetchRequestDetailFail = (state, action) => {
-    return updateObject(state, { loading: false });
+    return updateObject(state, { loading: false, error: action.error });
 }
 
 const reducer = (state = initialState, action) => {

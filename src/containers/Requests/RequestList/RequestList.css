@@ -1,0 +1,15 @@
+.card_columns {
+    column-count: 1;
+}
+
+@media (min-width:767px) {
+    .card_columns {
+        column-count: 2;
+    }
+}
+
+@media (min-width:1000px) {
+    .card_columns {
+        column-count: 3;
+    }
+}

@@ -1,0 +1,19 @@
+.ui.comments .comment .avatar img{
+    border-radius: 2rem;
+}
+
+.ui.comments .comment .actions .edit-btn:hover{
+    cursor: pointer;
+    display: inline-block;
+    margin: 0 .75em 0 0;
+    color: teal;
+}
+
+.ui.comments .comment .actions .delete-btn{
+    color: rgb(255, 81, 81);
+}
+.ui.comments .comment .actions .delete-btn:hover{
+    color: red;
+    font-size: 14px;
+    font-weight: bold;
+}

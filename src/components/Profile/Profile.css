@@ -1,0 +1,84 @@
+.svg-icon-style {
+    -ms-transform: rotate(360deg); 
+    -webkit-transform: rotate(360deg); 
+    transform: rotate(360deg);
+}
+.edit-btn {
+    cursor: pointer;
+    color: rgb(55, 108, 2);
+    padding: 0;
+    margin-bottom: 10px;
+    font-size: 15px;
+}
+
+.edit-info-btn {
+    background-color: transparent;
+    color: #7cb147;
+    border: none;
+    cursor: pointer;
+    display: inline;
+    margin: 2px;
+    padding: 0;
+    font-size: 18px;
+}
+
+.edit-info-btn:hover{
+    color: green;
+    font-weight: bold;
+}
+
+.delete-info-btn{
+    background-color: transparent;
+    color: salmon;
+    border: none;
+    cursor: pointer;
+    display: inline;
+    margin: 2px;
+    padding: 0;
+    font-size: 18px;
+}
+.delete-info-btn:hover{
+    color: red;
+    font-weight: bold;
+}
+
+.link-button {
+    background-color: transparent;
+    color: #0275d8;
+    border: none;
+    cursor: pointer;
+    display: inline;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .link-button:hover,
+  .link-button:focus {
+  font-weight: bold;
+  text-decoration: underline;
+  color: #0057a4;
+  }
+
+
+.edit-pencil {
+    cursor: pointer;
+    color: #0057a4;
+    font-size: 12px;
+    margin-left: 3px;
+    margin-bottom: 5px;
+}
+
+.edit-pencil:hover {
+    font-size: 15px;
+    margin-bottom: 1px;
+}
+
+.edit-profile-link {
+    color: #3a3a3a;
+}
+
+.edit-profile-link:hover {
+    color: #2b76b3;
+    text-decoration: underline;
+    text-shadow: 2px 2px 5px #e4e4e4;
+}

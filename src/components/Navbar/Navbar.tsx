@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-
 import './Navbar.css';
 import Button from 'react-bootstrap/Button';
 import Nav from 'react-bootstrap/Nav';
@@ -10,14 +9,17 @@ import { openAuthModal } from '../Auth/store/actions/actions';
 import { BsFillPersonFill } from "react-icons/bs"
 interface ILoginModalProps {
   hasLogin?: boolean;
+  is_requester?: boolean;
+  is_volunteer?: boolean;
   openAuthModal?(): any;
+  history?: any;
 }
 
 class AppNavbar extends Component<ILoginModalProps> {
   render() {
-    const { hasLogin, openAuthModal } = this.props;
+    const { hasLogin, openAuthModal, is_requester, is_volunteer, history } = this.props;
     return (
-      <Navbar bg="light" expand="lg">
+      <Navbar bg="light" expand="md">
         <Navbar.Brand as={NavLink} to="/">
           COVID-19 Mutual Aid
         </Navbar.Brand>
@@ -32,14 +34,19 @@ class AppNavbar extends Component<ILoginModalProps> {
                 <Nav.Link as={NavLink} to="/get-help">
                   Get help
                 </Nav.Link>
-                <Nav.Link as={NavLink} to="/volunteer">
+                <Nav.Link as={NavLink} to="/get-involved">
                   Get involved
                 </Nav.Link>
               </React.Fragment>
             )}
-            {hasLogin && (
+            {hasLogin && is_requester && (
               <Nav.Link as={NavLink} to="/my-requests">
-                Manage requests
+                Requests
+              </Nav.Link>
+            )}
+            {hasLogin && is_volunteer && (
+              <Nav.Link as={NavLink} to="/volunteer">
+                Volunteer
               </Nav.Link>
             )}
           </Nav>
@@ -54,7 +61,7 @@ class AppNavbar extends Component<ILoginModalProps> {
                 <BsFillPersonFill onClick={openAuthModal} />
               </Button>
             )}
-            <Button variant="info" className="m-2">Donate</Button>
+            {is_volunteer ? <Button variant="info" className="m-2" onClick={() => history.push("/profile/me")}>Profile</Button> : null}
             {hasLogin && <Button href="/logout" variant="outline-danger" className="m-2">Logout</Button>}
           </Nav>
 
@@ -67,6 +74,8 @@ class AppNavbar extends Component<ILoginModalProps> {
 const mapStateToProps = (state) => {
   return {
     hasLogin: state.auth.access !== null,
+    is_requester: state.auth.is_requester,
+    is_volunteer: state.auth.is_volunteer,
   };
 };
 

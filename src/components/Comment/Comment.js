@@ -63,7 +63,7 @@ const Comment = (props) => {
 
     if (!loading && comments && comments.results.length > 0) {
         display = cms.map((comment, index) => <CommentSUI key={comment.id}>
-            <CommentSUI.Avatar as='a' src='http://localhost:8000/media/default.jpg' />
+            <CommentSUI.Avatar as='a' src='http://142.93.99.126/media/default.jpg' />
             <CommentSUI.Content>
                 <CommentSUI.Author as='a' href={`/profile/${comment.author}`}>{comment.author_name}</CommentSUI.Author>
                 <CommentSUI.Metadata>
@@ -106,7 +106,7 @@ const Comment = (props) => {
 
             <CommentSUI.Group collapsed={collapsed}>
                 <CommentSUI>
-                    <CommentSUI.Avatar as='a' src='http://localhost:8000/media/elliot.jpg' />
+                    <CommentSUI.Avatar as='a' src='http://142.93.99.126/media/elliot.jpg' />
                     <CommentSUI.Content>
                         <CommentSUI.Author as='a'>Elliot Fu</CommentSUI.Author>
                         <CommentSUI.Metadata>
@@ -123,7 +123,7 @@ const Comment = (props) => {
 
                     <CommentSUI.Avatar
                         as='a'
-                        src='http://localhost:8000/media/jenny.jpg'
+                        src='http://142.93.99.126/media/jenny.jpg'
                     />
                     <CommentSUI.Content>
                         <CommentSUI.Author as='a'>Jenny Hess</CommentSUI.Author>

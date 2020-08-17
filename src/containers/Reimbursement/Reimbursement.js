@@ -49,12 +49,12 @@ const Reimbursement = (props) => {
                                         <Popover.Title as="h3">
                                             <a style={{ display: "table-cell" }}
                                                 rel="noopener noreferrer"
-                                                href={`http://localhost:8000${reimbursement.receipt_photo}`}
+                                                href={`http://142.93.99.126${reimbursement.receipt_photo}`}
                                                 target="_blank">Receipt Photo</a>
                                         </Popover.Title>
 
                                         <Popover.Content>
-                                            <Image src={`http://localhost:8000${reimbursement.receipt_photo}`} thumbnail fluid />
+                                            <Image src={`http://142.93.99.126${reimbursement.receipt_photo}`} thumbnail fluid />
                                         </Popover.Content>
                                     </Popover>
                                 }

@@ -17,3 +17,34 @@
     font-size: 14px;
     font-weight: bold;
 }
+
+.post-reply-btn {
+    background-color: transparent;
+    color: #7cb147;
+    border: none;
+    cursor: pointer;
+    display: inline;
+    margin: 2px;
+    padding: 0;
+    font-size: 18px;
+}
+
+.post-reply-btn:hover{
+    color: green;
+    font-weight: bold;
+}
+
+.delete-reply-btn{
+    background-color: transparent;
+    color: salmon;
+    border: none;
+    cursor: pointer;
+    display: inline;
+    margin: 2px;
+    padding: 0;
+    font-size: 18px;
+}
+.delete-reply-btn:hover{
+    color: red;
+    font-weight: bold;
+}

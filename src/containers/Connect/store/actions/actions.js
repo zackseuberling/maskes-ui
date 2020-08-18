@@ -177,3 +177,131 @@ export const deleteComment = (requestId, commentId, token) => {
             })
     }
 }
+
+
+
+//CREATE REPLY
+export const createReplyStart = () => {
+    return {
+        type: actionTypes.CREATE_REPLY_START
+    }
+}
+
+export const createReplySuccess = (payload) => {
+    return {
+        type: actionTypes.CREATE_REPLY_SUCCESS,
+    }
+}
+
+export const createReplyFail = (error) => {
+    return {
+        type: actionTypes.CREATE_REPLY_FAIL,
+    }
+}
+
+export const createReply = (commentId, content, requestId, token) => {
+    return dispatch => {
+        dispatch(createReplyStart());
+        const url = '/connect/replies/';
+        const config = {
+            headers: {
+                "Authorization": `Bearer ${token}`,
+            }
+        }
+        const body = {
+            reply_content: content,
+            comment: commentId
+        }
+        axios.post(url, body, config)
+            .then(response => {
+                dispatch(createReplySuccess());
+                dispatch(fetchComments(requestId, token))
+            })
+            .catch(error => {
+                dispatch(createReplyFail(error))
+            })
+    }
+}
+
+//UPDATE REPLY
+export const updateReplyStart = () => {
+    return {
+        type: actionTypes.UPDATE_REPLY_START
+    }
+}
+
+export const updateReplySuccess = () => {
+    return {
+        type: actionTypes.UPDATE_REPLY_SUCCESS,
+    }
+}
+
+export const updateReplyFail = () => {
+    return {
+        type: actionTypes.UPDATE_REPLY_FAIL,
+    }
+}
+
+export const updateReply = (replyId, content, commentId, requestId, token) => {
+    return dispatch => {
+        dispatch(updateReplyStart());
+        const url = `/connect/replies/${replyId}/`;
+        const config = {
+            headers: {
+                "Authorization": `Bearer ${token}`,
+            }
+        }
+        const body = {
+            reply_content: content,
+            comment: commentId
+        }
+        axios.put(url, body, config)
+            .then(response => {
+                dispatch(updateReplySuccess());
+                dispatch(fetchComments(requestId, token));
+            })
+            .catch(error => {
+                dispatch(updateReplyFail())
+            })
+    }
+}
+
+//DELETE REPLY
+export const deleteReplyStart = () => {
+    return {
+        type: actionTypes.DELETE_REPLY_START
+    }
+}
+
+export const deleteReplySuccess = () => {
+    return {
+        type: actionTypes.DELETE_REPLY_SUCCESS,
+    }
+}
+
+export const deleteReplyFail = () => {
+    return {
+        type: actionTypes.DELETE_REPLY_FAIL,
+    }
+}
+
+export const deleteReply = (replyId, requestId, token) => {
+    return dispatch => {
+        dispatch(deleteReplyStart());
+        const url = `/connect/replies/${replyId}/`;
+        const config = {
+            headers: {
+                "Authorization": `Bearer ${token}`,
+            }
+        }
+        axios.delete(url, config)
+            .then(response => {
+
+                dispatch(deleteReplySuccess());
+                dispatch(fetchComments(requestId, token))
+            })
+            .catch(error => {
+                dispatch(deleteReplyFail())
+            })
+    }
+}

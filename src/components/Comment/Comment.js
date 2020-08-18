@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { Tabs, Tab } from 'react-bootstrap';
 import { Button, Comment as CommentSUI, Form } from 'semantic-ui-react';
 import { Button as BSButton, Modal } from 'react-bootstrap'
@@ -8,9 +9,15 @@ import moment from 'moment';
 import Aux from '../../hoc/Aux/Aux';
 import './Comment.css';
 
+import Reply from './Reply/Reply';
+
 const Comment = (props) => {
 
-    const { comments, create, update, remove, loading, userId } = props
+    const { comments, create, update, remove,
+        create_reply, update_reply, remove_reply,
+        loading, userId } = props
+
+    const history = useHistory();
 
     const [key, setKey] = useState('Comment');
     const [commentContent, setCommentContent] = useState()
@@ -24,9 +31,23 @@ const Comment = (props) => {
     const toggleEditor = (i) => {
         setCms(cms.map((cm, j) => (j === i) ? { ...cm, key: j, onEdit: !cm.onEdit } : { ...cm, key: j }))
     }
-    const [cms, setCms] = useState(comments ? comments.results.map((cm, i) => ({ ...cm, key: i, onEdit: false })) : [])
+    const [cms, setCms] = useState(comments ?
+        comments.results.map((cm, i) => (
+            {
+                ...cm,
+                key: i,
+                onEdit: false,
+                collapsed: true,
+                comment_content: "",
+                reply_content: ""
+            })
+        ) : [])
     const onChangeComment = (e, i) => {
         setCms(cms.map((cm, j) => (j === i) ? { ...cm, key: j, comment_content: e.target.value } : { ...cm, key: j }))
+    };
+
+    const onChangeReply = (e, i) => {
+        setCms(cms.map((cm, j) => (j === i) ? { ...cm, key: j, reply_content: e.target.value } : { ...cm, key: j }))
     };
 
     //Delete Comment
@@ -52,20 +73,21 @@ const Comment = (props) => {
 
 
     //Show/unshow replies
-    const [collapsed, setCollapsed] = useState(true)
-    const toggleColapsed = (e) => setCollapsed(!collapsed)
-
+    const toggleColapsed = (i) => {
+        setCms(cms.map((cm, j) => (j === i) ? { ...cm, key: j, collapsed: !cm.collapsed } : { ...cm, key: j }))
+    }
 
     let display = []
 
     const edit_button = <BsPencil />
     const delete_button = <BsXSquare />
 
+
     if (!loading && comments && comments.results.length > 0) {
         display = cms.map((comment, index) => <CommentSUI key={comment.id}>
             <CommentSUI.Avatar as='a' src='http://localhost:8000/media/default.jpg' />
             <CommentSUI.Content>
-                <CommentSUI.Author as='a' href={`/profile/${comment.author}`}>{comment.author_name}</CommentSUI.Author>
+                <CommentSUI.Author as='a' onClick={() => history.push(`/profile/${comment.author}`)}>{comment.author_name}</CommentSUI.Author>
                 <CommentSUI.Metadata>
                     <span>{moment(comment.created_date).fromNow()}</span>
                     {comment.onEdit ?
@@ -85,9 +107,9 @@ const Comment = (props) => {
                             {comments.results[index].comment_content}
                         </CommentSUI.Text>
                         <CommentSUI.Actions>
-                            <CommentSUI.Action onClick={toggleColapsed}>
+                            <CommentSUI.Action onClick={(e) => toggleColapsed(index)}>
                                 <CommentSUI.Metadata>
-                                    {comment.reply_count} {comment.reply_count > 1 ? 'Replies' : 'Reply'} {collapsed ? null : <FiChevronDown />}
+                                    {comment.reply_count} {comment.reply_count > 1 ? 'Replies' : 'Reply'} {comment.collapsed ? null : <FiChevronDown />}
                                 </CommentSUI.Metadata>
 
                             </CommentSUI.Action>
@@ -98,46 +120,32 @@ const Comment = (props) => {
                         </CommentSUI.Actions>
                     </Aux>
                     : <Form reply onSubmit={() => update(comment.id, comment.comment_content)}>
-                        <Form.TextArea style={{ height: 60, marginTop: -15 }} onChange={(e) => onChangeComment(e, index)} value={comment.comment_content} />
+                        <Form.TextArea style={{ height: 60, marginTop: -10 }} onChange={(e) => onChangeComment(e, index)} value={comment.comment_content} />
                         <BSButton type='submit' size='sm' className='mr-2'>Update</BSButton><BSButton onClick={(e) => toggleEditor(index)} variant='secondary' size='sm'>Cancel</BSButton>
                     </Form>
                 }
             </CommentSUI.Content>
+            <CommentSUI.Group collapsed={comment.collapsed}>
+                {comment.replies.length > 0 ? comment.replies.map((reply, idx) =>
+                    <Reply
+                        key={idx}
+                        reply={reply}
+                        userId={userId}
+                        moment={moment}
+                        update={update_reply}
+                        remove={remove_reply}
+                    />) : null}
+                <Form reply onSubmit={() => create_reply(comment.id, comment.reply_content)}>
+                    <Form.Group inline>
+                        <Form.Input label="Reply" width={10} style={{ height: 30 }}
+                            onChange={(e) => onChangeReply(e, index)}
+                            value={comment.reply_content}
+                        />
+                    </Form.Group>
 
-            <CommentSUI.Group collapsed={collapsed}>
-                <CommentSUI>
-                    <CommentSUI.Avatar as='a' src='http://localhost:8000/media/elliot.jpg' />
-                    <CommentSUI.Content>
-                        <CommentSUI.Author as='a'>Elliot Fu</CommentSUI.Author>
-                        <CommentSUI.Metadata>
-                            <span>1 day ago</span>
-                        </CommentSUI.Metadata>
-                        <CommentSUI.Text>No, it wont</CommentSUI.Text>
-                        <CommentSUI.Actions>
-                            <a href="?">Reply</a>
-                        </CommentSUI.Actions>
-                    </CommentSUI.Content>
-                </CommentSUI>
-                <CommentSUI>
-
-
-                    <CommentSUI.Avatar
-                        as='a'
-                        src='http://localhost:8000/media/jenny.jpg'
-                    />
-                    <CommentSUI.Content>
-                        <CommentSUI.Author as='a'>Jenny Hess</CommentSUI.Author>
-                        <CommentSUI.Metadata>
-                            <span>20 minutes ago</span>
-                        </CommentSUI.Metadata>
-                        <CommentSUI.Text>Maybe it would.</CommentSUI.Text>
-                        <CommentSUI.Actions>
-                            <a href="?">Reply</a>
-                        </CommentSUI.Actions>
-                    </CommentSUI.Content>
-
-                </CommentSUI>
+                </Form>
             </CommentSUI.Group>
+
         </CommentSUI>)
     } else { display = <div>No comment yet</div> }
 

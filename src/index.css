@@ -5,6 +5,27 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+#page-container {
+  position: relative;
+  min-height: 100vh;
+}
+
+#content-wrap {
+  padding-bottom: 8rem;    /* Footer height */
+}
+
+#footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 6rem;
+  padding-top: 2.5rem;
+  padding-bottom: 3.5rem;         
+  /* Footer height */
+  font-size: 1.08rem;
+
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;

@@ -1,5 +1,4 @@
 import React from 'react';
-import Aux from '../Aux/Aux';
 import Navbar from '../../components/Navbar/Navbar';
 import Alert from '../../components/Alert/Alert';
 import Auth from '../../components/Auth/Auth';
@@ -12,20 +11,23 @@ const Layout = (props) => {
     const history = useHistory();
 
     return (
-        <Aux>
-            <Auth />
-            <Navbar history={history} />
-            <Alert alerts={props.alerts} />
-            {props.hasLogin ? <Container className='p-0 mb-0'><Breadcrumbs /></Container> : null}
+        <div id="page-container">
+            <div id="content-wrap">
+                <Auth />
+                <Navbar history={history} />
+                <Alert alerts={props.alerts} />
+                {props.hasLogin ? <Container className='p-0 mb-0'><Breadcrumbs /></Container> : null}
 
-            {props.children}
+                {props.children}
+            </div>
+            <footer id="footer" className="bg-secondary">
+                <Container>
+                    <p className="m-0 text-center text-white">Copyright &copy; 2020 SKESMA</p>
+                </Container>
+            </footer>
+        </div>
 
-            {/* <footer className="py-5 bg-light">
-            <Container>
-                <p className="m-0 text-center text-black">Copyright &copy; Mutual Aid Group 2020</p>
-            </Container>
-        </footer> */}
-        </Aux>
+
     )
 };
 

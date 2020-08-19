@@ -224,7 +224,7 @@ content: "»";
 }
 .waveTop {
     background-size: 50% 100px;
-    background-image: url('http://front-end-noobs.com/jecko/img/wave-top.png');
+    background-image: url('https://front-end-noobs.com/jecko/img/wave-top.png');
 }
 .waveAnimation .waveTop {
   animation: move-wave 3s;
@@ -234,13 +234,13 @@ content: "»";
 }
 .waveMiddle {
     background-size: 50% 120px;
-    background-image: url("http://front-end-noobs.com/jecko/img/wave-mid.png");
+    background-image: url("https://front-end-noobs.com/jecko/img/wave-mid.png");
 }
 .waveAnimation .waveMiddle {
     animation: move_wave 10s linear infinite;
 }
 .waveBottom {
-    background-image: url('http://front-end-noobs.com/jecko/img/wave-bot.png');
+    background-image: url('https://front-end-noobs.com/jecko/img/wave-bot.png');
     background-size: 50% 100px;
 }
 .waveAnimation .waveBottom {

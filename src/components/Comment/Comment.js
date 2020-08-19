@@ -85,7 +85,7 @@ const Comment = (props) => {
 
     if (!loading && comments && comments.results.length > 0) {
         display = cms.map((comment, index) => <CommentSUI key={comment.id}>
-            <CommentSUI.Avatar as='a' src='https://skesma.com/media/default.jpg' />
+            <CommentSUI.Avatar as='a' src='http://localhost:8000/media/default.jpg' />
             <CommentSUI.Content>
                 <CommentSUI.Author as='a' onClick={() => history.push(`/profile/${comment.author}`)}>{comment.author_name}</CommentSUI.Author>
                 <CommentSUI.Metadata>

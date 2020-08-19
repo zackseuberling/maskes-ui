@@ -49,12 +49,12 @@ const Reimbursement = (props) => {
                                         <Popover.Title as="h3">
                                             <a style={{ display: "table-cell" }}
                                                 rel="noopener noreferrer"
-                                                href={`https://skesma.com${reimbursement.receipt_photo}`}
+                                                href={`http://localhost:8000${reimbursement.receipt_photo}`}
                                                 target="_blank">Receipt Photo</a>
                                         </Popover.Title>
 
                                         <Popover.Content>
-                                            <Image src={`https://skesma.com${reimbursement.receipt_photo}`} thumbnail fluid />
+                                            <Image src={`http://localhost:8000${reimbursement.receipt_photo}`} thumbnail fluid />
                                         </Popover.Content>
                                     </Popover>
                                 }

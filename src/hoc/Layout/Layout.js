@@ -19,8 +19,9 @@ const Layout = (props) => {
                 <Navbar history={history} />
                 <Alert alerts={props.alerts} />
                 {props.hasLogin ? <Container className='p-0 mb-0'><Breadcrumbs /></Container> : null}
-
-                {props.children}
+                <div className="mt-4">
+                    {props.children}
+                </div>
             </div>
             <footer id="footer">
                 <Segment className='waveFooter' inverted vertical style={{ padding: "4em 1em", backgroundColor: "#343a40" }}>

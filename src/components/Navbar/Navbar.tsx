@@ -19,9 +19,9 @@ class AppNavbar extends Component<ILoginModalProps> {
   render() {
     const { hasLogin, openAuthModal, is_requester, is_volunteer, history } = this.props;
     return (
-      <Navbar bg="light" expand="md">
+      <Navbar className="px-4" bg="dark" variant="dark" expand="md">
         <Navbar.Brand as={NavLink} to="/">
-          COVID-19 Mutual Aid
+          SKCE Mutual Aid
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
@@ -32,10 +32,10 @@ class AppNavbar extends Component<ILoginModalProps> {
                   Home
                 </Nav.Link>
                 <Nav.Link as={NavLink} to="/get-help">
-                  Get help
+                  Get Help
                 </Nav.Link>
                 <Nav.Link as={NavLink} to="/get-involved">
-                  Get involved
+                  Get Involved
                 </Nav.Link>
               </React.Fragment>
             )}
@@ -55,13 +55,13 @@ class AppNavbar extends Component<ILoginModalProps> {
             {!hasLogin && (
               <Button
                 onClick={openAuthModal}
-                variant="outline-dark"
+                variant="outline-light"
                 className="m-2"
               >
                 <BsFillPersonFill onClick={openAuthModal} />
               </Button>
             )}
-            {is_volunteer ? <Button variant="info" className="m-2" onClick={() => history.push("/profile/me")}>Profile</Button> : null}
+            {is_volunteer ? <Button variant="outline-dark" className="m-2" onClick={() => history.push("/profile/me")}>Profile</Button> : null}
             {hasLogin && <Button href="/logout" variant="outline-danger" className="m-2">Logout</Button>}
           </Nav>
 

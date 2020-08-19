@@ -1,5 +1,5 @@
 {
-  "homepage": "http://142.93.99.126/",
+  "homepage": "https://skesma.com/",
   "name": "maskes-ui-typescript",
   "version": "0.1.0",
   "private": true,
@@ -19,6 +19,7 @@
     "moment": "^2.27.0",
     "node-sass": "^4.14.1",
     "node-uuid": "^1.4.8",
+    "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-bootstrap": "^1.0.1",
     "react-dom": "^16.13.1",

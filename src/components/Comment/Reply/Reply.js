@@ -47,7 +47,7 @@ const Reply = (props) => {
     return (
         <ReplySUI>
             {deleteModal}
-            <ReplySUI.Avatar className="reply-avatar" as='a' src="https://skesma.com/media/elliot.jpg" />
+            <ReplySUI.Avatar className="reply-avatar" as='a' src="https://skcema.org/media/elliot.jpg" />
             <ReplySUI.Content>
                 <ReplySUI.Author as='a' onClick={() => history.push(`/profile/${reply.author}`)}>{reply.author_name}</ReplySUI.Author>
                 <ReplySUI.Metadata>

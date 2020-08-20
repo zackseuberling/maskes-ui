@@ -67,7 +67,7 @@ const App = ({ isAuthenticated, authCheckLoginState, is_requester, is_volunteer 
 
   return (
     <Layout>
-      {!isAuthenticated ? public_routes : null}
+      {public_routes}
       <Route exact path='/password-reset' component={ResetPassword} />
       <Route exact path="/password-reset-confirm/:uid/:token" component={ConfirmPassword}></Route>
       <Route exact path='/email-reset' component={ResetEmail} />

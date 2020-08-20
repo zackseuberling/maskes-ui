@@ -2,3 +2,12 @@
   margin-right: 12px;
   margin-left: 12px;
 }
+.profile-button {
+  color: #fbbd08;
+  border:  1px solid #343a40 !important;
+  background-color: transparent !important;
+}
+
+.profile-button:hover {
+  text-decoration: wavy;
+}

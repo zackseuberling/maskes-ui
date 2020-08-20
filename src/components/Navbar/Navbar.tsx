@@ -61,8 +61,8 @@ class AppNavbar extends Component<ILoginModalProps> {
                 <BsFillPersonFill onClick={openAuthModal} />
               </Button>
             )}
-            {is_volunteer ? <Button variant="outline-dark" className="m-2" onClick={() => history.push("/profile/me")}>Profile</Button> : null}
-            {hasLogin && <Button href="/logout" variant="outline-danger" className="m-2">Logout</Button>}
+            {is_volunteer ? <Button className="profile-button m-2" onClick={() => history.push("/profile/me")}>Profile</Button> : null}
+            {hasLogin && <Button onClick={() => history.push("/logout")} variant="outline-danger" className="m-2">Logout</Button>}
           </Nav>
 
         </Navbar.Collapse>

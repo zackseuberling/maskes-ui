@@ -2,7 +2,7 @@
     column-count: 1;
 }
 
-@media (min-width:767px) {
+@media (min-width:768px) {
     .card_columns {
         column-count: 2;
     }
@@ -16,10 +16,6 @@
 
 .card-title {
     margin-bottom: 0;
-}
-
-.card_shadow:hover {
-    box-shadow: 1px 1px 5px #e9e9e9;
 }
 
 .request_shadow:hover {

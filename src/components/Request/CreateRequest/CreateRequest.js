@@ -450,7 +450,7 @@ const CreateRequest = (props) => {
           <Card.Text>
             We know that violence and abuse thrives in isolation, so do keep reaching out to your friends and family and creating online spaces to connect. If you or your loved ones need more resources and support, reach out to any of these organizations: API Chaya, The Northwest Network of Bi, Trans, Lesbian, and Gay Survivors of Abuse, The Arc of King County, MCRC Seattle, CAIR Washington, National Domestic Violence Hotline King County Sexual Assault Resource Center, MAPS AMEN, National Human Trafficking Hotline: 1-888-373-7888.
           </Card.Text>
-          <Button variant="outline-info" size="sm" href='https://www.apichaya.org/' target="_blank" rel="noopener noreferrer">Go to apichaya.org</Button>
+          <Button variant="link" size="sm" href='https://www.apichaya.org/' target="_blank" rel="noopener noreferrer">Go to apichaya.org</Button>
           <br />
           <Card.Img
             variant="bottom"

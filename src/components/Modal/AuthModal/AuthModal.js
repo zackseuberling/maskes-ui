@@ -10,7 +10,7 @@ import Aux from '../../../hoc/Aux/Aux';
 import './AuthModal.css';
 
 const AuthModal = (props) => {
-    const { showModal, hideModal, isLogin, loading, error, onSubmit, hasLogin, switchMode, onChange } = props
+    const { showModal, hideModal, isLogin, loading, error, onSubmit, hasLogin, switchMode, onChange, is_volunteer, is_requester } = props
     const loading_button = (
         <Button variant="primary" disabled block>
             <Spinner
@@ -33,8 +33,12 @@ const AuthModal = (props) => {
             centered
             className="auth-modal"
         >
+            {/* REDIRECT AFTER LOGIN */}
 
-            {hasLogin ? <Redirect to='/volunteer'/> : null}
+            {hasLogin ? 
+                (is_volunteer ? <Redirect to='/volunteer'/> :
+                is_requester? <Redirect to='/my-requests'/>: <Redirect to='/' />)
+            : null}
 
             <Modal.Header closeButton>
                 <Modal.Title id="contained-modal-title-vcenter">

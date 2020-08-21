@@ -24,7 +24,7 @@ const Auth = (props) => {
     const is_volunteer = false;
     const is_requester = true;
 
-    const { showAuthModal, hideAuthModal, onAuth, isLoading, hasError, hasLogin } = props;
+    const { showAuthModal, hideAuthModal, onAuth, isLoading, hasError, hasLogin, auth_volunteer, auth_requester } = props;
 
     const onChange = (event) => setFormData({ ...formData, [event.target.name]: event.target.value });
 
@@ -44,6 +44,8 @@ const Auth = (props) => {
             hasLogin={hasLogin}
             switchMode={switchAuthModeHandler}
             onChange={onChange}
+            is_volunteer={auth_volunteer}
+            is_requester={auth_requester}
         />
     );
 };
@@ -54,6 +56,8 @@ const mapStateToProps = (state) => {
         isLoading: state.auth.loading,
         hasError: state.auth.error,
         hasLogin: state.auth.access !== null,
+        auth_volunteer: state.auth.is_volunteer,
+        auth_requester: state.auth.is_requester
     };
 };
 

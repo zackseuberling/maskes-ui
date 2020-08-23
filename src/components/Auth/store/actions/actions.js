@@ -41,16 +41,17 @@ export const logoutSuccess = () => {
 
 export const logout = () => {
     return dispatch => {
+        dispatch(logoutSuccess())
+        localStorage.removeItem('access');
+        localStorage.removeItem('refresh');
+        localStorage.removeItem('expirationDate');
+        localStorage.removeItem('is_requester');
+        localStorage.removeItem('is_volunteer');
+        localStorage.removeItem('name');
+        localStorage.removeItem('user_id');
         axios.post('/blacklist/', { "refresh": localStorage.getItem('refresh') })
             .then(response => {
-                dispatch(logoutSuccess())
-                localStorage.removeItem('access');
-                localStorage.removeItem('refresh');
-                localStorage.removeItem('expirationDate');
-                localStorage.removeItem('is_requester');
-                localStorage.removeItem('is_volunteer');
-                localStorage.removeItem('name');
-                localStorage.removeItem('user_id');
+
             })
             .catch(error => {
 
@@ -61,7 +62,7 @@ export const logout = () => {
 export const checkAuthTimeout = (expirationTime) => {
     return dispatch => {
         setTimeout(() => {
-            dispatch(logout());
+            // dispatch(logout());
         }, expirationTime)
     }
 }
@@ -159,7 +160,7 @@ export const authCheckLoginState = () => {
             }
 
         } else {
-            dispatch(logout())
+            // dispatch(logout())
         }
     }
 }

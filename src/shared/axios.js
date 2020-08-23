@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const baseURL = 'https://skcema.org'
+const baseURL = 'http://localhost:8000'
 
 const instance = axios.create(
     {
@@ -36,7 +36,6 @@ instance.interceptors.response.use(
 
                 // exp date in token is expressed in seconds, while now() returns milliseconds:
                 const now = Math.ceil(Date.now() / 1000);
-                console.log(tokenParts.exp);
 
                 if (tokenParts.exp > now) {
                     return instance
@@ -48,7 +47,7 @@ instance.interceptors.response.use(
                             return instance(request);
                         })
                         .catch(error => {
-                            console.log(error)
+
                         });
                 } else {
                     console.log("Refresh token is expired", tokenParts.exp, now);

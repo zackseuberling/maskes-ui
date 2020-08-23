@@ -55,7 +55,7 @@ const Layout = (props) => {
                                     </p>
                                 </Grid.Column>
                             </Grid.Row>
-                            <Grid.Row style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold' }}>
+                            <Grid.Row style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                                 <p>Copyright &copy; 2020 SKCEMA</p>
                             </Grid.Row>
                         </Grid>

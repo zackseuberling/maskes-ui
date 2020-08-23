@@ -34,7 +34,7 @@ import { authCheckLoginState } from './components/Auth/store/actions/actions';
 const App = ({ isAuthenticated, authCheckLoginState, is_requester, is_volunteer }) => {
   useEffect(() => {
     authCheckLoginState();
-  })
+  }, [authCheckLoginState])
   const requester_routes = (
     <Switch>
       <ProtectedRoute exact path='/my-requests' component={RequestList} />
@@ -62,6 +62,7 @@ const App = ({ isAuthenticated, authCheckLoginState, is_requester, is_volunteer 
       <Route exact path='/get-involved' component={GetInvolved} />
       <Route exact path='/volunteer/signup' component={SignUp} />
       <Route exact path="/logout" component={Logout} />
+      <Redirect from="/admin" to="/admin/" />
     </Switch>
   );
 

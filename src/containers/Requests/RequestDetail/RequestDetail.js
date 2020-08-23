@@ -19,7 +19,6 @@ const RequestDetail = (props) => {
 
   let request_detail = {}
   if (!loading && request) {
-    console.log(request);
     request_detail = (
       <tbody>
         <tr><td>Request #</td><td>{request.id}</td></tr>

@@ -12,7 +12,7 @@ import './AuthModal.css';
 const AuthModal = (props) => {
     const { showModal, hideModal, isLogin, loading, error, onSubmit, hasLogin, switchMode, onChange, is_volunteer, is_requester } = props
     const loading_button = (
-        <Button variant="primary" disabled block>
+        <Button className="auth-button" variant="primary" disabled block>
             <Spinner
                 as="span"
                 animation="grow"
@@ -28,10 +28,10 @@ const AuthModal = (props) => {
             show={showModal}
             onHide={hideModal}
             dialogClassName="modal-50w"
-            animation={true}
             aria-labelledby="contained-modal-title-vcenter"
             centered
             className="auth-modal"
+            animation={false}
         >
             {/* REDIRECT AFTER LOGIN */}
 

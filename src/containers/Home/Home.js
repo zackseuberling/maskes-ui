@@ -141,7 +141,7 @@ ResponsiveContainer.propTypes = {
 
 const Home = ({ openAuthModal, isAuthenticated }) => (
     <ResponsiveContainer openAuthModal={openAuthModal} isAuthenticated={isAuthenticated}>
-        <Segment style={{ padding: "8em 0em" }} vertical>
+        <Segment style={{ padding: "4em 0em" }} vertical>
             <Grid container stackable verticalAlign="middle">
                 <Grid.Row style={{ padding: "2em" }}>
                     <Grid.Column width={10}>

@@ -32,7 +32,7 @@ const Reply = (props) => {
             })
 
         return () => mounted = false;
-    }, [token, userId])
+    }, [token, reply.author])
 
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [deleteReplyId, setDeleteReplyId] = useState(null)

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Tabs, Tab } from 'react-bootstrap';
 import { Button, Comment as CommentSUI, Form } from 'semantic-ui-react';
@@ -8,16 +8,23 @@ import { BsPencil, BsXSquare } from 'react-icons/bs';
 import moment from 'moment';
 import Aux from '../../hoc/Aux/Aux';
 import './Comment.css';
-
 import Reply from './Reply/Reply';
+import { connect } from 'react-redux';
+import { fetchProfile } from '../../containers/UserProfile/store/actions/actions';
 
 const Comment = (props) => {
 
     const { comments, create, update, remove,
         create_reply, update_reply, remove_reply,
-        loading, userId } = props
+        loading, userId, profile, fetchProfile, token } = props
+
+
 
     const history = useHistory();
+
+    useEffect(() => {
+        fetchProfile(userId, token)
+    }, [userId, fetchProfile, token])
 
     const [key, setKey] = useState('Comment');
     const [commentContent, setCommentContent] = useState()
@@ -85,7 +92,7 @@ const Comment = (props) => {
 
     if (!loading && comments && comments.results.length > 0) {
         display = cms.map((comment, index) => <CommentSUI key={comment.id}>
-            <CommentSUI.Avatar as='a' src='https://skcema.org/media/default.jpg' />
+            <CommentSUI.Avatar as='a' src={profile.image} />
             <CommentSUI.Content>
                 <CommentSUI.Author as='a' onClick={() => history.push(`/profile/${comment.author}`)}>{comment.author_name}</CommentSUI.Author>
                 <CommentSUI.Metadata>
@@ -134,6 +141,7 @@ const Comment = (props) => {
                         moment={moment}
                         update={update_reply}
                         remove={remove_reply}
+                        token={token}
                     />) : null}
                 <Form reply onSubmit={() => create_reply(comment.id, comment.reply_content)}>
                     <Form.Group inline>
@@ -172,4 +180,10 @@ const Comment = (props) => {
     );
 };
 
-export default Comment;
+const mapStateToProps = state => {
+    return {
+        profile: state.profile.profile,
+        token: state.auth.access,
+    }
+}
+export default connect(mapStateToProps, { fetchProfile })(Comment);

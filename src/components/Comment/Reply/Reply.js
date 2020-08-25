@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from '../../../shared/axios';
 import { useHistory } from 'react-router-dom';
 import { Comment as ReplySUI, Form } from 'semantic-ui-react';
 import { Button as BSButton, Modal } from 'react-bootstrap'
@@ -7,8 +8,31 @@ import moment from 'moment';
 import './Reply.css';
 
 const Reply = (props) => {
-    const { reply, userId, update, remove } = props;
+    const { reply, userId, update, remove, token } = props;
     const isOwner = userId === reply.author
+
+    const [authorAvatar, setAuthorAvatar] = useState()
+
+    useEffect(() => {
+        let mounted = true;
+
+        const url = `/profile/${reply.author}/`
+        const config = {
+            headers: {
+                "Authorization": `Bearer ${token}`,
+            }
+        }
+        axios.get(url, config)
+            .then(response => {
+                const payload = response.data.image
+                if (mounted) { setAuthorAvatar(payload) }
+            })
+            .catch(error => {
+
+            })
+
+        return () => mounted = false;
+    }, [token, userId])
 
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [deleteReplyId, setDeleteReplyId] = useState(null)
@@ -47,7 +71,7 @@ const Reply = (props) => {
     return (
         <ReplySUI>
             {deleteModal}
-            <ReplySUI.Avatar className="reply-avatar" as='a' src="https://skcema.org/media/elliot.jpg" />
+            <ReplySUI.Avatar className="reply-avatar" as='a' src={authorAvatar} />
             <ReplySUI.Content>
                 <ReplySUI.Author as='a' onClick={() => history.push(`/profile/${reply.author}`)}>{reply.author_name}</ReplySUI.Author>
                 <ReplySUI.Metadata>

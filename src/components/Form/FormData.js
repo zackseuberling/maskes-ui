@@ -22,6 +22,7 @@ export const locations = [
     'Redmond',
     'Renton',
     'Sammamish',
+    'SeaTac',
     'Snoqualmie',
     'Summer',
     'Tukwila',

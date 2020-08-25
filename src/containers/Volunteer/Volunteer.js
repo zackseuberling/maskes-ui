@@ -7,9 +7,13 @@ const Volunteer = (props) => {
     return (
         <Container className='mt-4'>
             <Container >
-                <h4 style={{ fontWeight: 'bold' }}>Hello {props.name}!</h4>
+                <h4 style={{ fontWeight: 'bold' }}>
+                    Hello {props.name}!</h4>
                 <p>We need your help!</p>
-                <Button variant='outline-dark' onClick={() => history.push(`/volunteer/my-volunteer`)}>My Volunteer</Button>
+                <Button className="my-volunteer-button"
+                    onClick={() => history.push(`/volunteer/my-volunteer`)}
+                    variant='outline-dark'
+                >My Volunteer</Button>
             </Container>
             <hr />
             <Container className='mt-3'>

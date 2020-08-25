@@ -19,8 +19,16 @@ instance.interceptors.response.use(
     error => {
         const request = error.config;
 
+        const refresh_url = '/auth/jwt/refresh/';
         // Prevent infinite loops
-        if (error.response.status === 401 && request.url === baseURL + '/auth/jwt/refresh/') {
+        if (error.response.status === 401 && request.url === refresh_url) {
+            localStorage.removeItem('access');
+            localStorage.removeItem('expirationDate');
+            localStorage.removeItem('is_requester');
+            localStorage.removeItem('is_volunteer');
+            localStorage.removeItem('name');
+            localStorage.removeItem('user_id');
+            localStorage.removeItem('refresh');
             window.location.href = '/';
             return Promise.reject(error);
         }
@@ -50,12 +58,10 @@ instance.interceptors.response.use(
 
                         });
                 } else {
-                    console.log("Refresh token is expired", tokenParts.exp, now);
                     window.location.href = '/';
                 };
 
             } else {
-                console.log("Refresh token not available.")
                 window.location.href = '/';
             }
         }

@@ -10,7 +10,6 @@ import DeleteModal from '../../../components/Modal/DeleteModal/DeleteModal';
 import UpdateModal from '../../../components/Modal/UpdateModal/UpdateModal';
 import './MyVolunteer.css';
 
-
 const MyVolunteerDetail = (props) => {
 
     const { volunteer, loading, token, match, name, isMyVolunteer,
@@ -24,6 +23,7 @@ const MyVolunteerDetail = (props) => {
     const [deleteId, setDeleteId] = useState(null)
     const [updateId, setUpdateId] = useState(null)
 
+    const [reimbursementId, setReimbursementId] = useState()
 
     useEffect(() => {
         if (isMyVolunteer) {
@@ -34,6 +34,12 @@ const MyVolunteerDetail = (props) => {
     useEffect(() => {
         fetchVolunteerDetail(match.params.volunteerId, token)
     }, [fetchVolunteerDetail, token, match.params.volunteerId])
+
+    useEffect(() => {
+        if (volunteer.reimbursement_detail) {
+            setReimbursementId(volunteer.reimbursement_detail.id)
+        }
+    }, [volunteer.reimbursement_detail, setReimbursementId])
 
     const onMyVolunteer = (event) => {
         setMyVolunteer(!myVolunteer);
@@ -62,7 +68,6 @@ const MyVolunteerDetail = (props) => {
         updateVolunteer(updateId, token);
         setShowUpdateModal(false);
     }
-
 
     let display = []
     if (!loading && volunteer.request_detail) {
@@ -111,16 +116,17 @@ const MyVolunteerDetail = (props) => {
                                 <tbody>
                                     <tr><td>Contact Phone</td><td>{volunteer.request_detail.phone}</td></tr>
                                     <tr><td>Delivery Address</td><td>{`${volunteer.request_detail.address1} ${volunteer.request_detail.address2}, ${volunteer.request_detail.city}, WA ${volunteer.request_detail.zip_code}`}</td></tr>
+                                    <tr><td>Budget</td><td style={{ fontWeight: "bold", color: "green" }}>${75 + 25 * (parseInt(volunteer.request_detail.household_number) - 1)}</td></tr>
                                 </tbody>
                             </Table>
                             <div>
                                 <Button
-                                    className='mt-1 mb-3 mr-2'
+                                    className='mt-1 mb-3 mr-2 confirm-button'
                                     onClick={() => showUpdateModalHandler(volunteer.id, volunteer.request_detail.id)}
                                 >Confirm Delivered</Button>
                                 <Button
                                     className='mt-1 mb-3'
-                                    variant='danger'
+                                    variant='outline-danger'
                                     onClick={() => showDeleteModalHandler(volunteer.id)}
                                 >Cancel</Button>
                             </div>
@@ -129,7 +135,8 @@ const MyVolunteerDetail = (props) => {
                     || (volunteer.status === 'Delivered'
                         && <Reimbursement
                             volunteerId={volunteer.id}
-                            reimbursement={volunteer.reimbursement_detail}
+                            reimbursement_detail={volunteer.reimbursement_detail}
+                            reimbursementId={reimbursementId}
                         />)
                 }
 

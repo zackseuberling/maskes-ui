@@ -34,13 +34,12 @@ import { authCheckLoginState } from './components/Auth/store/actions/actions';
 const App = ({ isAuthenticated, authCheckLoginState, is_requester, is_volunteer }) => {
   useEffect(() => {
     authCheckLoginState();
-  }, [authCheckLoginState])
+  })
   const requester_routes = (
     <Switch>
       <ProtectedRoute exact path='/my-requests' component={RequestList} />
       <ProtectedRoute exact path='/my-requests/create-request' component={CreateRequest} />
       <ProtectedRoute exact path='/my-requests/:requestId' component={RequestDetail} />
-      <Route exact path="/logout" component={Logout} />
     </Switch>
   );
   const volunteer_routes = (
@@ -50,7 +49,6 @@ const App = ({ isAuthenticated, authCheckLoginState, is_requester, is_volunteer 
       <ProtectedRoute exact path='/volunteer/my-volunteer/:volunteerId' component={MyVolunteerDetail} />
       <Redirect from='/volunteer/signup' to='/volunteer' />
       <ProtectedRoute exact path='/volunteer/:requestId' component={VolunteerDetail} />
-      <ProtectedRoute exact path="/logout" component={Logout} />
       <Redirect exact from='/profile' to='/profile/me' />
       <Route exact path='/profile/:userId' component={UserProfile} />
     </Switch>
@@ -61,7 +59,6 @@ const App = ({ isAuthenticated, authCheckLoginState, is_requester, is_volunteer 
       <Route exact path='/get-help' component={GetHelp} />
       <Route exact path='/get-involved' component={GetInvolved} />
       <Route exact path='/volunteer/signup' component={SignUp} />
-      <Route exact path="/logout" component={Logout} />
       <Redirect from="/admin" to="/admin/" />
     </Switch>
   );
@@ -69,6 +66,7 @@ const App = ({ isAuthenticated, authCheckLoginState, is_requester, is_volunteer 
   return (
     <Layout>
       {public_routes}
+      <Route exact path="/logout" component={Logout} />
       <Route exact path='/password-reset' component={ResetPassword} />
       <Route exact path="/password-reset-confirm/:uid/:token" component={ConfirmPassword}></Route>
       <Route exact path='/email-reset' component={ResetEmail} />

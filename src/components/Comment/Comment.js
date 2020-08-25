@@ -121,7 +121,7 @@ const Comment = (props) => {
                     </Aux>
                     : <Form reply onSubmit={() => update(comment.id, comment.comment_content)}>
                         <Form.TextArea style={{ height: 60, marginTop: -10 }} onChange={(e) => onChangeComment(e, index)} value={comment.comment_content} />
-                        <BSButton type='submit' size='sm' className='mr-2'>Update</BSButton><BSButton onClick={(e) => toggleEditor(index)} variant='secondary' size='sm'>Cancel</BSButton>
+                        <BSButton type='submit' size='sm' className='mr-2 update-comment-button'>Update</BSButton><BSButton onClick={(e) => toggleEditor(index)} variant='secondary' size='sm'>Cancel</BSButton>
                     </Form>
                 }
             </CommentSUI.Content>
@@ -164,7 +164,7 @@ const Comment = (props) => {
                 <Tab eventKey="Add Comment" title="Add Comment">
                     <Form reply onSubmit={() => create(commentContent)}>
                         <Form.TextArea onChange={onChange} value={commentContent} />
-                        <Button type='submit' content='Add Comment' labelPosition='left' icon='edit' primary />
+                        <Button className="add-comment-button" type='submit' content='Add Comment' labelPosition='left' icon='edit' primary />
                     </Form>
                 </Tab>
             </Tabs>

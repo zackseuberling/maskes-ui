@@ -1,0 +1,15 @@
+.create-request-button {
+    color: white !important;
+    background-color: #7d0030 !important;
+    border: 1px solid #7d0030 !important;
+    box-shadow: 1px 1px 6px #a5a5a5;
+}
+    
+.create-request-button:hover {
+    background-color: #ba0248 !important;
+    border: 1px solid #ba0248 !important;
+    box-shadow: 2px 1px 8px #a9a9a9;
+    margin-left: 1px;
+    margin-bottom: 1px;
+    margin-top: -1px
+}

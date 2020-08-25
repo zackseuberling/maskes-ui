@@ -48,3 +48,29 @@
     color: red;
     font-weight: bold;
 }
+
+.add-comment-button {
+    color: white !important;
+    background-color: #b44c70 !important;
+    border: 1px solid #b8597b !important;
+}
+
+.add-comment-button:hover {
+    color: white !important;
+    background-color: #852647 !important;
+    border: 1px solid #852647 !important;
+    
+}
+
+.update-comment-button {
+    color: white !important;
+    background-color: #b44c70 !important;
+    border: 1px solid #b8597b !important;
+}
+
+.update-comment-button:hover {
+    color: white !important;
+    background-color: #852647 !important;
+    border: 1px solid #852647 !important;
+    
+}

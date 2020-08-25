@@ -34,6 +34,13 @@ export const authFail = (error) => {
 }
 
 export const logoutSuccess = () => {
+    localStorage.removeItem('access');
+    localStorage.removeItem('expirationDate');
+    localStorage.removeItem('is_requester');
+    localStorage.removeItem('is_volunteer');
+    localStorage.removeItem('name');
+    localStorage.removeItem('user_id');
+    localStorage.removeItem('refresh');
     return {
         type: actionTypes.AUTH_LOGOUT
     };
@@ -41,31 +48,24 @@ export const logoutSuccess = () => {
 
 export const logout = () => {
     return dispatch => {
-        dispatch(logoutSuccess())
-        localStorage.removeItem('access');
-        localStorage.removeItem('refresh');
-        localStorage.removeItem('expirationDate');
-        localStorage.removeItem('is_requester');
-        localStorage.removeItem('is_volunteer');
-        localStorage.removeItem('name');
-        localStorage.removeItem('user_id');
+
         axios.post('/blacklist/', { "refresh": localStorage.getItem('refresh') })
             .then(response => {
-
+                dispatch(logoutSuccess())
             })
             .catch(error => {
-
+                dispatch(logoutSuccess())
             })
     }
 }
 
-export const checkAuthTimeout = (expirationTime) => {
-    return dispatch => {
-        setTimeout(() => {
-            // dispatch(logout());
-        }, expirationTime)
-    }
-}
+// export const checkAuthTimeout = (expirationTime) => {
+//     return dispatch => {
+//         setTimeout(() => {
+//             // dispatch(logout());
+//         }, expirationTime)
+//     }
+// }
 
 export const onAuth = (first_name, last_name, display_name, email, password, hasAccount, is_requester, is_volunteer) => {
     return dispatch => {
@@ -100,7 +100,7 @@ export const onAuth = (first_name, last_name, display_name, email, password, has
                     localStorage.setItem('user_id', res.data.user_id)
                     dispatch(authSuccess(res.data));
                     dispatch(hideAuthModal())
-                    dispatch(checkAuthTimeout(expiresIn))
+                    // dispatch(checkAuthTimeout(expiresIn))
                 })
                 .catch(err => {
                     dispatch(authFail(err));
@@ -123,7 +123,7 @@ export const onAuth = (first_name, last_name, display_name, email, password, has
                             localStorage.setItem('user_id', res.data.user_id)
                             dispatch(authSuccess(res.data));
                             dispatch(hideAuthModal())
-                            dispatch(checkAuthTimeout(expiresIn))
+                            // dispatch(checkAuthTimeout(expiresIn))
                         })
                         .catch(err => {
                             dispatch(authFail(err));
@@ -151,16 +151,17 @@ export const authCheckLoginState = () => {
             user_id: localStorage.getItem('user_id')
         }
         if (access) {
-            const expirationDate = new Date(localStorage.getItem('expirationDate'));
-            if (expirationDate < new Date()) {
-                dispatch(logout());
-            } else {
-                dispatch(authSuccess(payload));
-                dispatch(checkAuthTimeout(expirationDate.getTime() - new Date().getTime()))
-            }
+            // const expirationDate = new Date(localStorage.getItem('expirationDate'));
+            // if (expirationDate < new Date()) {
+            // dispatch(logout());
+            // } else {
+            dispatch(authSuccess(payload));
+            // dispatch(checkAuthTimeout(expirationDate.getTime() - new Date().getTime()))
+            // }
 
-        } else {
-            // dispatch(logout())
         }
+        // else {
+        //     dispatch(logout())
+        // }
     }
 }

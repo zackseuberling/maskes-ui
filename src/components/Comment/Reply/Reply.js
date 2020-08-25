@@ -64,7 +64,7 @@ const Reply = (props) => {
                         </ReplySUI.Actions> : null}
                     {isOwner && !onEdit
                         ? <ReplySUI.Actions>
-                            <ReplySUI.Metadata as='a' onClick={toggleEdit}>
+                            <ReplySUI.Metadata as='a' className="edit-reply-button" onClick={toggleEdit}>
                                 Edit
                         </ReplySUI.Metadata>
                         </ReplySUI.Actions> : null}
@@ -74,7 +74,7 @@ const Reply = (props) => {
                 {onEdit
                     ? <Form reply onSubmit={handleSubmit}>
                         <Form.Input onChange={onChangeReply} value={replyContent} />
-                        <BSButton type='submit' size='sm' className='mr-2'>Update</BSButton><BSButton onClick={toggleEdit} variant='secondary' size='sm'>Cancel</BSButton>
+                        <BSButton type='submit' size='sm' className='mr-2 update-button'>Update</BSButton><BSButton onClick={toggleEdit} variant='secondary' size='sm'>Cancel</BSButton>
                     </Form>
                     : <ReplySUI.Text>{reply.reply_content}</ReplySUI.Text>}
 

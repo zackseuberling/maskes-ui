@@ -1,7 +1,7 @@
 import * as actionTypes from '../actions/actionTypes';
 import { updateObject } from '../../../../shared/utility';
 const initialState = {
-    reimbursement: [],
+    reimbursement: null,
     loading: false,
     error: null,
     status: null,
@@ -32,6 +32,7 @@ const fetchReimbursementFail = (state, action) => {
 //DELETE REIMBURSEMENT
 const deleteReimbursementSuccess = (state, action) => {
     return updateObject(state, {
+        reimbursement: null,
         status: action.status,
         loading: false,
         error: null,

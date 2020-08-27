@@ -69,8 +69,6 @@ const MyVolunteerDetail = (props) => {
         setShowUpdateModal(false);
     }
 
-    console.log(volunteer)
-
     let display = []
     if (!loading && volunteer.request_detail) {
         display = (

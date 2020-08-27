@@ -18,8 +18,6 @@ const Comment = (props) => {
         create_reply, update_reply, remove_reply,
         loading, userId, profile, fetchProfile, token } = props
 
-
-
     const history = useHistory();
 
     useEffect(() => {
@@ -38,6 +36,7 @@ const Comment = (props) => {
     const toggleEditor = (i) => {
         setCms(cms.map((cm, j) => (j === i) ? { ...cm, key: j, onEdit: !cm.onEdit } : { ...cm, key: j }))
     }
+
     const [cms, setCms] = useState(comments ?
         comments.results.map((cm, i) => (
             {
@@ -45,7 +44,7 @@ const Comment = (props) => {
                 key: i,
                 onEdit: false,
                 collapsed: true,
-                comment_content: "",
+                comment_content: cm.comment_content,
                 reply_content: ""
             })
         ) : [])
@@ -128,7 +127,8 @@ const Comment = (props) => {
                     </Aux>
                     : <Form reply onSubmit={() => update(comment.id, comment.comment_content)}>
                         <Form.TextArea style={{ height: 60, marginTop: -10 }} onChange={(e) => onChangeComment(e, index)} value={comment.comment_content} />
-                        <BSButton type='submit' size='sm' className='mr-2 update-comment-button'>Update</BSButton><BSButton onClick={(e) => toggleEditor(index)} variant='secondary' size='sm'>Cancel</BSButton>
+                        <BSButton type='submit' size='sm' className='mr-2 update-comment-button'>Update</BSButton>
+                        <BSButton onClick={(e) => toggleEditor(index)} variant='secondary' size='sm'>Cancel</BSButton>
                     </Form>
                 }
             </CommentSUI.Content>

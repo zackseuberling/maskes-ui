@@ -6,6 +6,8 @@ import Volunteer from '../Volunteer';
 import Connect from '../../../containers/Connect/Connect';
 import { connect } from 'react-redux';
 import { fetchVolunteerRequestDetail, volunteering } from './store/actions/actions';
+import { FaRegHandPaper } from 'react-icons/fa';
+import "../Volunteer.css";
 
 const VolunteerDetail = (props) => {
 
@@ -28,13 +30,13 @@ const VolunteerDetail = (props) => {
     const onMyVolunteer = (event) => {
         setMyVolunteer(!myVolunteer);
         if (!myVolunteer) {
-            history.push('/volunteer/my-volunteer')
+            history.push('/volunteer/my-support')
         }
     }
 
     const volunteerSignupHandler = requestId => {
         volunteering(requestId, token);
-        history.push('/volunteer/my-volunteer');
+        history.push('/volunteer/my-support');
     }
 
     let display = []
@@ -55,10 +57,10 @@ const VolunteerDetail = (props) => {
                 </Table>
 
                 {request.volunteer_status === 'Available' ? <Button size='lg'
-                    className='mt-1 mb-3'
-                    variant='outline-primary'
+                    className='mt-1 mb-3 '
+                    variant='outline-primary volunteer-button'
                     onClick={() => volunteerSignupHandler(request.id)}
-                >Volunteer!</Button> : null
+                >Volunteer! <FaRegHandPaper className='mb-1' /></Button> : null
                 }
 
                 <Connect requestId={request.id} />

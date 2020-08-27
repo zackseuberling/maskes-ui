@@ -45,12 +45,12 @@ const App = ({ isAuthenticated, authCheckLoginState, is_requester, is_volunteer 
   const volunteer_routes = (
     <Switch>
       <ProtectedRoute exact path='/volunteer' component={VolunteerList} />
-      <ProtectedRoute exact path='/volunteer/my-volunteer' component={MyVolunteerList} />
-      <ProtectedRoute exact path='/volunteer/my-volunteer/:volunteerId' component={MyVolunteerDetail} />
+      <ProtectedRoute exact path='/volunteer/my-support' component={MyVolunteerList} />
+      <ProtectedRoute exact path='/volunteer/my-support/:volunteerId' component={MyVolunteerDetail} />
       <Redirect from='/volunteer/signup' to='/volunteer' />
       <ProtectedRoute exact path='/volunteer/:requestId' component={VolunteerDetail} />
-      <Redirect exact from='/profile' to='/profile/me' />
-      <Route exact path='/profile/:userId' component={UserProfile} />
+      <Redirect exact from='/profile' to='/profile/me/' />
+      <Route exact path='/profile/:userId/' component={UserProfile} />
     </Switch>
   )
   const public_routes = (

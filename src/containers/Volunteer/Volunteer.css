@@ -32,17 +32,33 @@
     background-color: #fafafa;
 }
 
-.my-volunteer-button {
+.my-support-button {
 color: black !important;
 background-color: #ffae00 !important;
 border: 1px solid #ffae00 !important;
 box-shadow: 1px 1px 6px #a5a5a5;
 }
 
-.my-volunteer-button:hover {
+.my-support-button:hover {
     background-color: #ffbb27 !important;
     box-shadow: 2px 1px 8px #a9a9a9;
     margin-left: 1px;
     margin-bottom: 1px;
     margin-top: -1px
 }
+
+.volunteer-button {
+    color: black !important;
+    background-color: #ffbb27 !important;
+    border: 0 !important;
+    box-shadow: 1px 1px 6px #a5a5a5;
+    }
+    
+.volunteer-button:hover {
+    background-color: #f7b015 !important;
+    box-shadow: 2px 1px 8px #a9a9a9;
+    margin-left: 1px;
+    margin-bottom: 1px;
+    margin-top: -1px
+}
+    

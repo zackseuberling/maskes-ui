@@ -23,6 +23,15 @@ const AuthModal = (props) => {
             /> Loading...
         </Button>)
     const history = useHistory();
+    
+    let alert_messages = []
+
+    if (error) {
+        if (error.response.data.detail) {
+            alert_messages = [...alert_messages, error.response.data.detail]
+        }
+    }
+
     return (
         <Modal
             show={showModal}
@@ -47,10 +56,11 @@ const AuthModal = (props) => {
             </Modal.Header>
 
             <Modal.Body>
-                {isLogin && error && <Alert variant="danger">{error.response.data.detail}<br/> Please try again!</Alert>}
-                {!isLogin && error && <Alert variant="danger">{error.response.data.detail}<br/> Please try again!</Alert>}
+                {isLogin && error && alert_messages.map((msg,idx)=><Alert key={idx} variant="danger">{msg}</Alert>)}
+                {!isLogin && error && alert_messages.map((msg,idx)=><Alert key={idx} variant="danger">{msg}</Alert>)}
+                    
                 <Form onSubmit={onSubmit}>
-                    {isLogin ? <LoginForm isLoading={loading} onChange={onChange}/> : <RegisterForm isLoading={loading} onChange={onChange} />}
+                    {isLogin ? <LoginForm error={error} isLoading={loading} onChange={onChange}/> : <RegisterForm error={error} isLoading={loading} onChange={onChange} />}
                     {isLogin ?(loading?loading_button:<Button className="auth-button" variant="primary" block type="submit">Login</Button>)
                                 :(loading?loading_button:<Button className="auth-button" variant="primary" block type="submit">Register</Button>)}
                 </Form>
@@ -62,7 +72,8 @@ const AuthModal = (props) => {
                         {isLogin
                             ?(<p className="text-right">Don't have an account? <button className="auth-btn-link" onClick={switchMode}>Sign up</button></p>)
                             :(<p className="text-right text-muted">Already have an account? <button className="auth-btn-link"  onClick={switchMode}>Log in</button></p>)}
-                            <p className="text-right text-muted mb-3">Forgot your password? <button className="auth-btn-link" onClick={()=> {
+                            <p className="text-right text-muted mb-3">Forgot your password? <button className="auth-btn-link" 
+                            onClick={()=> {
                                 history.push("/password-reset");
                                 hideModal();
                                 }}>Reset password</button></p>

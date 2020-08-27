@@ -96,14 +96,14 @@ const CreateRequest = (props) => {
   ));
 
   const createDropdownOptions = (data) => (
+
     <Form.Control as="select" onChange={onRadio} defaultValue={null} required>
-      <option value={null} label='Select...' />
+      <option value={null}>Select...</option>
       {data.map((option) => (
         <option
-          label={option}
           value={option}
           key={option}
-        />
+        >{option}</option>
       ))};
     </Form.Control>
   );
@@ -472,7 +472,7 @@ const CreateRequest = (props) => {
           />
         </Card>
 
-        <Button type="submit" size="lg" className='mt-3' block>Submit</Button>
+        <Button type="submit" size="lg" className='mt-3 submit-request-button'>Submit</Button>
       </Form>
     </Container>
   );

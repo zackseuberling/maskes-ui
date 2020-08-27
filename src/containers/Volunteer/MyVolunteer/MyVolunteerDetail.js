@@ -44,7 +44,7 @@ const MyVolunteerDetail = (props) => {
     const onMyVolunteer = (event) => {
         setMyVolunteer(!myVolunteer);
         if (!myVolunteer) {
-            history.push('/volunteer/my-volunteer')
+            history.push('/volunteer/my-support')
         }
     }
 
@@ -61,7 +61,7 @@ const MyVolunteerDetail = (props) => {
 
     const volunteerDeleteHandler = () => {
         deleteVolunteer(deleteId, token);
-        history.push('/volunteer/my-volunteer')
+        history.push('/volunteer/my-support')
     }
 
     const confirmDeliveredHandler = () => {
@@ -69,13 +69,15 @@ const MyVolunteerDetail = (props) => {
         setShowUpdateModal(false);
     }
 
+    console.log(volunteer)
+
     let display = []
     if (!loading && volunteer.request_detail) {
         display = (
             <Aux>
                 <Table bordered striped hover size="sm" responsive='sm'>
                     <tbody >
-                        <tr><td>Volunteer #</td><td>{volunteer.id}</td></tr>
+                        <tr><td>Support #</td><td>{volunteer.id}</td></tr>
                         <tr><td>Request #</td><td className='link-button' onClick={() => history.push(`/volunteer/${volunteer.request_detail.id}`)}>{volunteer.request_detail.id}</td></tr>
                         <tr><td>Request Date</td><td>{new Date(volunteer.request_detail.created_date).toLocaleDateString()}</td></tr>
                         <tr><td>Location</td><td>{volunteer.request_detail.locations}</td></tr>
@@ -114,6 +116,7 @@ const MyVolunteerDetail = (props) => {
                             <h5 style={{ fontWeight: 'bold' }}>Delivery Infomation</h5>
                             <Table size="sm" responsive='sm'>
                                 <tbody>
+                                    <tr><td>Name</td><td>{volunteer.request_detail.requester}</td></tr>
                                     <tr><td>Contact Phone</td><td>{volunteer.request_detail.phone}</td></tr>
                                     <tr><td>Delivery Address</td><td>{`${volunteer.request_detail.address1} ${volunteer.request_detail.address2}, ${volunteer.request_detail.city}, WA ${volunteer.request_detail.zip_code}`}</td></tr>
                                     <tr><td>Budget</td><td style={{ fontWeight: "bold", color: "green" }}>${75 + 25 * (parseInt(volunteer.request_detail.household_number) - 1)}</td></tr>

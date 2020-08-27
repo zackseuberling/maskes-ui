@@ -10,8 +10,8 @@ const Volunteer = (props) => {
                 <h4 style={{ fontWeight: 'bold' }}>
                     Hello {props.name}!</h4>
                 <p>We need your help!</p>
-                <Button className="my-volunteer-button"
-                    onClick={() => history.push(`/volunteer/my-volunteer`)}
+                <Button className="my-support-button"
+                    onClick={() => history.push(`/volunteer/my-support`)}
                     variant='outline-dark'
                 >My Volunteer</Button>
             </Container>

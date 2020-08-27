@@ -36,7 +36,7 @@ const MyVolunteerList = (props) => {
         display = results.map((volunteer, index) => (
             <Card className='card_shadow' key={index} style={volunteer.status === 'Delivered' ? { backgroundColor: '#E1F6F1' } : null}>
                 <Card.Body>
-                    <Card.Title className='mb-2'>Volunteer #{volunteer.id}</Card.Title>
+                    <Card.Title className='mb-2'>Support #{volunteer.id}</Card.Title>
                     <Accordion defaultActiveKey="0">
                         <Card className="request_shadow">
                             <Accordion.Toggle as={Card.Header} eventKey="1">
@@ -58,7 +58,7 @@ const MyVolunteerList = (props) => {
                             volunteer.status === 'Delivered' ? { color: 'green' } :
                                 volunteer.status === 'Signed Up' ? { color: 'orange' } :
                                     volunteer.status === 'Ready' ? { color: '#0275d8' } : null}
-                        onClick={() => history.push(`my-volunteer/${volunteer.id}`)}>
+                        onClick={() => history.push(`my-support/${volunteer.id}`)}>
                         {volunteer.status === 'Signed Up' ? "Waiting for admin..." : volunteer.status + ' '}
                         {volunteer.status === 'Delivered'
                             ? <BsCheck style={{ width: '20px', height: '20px' }} />
@@ -92,7 +92,7 @@ const MyVolunteerList = (props) => {
     return (
         <Volunteer name={name}>
             <Container fluid>
-                <h3>My Volunteer</h3>
+                <h3>Manage Supports</h3>
                 {pagination}
                 {loading
                     ? <Spinner animation="border" style={{ marginLeft: '40%' }} />

@@ -47,9 +47,8 @@ const RequestList = (props) => {
 
   if (!loading && results) {
     requests_list = results.map((request) => (
-
-      <Accordion key={request.id} defaultActiveKey="0">
-        <Card>
+      <Card key={request.id} className='card_shadow'>
+        <Accordion defaultActiveKey="0">
           <Accordion.Toggle as={Card.Header} eventKey="1">
             <Row>
               <Col>Request #{request.id}</Col>
@@ -64,8 +63,9 @@ const RequestList = (props) => {
               <Button block variant='link' onClick={() => selectRequestHandler(request.id)}>Detail <BsBoxArrowInRight style={{ width: '15px', height: '15px' }} /></Button>
             </Card.Body>
           </Accordion.Collapse>
-        </Card>
-      </Accordion>
+
+        </Accordion>
+      </Card>
     )
     );
   } else {

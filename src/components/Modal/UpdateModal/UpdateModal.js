@@ -1,5 +1,6 @@
 import React from 'react';
 import { Modal, Button } from 'react-bootstrap';
+import './UpdateModal.css'
 
 const DeleteModal = (props) => {
     const { showUpdateModal, closeModalHandler, updateHanlder } = props
@@ -13,7 +14,7 @@ const DeleteModal = (props) => {
                 <Button variant="secondary" onClick={closeModalHandler}>
                     Close
           </Button>
-                <Button variant="success" onClick={updateHanlder}>
+                <Button className="update-button" onClick={updateHanlder}>
                     Confirm!
           </Button>
             </Modal.Footer>

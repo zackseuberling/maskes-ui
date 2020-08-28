@@ -1,6 +1,9 @@
 import PropTypes from "prop-types";
 import React, { Component } from "react";
+import { connect } from 'react-redux';
 import './Home.css';
+import { openAuthModal } from '../../components/Auth/store/actions/actions';
+
 import {
     Button,
     Container,
@@ -15,7 +18,7 @@ import {
 } from "semantic-ui-react";
 import skesma1 from '../../assets/images/skesma-1.jpg';
 
-const HomepageHeading = ({ mobile }) => (
+const HomepageHeading = ({ mobile, isAuthenticated, openAuthModal }) => (
     <div className="waveWrapper waveAnimation">
         <div className="waveHeadWrapperInner headerContent">
             <Container className="waveHeader" text>
@@ -37,15 +40,15 @@ const HomepageHeading = ({ mobile }) => (
                     recognizing that as humans, our survival is dependent on one another." - Mariame Kaba`}
                     inverted
                     style={{
-                        fontSize: mobile ? "1em" : "1.7em",
+                        fontSize: mobile ? "0.8em" : "1.7em",
                         fontWeight: "normal",
-                        marginTop: mobile ? "0.2em" : "1.5em"
+                        marginTop: mobile ? "1.3em" : "1.5em",
                     }}
                 />
-                <Button inverted color="yellow" size={mobile ? "small" : "huge"}>
+                {!isAuthenticated && <Button inverted color="yellow" size={mobile ? "small" : "huge"} onClick={openAuthModal}>
                     Sign Up
-            <Icon name="right arrow" />
-                </Button>
+                    <Icon name="right arrow" />
+                </Button>}
             </Container>
         </div>
         <div className="waveWrapperInner bgTop">
@@ -67,7 +70,7 @@ HomepageHeading.propTypes = {
 class DesktopContainer extends Component {
     state = {};
     render() {
-        const { children } = this.props;
+        const { children, isAuthenticated, openAuthModal } = this.props;
 
         return (
             <Responsive minWidth={Responsive.onlyTablet.minWidth}>
@@ -85,7 +88,7 @@ class DesktopContainer extends Component {
                         vertical
                     >
 
-                        <HomepageHeading />
+                        <HomepageHeading isAuthenticated={isAuthenticated} openAuthModal={openAuthModal} />
 
                     </Segment>
                 </Visibility>
@@ -102,7 +105,7 @@ DesktopContainer.propTypes = {
 
 class MobileContainer extends Component {
     render() {
-        const { children } = this.props;
+        const { children, isAuthenticated, openAuthModal } = this.props;
 
         return (
             <Responsive maxWidth={Responsive.onlyMobile.maxWidth}>
@@ -112,7 +115,7 @@ class MobileContainer extends Component {
                     style={{ minHeight: 350, padding: "1em 0em" }}
                     vertical
                 >
-                    <HomepageHeading mobile />
+                    <HomepageHeading mobile isAuthenticated={isAuthenticated} openAuthModal={openAuthModal} />
                 </Segment>
 
                 {children}
@@ -125,10 +128,10 @@ MobileContainer.propTypes = {
     children: PropTypes.node
 };
 
-const ResponsiveContainer = ({ children }) => (
+const ResponsiveContainer = ({ children, openAuthModal, isAuthenticated }) => (
     <div>
-        <DesktopContainer>{children}</DesktopContainer>
-        <MobileContainer>{children}</MobileContainer>
+        <DesktopContainer openAuthModal={openAuthModal} isAuthenticated={isAuthenticated}>{children}</DesktopContainer>
+        <MobileContainer openAuthModal={openAuthModal} isAuthenticated={isAuthenticated}>{children}</MobileContainer>
     </div>
 );
 
@@ -136,9 +139,9 @@ ResponsiveContainer.propTypes = {
     children: PropTypes.node
 };
 
-const Home = () => (
-    <ResponsiveContainer>
-        <Segment style={{ padding: "8em 0em" }} vertical>
+const Home = ({ openAuthModal, isAuthenticated }) => (
+    <ResponsiveContainer openAuthModal={openAuthModal} isAuthenticated={isAuthenticated}>
+        <Segment style={{ padding: "4em 0em" }} vertical>
             <Grid container stackable verticalAlign="middle">
                 <Grid.Row style={{ padding: "2em" }}>
                     <Grid.Column width={10}>
@@ -248,4 +251,9 @@ const Home = () => (
     </ResponsiveContainer >
 );
 
-export default Home;
+const mapStateToProps = state => {
+    return {
+        isAuthenticated: state.auth.access !== null,
+    }
+}
+export default connect(mapStateToProps, { openAuthModal })(Home);

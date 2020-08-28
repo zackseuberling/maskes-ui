@@ -19,9 +19,7 @@ const Layout = (props) => {
                 <Navbar history={history} />
                 <Alert alerts={props.alerts} />
                 {props.hasLogin ? <Container className='p-0 mb-0'><Breadcrumbs /></Container> : null}
-                <div className="mt-4">
-                    {props.children}
-                </div>
+                {props.children}
             </div>
             <footer id="footer">
                 <Segment className='waveFooter' inverted vertical style={{ padding: "4em 1em", backgroundColor: "#343a40" }}>
@@ -57,8 +55,8 @@ const Layout = (props) => {
                                     </p>
                                 </Grid.Column>
                             </Grid.Row>
-                            <Grid.Row style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold' }}>
-                                <p>Copyright &copy; 2020 SKESMA</p>
+                            <Grid.Row style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                <p>Copyright &copy; 2020 SKCEMA</p>
                             </Grid.Row>
                         </Grid>
                     </Container>

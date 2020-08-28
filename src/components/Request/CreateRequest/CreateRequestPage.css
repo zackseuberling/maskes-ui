@@ -1,6 +1,5 @@
 
 .create-request {
-  background-color: #f8f9fa;
   padding: 20px;
   border-radius: 25px;
   margin-bottom: 30px;
@@ -24,4 +23,17 @@
 
 .required {
   color: #ff0000;
+}
+
+.submit-request-button {
+  color: white !important;
+  background-color: #b44c70 !important;
+  border: 1px solid #b8597b !important;
+}
+
+.submit-request-button:hover {
+  color: white !important;
+  background-color: #852647 !important;
+  border: 1px solid #852647 !important;
+  
 }

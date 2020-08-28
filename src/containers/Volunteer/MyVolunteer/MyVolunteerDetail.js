@@ -10,7 +10,6 @@ import DeleteModal from '../../../components/Modal/DeleteModal/DeleteModal';
 import UpdateModal from '../../../components/Modal/UpdateModal/UpdateModal';
 import './MyVolunteer.css';
 
-
 const MyVolunteerDetail = (props) => {
 
     const { volunteer, loading, token, match, name, isMyVolunteer,
@@ -24,6 +23,7 @@ const MyVolunteerDetail = (props) => {
     const [deleteId, setDeleteId] = useState(null)
     const [updateId, setUpdateId] = useState(null)
 
+    const [reimbursementId, setReimbursementId] = useState()
 
     useEffect(() => {
         if (isMyVolunteer) {
@@ -35,10 +35,16 @@ const MyVolunteerDetail = (props) => {
         fetchVolunteerDetail(match.params.volunteerId, token)
     }, [fetchVolunteerDetail, token, match.params.volunteerId])
 
+    useEffect(() => {
+        if (volunteer.reimbursement_detail) {
+            setReimbursementId(volunteer.reimbursement_detail.id)
+        }
+    }, [volunteer.reimbursement_detail, setReimbursementId])
+
     const onMyVolunteer = (event) => {
         setMyVolunteer(!myVolunteer);
         if (!myVolunteer) {
-            history.push('/volunteer/my-volunteer')
+            history.push('/volunteer/my-support')
         }
     }
 
@@ -55,7 +61,7 @@ const MyVolunteerDetail = (props) => {
 
     const volunteerDeleteHandler = () => {
         deleteVolunteer(deleteId, token);
-        history.push('/volunteer/my-volunteer')
+        history.push('/volunteer/my-support')
     }
 
     const confirmDeliveredHandler = () => {
@@ -63,14 +69,13 @@ const MyVolunteerDetail = (props) => {
         setShowUpdateModal(false);
     }
 
-
     let display = []
     if (!loading && volunteer.request_detail) {
         display = (
             <Aux>
                 <Table bordered striped hover size="sm" responsive='sm'>
                     <tbody >
-                        <tr><td>Volunteer #</td><td>{volunteer.id}</td></tr>
+                        <tr><td>Support #</td><td>{volunteer.id}</td></tr>
                         <tr><td>Request #</td><td className='link-button' onClick={() => history.push(`/volunteer/${volunteer.request_detail.id}`)}>{volunteer.request_detail.id}</td></tr>
                         <tr><td>Request Date</td><td>{new Date(volunteer.request_detail.created_date).toLocaleDateString()}</td></tr>
                         <tr><td>Location</td><td>{volunteer.request_detail.locations}</td></tr>
@@ -109,18 +114,20 @@ const MyVolunteerDetail = (props) => {
                             <h5 style={{ fontWeight: 'bold' }}>Delivery Infomation</h5>
                             <Table size="sm" responsive='sm'>
                                 <tbody>
+                                    <tr><td>Name</td><td>{volunteer.request_detail.requester}</td></tr>
                                     <tr><td>Contact Phone</td><td>{volunteer.request_detail.phone}</td></tr>
                                     <tr><td>Delivery Address</td><td>{`${volunteer.request_detail.address1} ${volunteer.request_detail.address2}, ${volunteer.request_detail.city}, WA ${volunteer.request_detail.zip_code}`}</td></tr>
+                                    <tr><td>Budget</td><td style={{ fontWeight: "bold", color: "green" }}>${75 + 25 * (parseInt(volunteer.request_detail.household_number) - 1)}</td></tr>
                                 </tbody>
                             </Table>
                             <div>
                                 <Button
-                                    className='mt-1 mb-3 mr-2'
+                                    className='mt-1 mb-3 mr-2 confirm-button'
                                     onClick={() => showUpdateModalHandler(volunteer.id, volunteer.request_detail.id)}
                                 >Confirm Delivered</Button>
                                 <Button
                                     className='mt-1 mb-3'
-                                    variant='danger'
+                                    variant='outline-danger'
                                     onClick={() => showDeleteModalHandler(volunteer.id)}
                                 >Cancel</Button>
                             </div>
@@ -129,7 +136,8 @@ const MyVolunteerDetail = (props) => {
                     || (volunteer.status === 'Delivered'
                         && <Reimbursement
                             volunteerId={volunteer.id}
-                            reimbursement={volunteer.reimbursement_detail}
+                            reimbursement_detail={volunteer.reimbursement_detail}
+                            reimbursementId={reimbursementId}
                         />)
                 }
 

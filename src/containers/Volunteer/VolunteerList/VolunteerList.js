@@ -12,6 +12,7 @@ import Container from 'react-bootstrap/Container';
 import Volunteer from '../Volunteer';
 import SearchForm from '../../../components/Form/SearchForm';
 import { Pagination } from 'semantic-ui-react';
+import moment from 'moment';
 
 import './VolunteerList.css';
 
@@ -41,13 +42,13 @@ const VolunteerList = (props) => {
     //ALL VOLUNTEER
     if (!loading && results) {
         display = results.map((request, index) => (
-            <Accordion key={index}>
-                <Card className='card_shadow'>
 
-                    <Accordion.Toggle as={Card.Header} eventKey="1" className="row request_accordion">
-                        <Card.Title className="col">Request #{request.id}</Card.Title>
+            <Card key={index} className='card_shadow'>
+                <Accordion >
+                    <Accordion.Toggle as={Card.Header} eventKey="1" className="request_accordion">
+                        <Card.Title >Request #{request.id}</Card.Title>
                         <small
-                            className="col text-right"
+
                             style={{
                                 color: request.urgency === "In the next 72 hours" ? '#d9534f' : "#0275d8",
                                 fontSize: '13px'
@@ -92,9 +93,10 @@ const VolunteerList = (props) => {
                             </ul>
                         </Card.Body>
                     </Accordion.Collapse>
-                    <Card.Footer>Request on: {new Date(request.created_date).toLocaleDateString()}</Card.Footer>
-                </Card>
-            </Accordion>)
+                    <Card.Footer className="text-secondary">{moment(request.created_date).fromNow()}</Card.Footer>
+                </Accordion>
+            </Card>
+        )
         );
     }
 

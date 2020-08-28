@@ -1,26 +1,25 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import Aux from '../../hoc/Aux/Aux';
-import { Button, Card, Container } from 'react-bootstrap';
-
+import { Button, Container } from 'react-bootstrap';
+import './Requests.css';
 const Requests = (props) => {
   const history = useHistory();
   return (
     <Aux>
-      <Container className='mt-2'>
+      <Container className='mt-4'>
         <Container >
-          <Card.Title>
-            <h4 style={{ fontWeight: 'bold' }}>
-              Hello {props.name}!
+
+          <h4 style={{ fontWeight: 'bold' }}>
+            Hello {props.name}!
             </h4>
-          </Card.Title>
-          <Card.Text>
-            We are here to support you!
-          </Card.Text>
+
+          <p>We are here to support you!</p>
           <Button
+            className="create-request-button"
             onClick={() => history.push(`/my-requests/create-request`)}
             variant="primary"
-          >Create a request</Button>
+          >New Request</Button>
         </Container>
         <hr />
 

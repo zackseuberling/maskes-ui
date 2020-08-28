@@ -84,7 +84,7 @@ export const deleteReimbursement = (reimbursementId, token) => {
             })
             .catch(error => {
                 dispatch(deleteReimbursementFail(error));
-                dispatch(setAlert(`Failed to cancel reimbursement #${reimbursementId} data from server`, "danger"));
+                dispatch(setAlert(`Failed to cancel reimbursement #${reimbursementId}`, "danger"));
             })
     }
 };
@@ -111,7 +111,7 @@ export const updateReimbursementFail = (error) => {
 }
 
 
-export const updateReimbursement = ({ total_cost, reimbursement, receipt }, reimbursementId, token) => {
+export const updateReimbursement = (formData, volunteerId, token, reimbursementId) => {
     return dispatch => {
         dispatch(updateReimbursementStart());
         const url = `/funds/reimbursement/${reimbursementId}/`;
@@ -121,23 +121,29 @@ export const updateReimbursement = ({ total_cost, reimbursement, receipt }, reim
                 "Content-Type": "multipart/form-data"
             }
         };
+
+        const { total_cost, amount, receipt, note } = formData;
+
         let form_data = new FormData();
-        form_data.append('receipt_photo', receipt);
+        if (receipt) {
+            form_data.append('receipt_photo', receipt)
+        };
         form_data.append('total_cost', parseFloat(total_cost));
-        form_data.append('amount', parseFloat(reimbursement));
-        form_data.append('status', 'Completed');
-        form_data.append('reimbursement', reimbursementId);
+        form_data.append('amount', parseFloat(amount));
+        form_data.append('volunteer_notes', note);
+
+        form_data.append('volunteer', volunteerId);
 
         axios.put(url, form_data, config)
             .then(response => {
                 const status = response.status;
                 dispatch(updateReimbursementSuccess(status));
                 dispatch(fetchReimbursement(reimbursementId, token));
-                dispatch(setAlert(`Reimbursement #${reimbursementId} completed.`, "success"));
+                dispatch(setAlert(`Reimbursement #${reimbursementId} updated.`, "success"));
             })
             .catch(error => {
                 dispatch(updateReimbursementFail(error));
-                dispatch(setAlert(`Failed to update status for reimbursement #${reimbursementId}`, "danger"));
+                dispatch(setAlert(`Failed to update reimbursement #${reimbursementId}`, "danger"));
             })
     }
 };
@@ -165,7 +171,7 @@ export const requestReimbursementFail = (error) => {
 }
 
 
-export const requestReimbursement = ({ total_cost, reimbursement, receipt }, volunteerId, token) => {
+export const requestReimbursement = (formData, volunteerId, token) => {
     return dispatch => {
         dispatch(requestReimbursementStart());
         const url = '/funds/reimbursement/';
@@ -175,10 +181,12 @@ export const requestReimbursement = ({ total_cost, reimbursement, receipt }, vol
                 "Content-Type": "multipart/form-data"
             }
         };
+        const { total_cost, amount, receipt, note } = formData;
         let form_data = new FormData();
         form_data.append('receipt_photo', receipt);
         form_data.append('total_cost', parseFloat(total_cost));
-        form_data.append('amount', parseFloat(reimbursement));
+        form_data.append('amount', parseFloat(amount));
+        form_data.append('volunteer_notes', note);
         form_data.append('status', 'In Process');
         form_data.append('volunteer', volunteerId);
 

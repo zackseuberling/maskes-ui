@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Tabs, Tab } from 'react-bootstrap';
 import { Button, Comment as CommentSUI, Form } from 'semantic-ui-react';
@@ -8,16 +8,21 @@ import { BsPencil, BsXSquare } from 'react-icons/bs';
 import moment from 'moment';
 import Aux from '../../hoc/Aux/Aux';
 import './Comment.css';
-
 import Reply from './Reply/Reply';
+import { connect } from 'react-redux';
+import { fetchProfile } from '../../containers/UserProfile/store/actions/actions';
 
 const Comment = (props) => {
 
     const { comments, create, update, remove,
         create_reply, update_reply, remove_reply,
-        loading, userId } = props
+        loading, userId, profile, fetchProfile, token } = props
 
     const history = useHistory();
+
+    useEffect(() => {
+        fetchProfile(userId, token)
+    }, [userId, fetchProfile, token])
 
     const [key, setKey] = useState('Comment');
     const [commentContent, setCommentContent] = useState()
@@ -31,6 +36,7 @@ const Comment = (props) => {
     const toggleEditor = (i) => {
         setCms(cms.map((cm, j) => (j === i) ? { ...cm, key: j, onEdit: !cm.onEdit } : { ...cm, key: j }))
     }
+
     const [cms, setCms] = useState(comments ?
         comments.results.map((cm, i) => (
             {
@@ -38,7 +44,7 @@ const Comment = (props) => {
                 key: i,
                 onEdit: false,
                 collapsed: true,
-                comment_content: "",
+                comment_content: cm.comment_content,
                 reply_content: ""
             })
         ) : [])
@@ -85,7 +91,7 @@ const Comment = (props) => {
 
     if (!loading && comments && comments.results.length > 0) {
         display = cms.map((comment, index) => <CommentSUI key={comment.id}>
-            <CommentSUI.Avatar as='a' src='http://localhost:8000/media/default.jpg' />
+            <CommentSUI.Avatar as='a' src={profile.image} />
             <CommentSUI.Content>
                 <CommentSUI.Author as='a' onClick={() => history.push(`/profile/${comment.author}`)}>{comment.author_name}</CommentSUI.Author>
                 <CommentSUI.Metadata>
@@ -121,7 +127,8 @@ const Comment = (props) => {
                     </Aux>
                     : <Form reply onSubmit={() => update(comment.id, comment.comment_content)}>
                         <Form.TextArea style={{ height: 60, marginTop: -10 }} onChange={(e) => onChangeComment(e, index)} value={comment.comment_content} />
-                        <BSButton type='submit' size='sm' className='mr-2'>Update</BSButton><BSButton onClick={(e) => toggleEditor(index)} variant='secondary' size='sm'>Cancel</BSButton>
+                        <BSButton type='submit' size='sm' className='mr-2 update-comment-button'>Update</BSButton>
+                        <BSButton onClick={(e) => toggleEditor(index)} variant='secondary' size='sm'>Cancel</BSButton>
                     </Form>
                 }
             </CommentSUI.Content>
@@ -134,6 +141,7 @@ const Comment = (props) => {
                         moment={moment}
                         update={update_reply}
                         remove={remove_reply}
+                        token={token}
                     />) : null}
                 <Form reply onSubmit={() => create_reply(comment.id, comment.reply_content)}>
                     <Form.Group inline>
@@ -164,7 +172,7 @@ const Comment = (props) => {
                 <Tab eventKey="Add Comment" title="Add Comment">
                     <Form reply onSubmit={() => create(commentContent)}>
                         <Form.TextArea onChange={onChange} value={commentContent} />
-                        <Button type='submit' content='Add Comment' labelPosition='left' icon='edit' primary />
+                        <Button className="add-comment-button" type='submit' content='Add Comment' labelPosition='left' icon='edit' primary />
                     </Form>
                 </Tab>
             </Tabs>
@@ -172,4 +180,10 @@ const Comment = (props) => {
     );
 };
 
-export default Comment;
+const mapStateToProps = state => {
+    return {
+        profile: state.profile.profile,
+        token: state.auth.access,
+    }
+}
+export default connect(mapStateToProps, { fetchProfile })(Comment);

@@ -21,6 +21,7 @@ const RequestDetail = (props) => {
   if (!loading && request) {
     request_detail = (
       <tbody>
+        <tr><td>Request #</td><td>{request.id}</td></tr>
         <tr><td>Request Status</td><td>{request.status}</td></tr>
         <tr><td>Created Date</td><td>{new Date(request.created_date).toLocaleDateString()}</td></tr>
         <tr><td>Phone</td><td>{request.phone}</td></tr>

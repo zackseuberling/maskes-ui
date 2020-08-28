@@ -33,25 +33,39 @@ export const authFail = (error) => {
     };
 }
 
-export const logout = () => {
+export const logoutSuccess = () => {
     localStorage.removeItem('access');
     localStorage.removeItem('expirationDate');
     localStorage.removeItem('is_requester');
     localStorage.removeItem('is_volunteer');
     localStorage.removeItem('name');
     localStorage.removeItem('user_id');
+    localStorage.removeItem('refresh');
     return {
         type: actionTypes.AUTH_LOGOUT
     };
 }
 
-export const checkAuthTimeout = (expirationTime) => {
+export const logout = () => {
     return dispatch => {
-        setTimeout(() => {
-            dispatch(logout());
-        }, expirationTime)
+
+        axios.post('/blacklist/', { "refresh": localStorage.getItem('refresh') })
+            .then(response => {
+                dispatch(logoutSuccess())
+            })
+            .catch(error => {
+                dispatch(logoutSuccess())
+            })
     }
 }
+
+// export const checkAuthTimeout = (expirationTime) => {
+//     return dispatch => {
+//         setTimeout(() => {
+//             // dispatch(logout());
+//         }, expirationTime)
+//     }
+// }
 
 export const onAuth = (first_name, last_name, display_name, email, password, hasAccount, is_requester, is_volunteer) => {
     return dispatch => {
@@ -78,6 +92,7 @@ export const onAuth = (first_name, last_name, display_name, email, password, has
                     const expiresIn = 3600 * 1000
                     const expirationDate = new Date(new Date().getTime() + expiresIn)
                     localStorage.setItem('access', res.data.access);
+                    localStorage.setItem('refresh', res.data.refresh);
                     localStorage.setItem('expirationDate', expirationDate)
                     localStorage.setItem('is_requester', res.data.is_requester)
                     localStorage.setItem('is_volunteer', res.data.is_volunteer)
@@ -85,7 +100,7 @@ export const onAuth = (first_name, last_name, display_name, email, password, has
                     localStorage.setItem('user_id', res.data.user_id)
                     dispatch(authSuccess(res.data));
                     dispatch(hideAuthModal())
-                    dispatch(checkAuthTimeout(expiresIn))
+                    // dispatch(checkAuthTimeout(expiresIn))
                 })
                 .catch(err => {
                     dispatch(authFail(err));
@@ -100,6 +115,7 @@ export const onAuth = (first_name, last_name, display_name, email, password, has
                             const expiresIn = 3600 * 1000
                             const expirationDate = new Date(new Date().getTime() + expiresIn)
                             localStorage.setItem('access', res.data.access);
+                            localStorage.setItem('refresh', res.data.refresh);
                             localStorage.setItem('expirationDate', expirationDate)
                             localStorage.setItem('is_requester', res.data.is_requester)
                             localStorage.setItem('is_volunteer', res.data.is_volunteer)
@@ -107,7 +123,7 @@ export const onAuth = (first_name, last_name, display_name, email, password, has
                             localStorage.setItem('user_id', res.data.user_id)
                             dispatch(authSuccess(res.data));
                             dispatch(hideAuthModal())
-                            dispatch(checkAuthTimeout(expiresIn))
+                            // dispatch(checkAuthTimeout(expiresIn))
                         })
                         .catch(err => {
                             dispatch(authFail(err));
@@ -125,24 +141,27 @@ export const onAuth = (first_name, last_name, display_name, email, password, has
 export const authCheckLoginState = () => {
     return dispatch => {
         const access = localStorage.getItem('access');
+        const refresh = localStorage.getItem('refresh');
         const payload = {
             access: access,
+            refresh: refresh,
             is_requester: (localStorage.getItem('is_requester') === "true"),
             is_volunteer: (localStorage.getItem('is_volunteer') === "true"),
             name: localStorage.getItem('name'),
             user_id: localStorage.getItem('user_id')
         }
         if (access) {
-            const expirationDate = new Date(localStorage.getItem('expirationDate'));
-            if (expirationDate < new Date()) {
-                dispatch(logout());
-            } else {
-                dispatch(authSuccess(payload));
-                dispatch(checkAuthTimeout(expirationDate.getTime() - new Date().getTime()))
-            }
+            // const expirationDate = new Date(localStorage.getItem('expirationDate'));
+            // if (expirationDate < new Date()) {
+            // dispatch(logout());
+            // } else {
+            dispatch(authSuccess(payload));
+            // dispatch(checkAuthTimeout(expirationDate.getTime() - new Date().getTime()))
+            // }
 
-        } else {
-            dispatch(logout())
         }
+        // else {
+        //     dispatch(logout())
+        // }
     }
 }

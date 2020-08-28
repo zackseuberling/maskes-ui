@@ -5,11 +5,15 @@ import { Container, Button } from 'react-bootstrap';
 const Volunteer = (props) => {
     const history = useHistory()
     return (
-        <Container className='mt-2'>
+        <Container className='mt-4'>
             <Container >
-                <h4 style={{ fontWeight: 'bold' }}>Hello {props.name}!</h4>
+                <h4 style={{ fontWeight: 'bold' }}>
+                    Hello {props.name}!</h4>
                 <p>We need your help!</p>
-                <Button variant='outline-dark' onClick={() => history.push(`/volunteer/my-volunteer`)}>My Volunteer</Button>
+                <Button className="my-support-button"
+                    onClick={() => history.push(`/volunteer/my-support`)}
+                    variant='outline-dark'
+                >My Volunteer</Button>
             </Container>
             <hr />
             <Container className='mt-3'>

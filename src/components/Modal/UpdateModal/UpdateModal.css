@@ -1,21 +1,10 @@
-.receipt-link {
-    cursor: pointer;
-    color: #007BFF;
-}
-
-.receipt-link:hover {
-    text-decoration: underline;
-    color:#0065d2;
-}
-
-.edit-reimbursement-button {
-    width: 70px !important;
+.update-button {
     color: white !important;
     background-color: #b44c70 !important;
     border: 1px solid #b8597b !important;
 }
 
-.edit-reimbursement-button:hover {
+.update-button:hover {
     color: white !important;
     background-color: #852647 !important;
     border: 1px solid #852647 !important;

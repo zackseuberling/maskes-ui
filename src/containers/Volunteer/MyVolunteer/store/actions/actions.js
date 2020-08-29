@@ -121,6 +121,7 @@ export const deleteVolunteer = (volunteerId, token) => {
             .then(response => {
                 const status = response.request.status;
                 dispatch(deleteVolunteerSuccess(status));
+                dispatch(fetchVolunteerList(1, token))
                 dispatch(setAlert(`Your volunteer #${volunteerId} has been canceled, the corresponding request will be available for all volunteers`, "warning"));
             })
             .catch(error => {

@@ -1,6 +1,7 @@
 import * as actionTypes from './actionTypes';
 import { setAlert } from '../../../../../components/Alert/store/actions/actions';
 import axios from '../../../../../shared/axios';
+import { fetchVolunteerList } from '../../../MyVolunteer/store/actions/actions';
 
 export const fetchVolunteerRequestDetailStart = () => {
     return {
@@ -81,6 +82,7 @@ export const volunteering = (requestId, token) => {
             .then(response => {
                 const payload = response.data;
                 dispatch(volunteeringSuccess(payload));
+                dispatch(fetchVolunteerList(1, token))
                 dispatch(setAlert(`Successfully signed up for Request #${requestId}! Thank you for volunteering`, "success"))
             })
             .catch(error => {

@@ -17,7 +17,7 @@ import '../Volunteer.css';
 
 const MyVolunteerList = (props) => {
     const { volunteer, loading, token,
-        name, fetchVolunteerList } = props
+        name, fetchVolunteerList, status } = props
 
     const history = useHistory();
     const { results, count } = volunteer
@@ -27,7 +27,7 @@ const MyVolunteerList = (props) => {
 
     useEffect(() => {
         fetchVolunteerList(activePage, token);
-    }, [fetchVolunteerList, token, activePage]);
+    }, [fetchVolunteerList, token, activePage, status]);
 
     let display = [];
 
@@ -110,6 +110,7 @@ const mapStateToProps = (state) => {
         loading: state.myVolunteer.loading,
         volunteer: state.myVolunteer.volunteer,
         error: state.myVolunteer.error,
+        status: state.myVolunteer.status
     }
 }
 

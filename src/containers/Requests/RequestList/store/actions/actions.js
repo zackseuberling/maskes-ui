@@ -77,6 +77,7 @@ export const createRequest = (body, token) => {
             .then(response => {
                 const payload = response.data;
                 dispatch(createRequestSuccess(payload));
+                dispatch(fetchRequests(1, token))
                 dispatch(setAlert(`Request #${payload.id} successfully created`, "success"));
             })
             .catch(error => {

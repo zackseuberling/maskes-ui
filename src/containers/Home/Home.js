@@ -214,7 +214,7 @@ const Home = ({ openAuthModal, isAuthenticated }) => (
                     horizontal
                     style={{ margin: "3em 0em", textTransform: "uppercase" }}
                 >
-                    <a href="#root">Up Comming Events</a>
+                    <a href="#root">Upcoming Events</a>
                 </Divider>
 
                 <Header as="h3" style={{ fontSize: "2em" }}>

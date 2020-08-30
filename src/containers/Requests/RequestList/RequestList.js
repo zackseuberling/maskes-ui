@@ -42,7 +42,7 @@ const RequestList = (props) => {
     'Pending': '#fcdc04',
     'In Process': '#FF8C00',
     'Completed': '#5cb85c',
-    'Transfered': '#342452',
+    'Transferred': '#342452',
   }
 
   if (!loading && results) {

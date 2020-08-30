@@ -147,7 +147,7 @@ const MyVolunteerDetail = (props) => {
 
     return (
         <Volunteer name={name} onMyVolunteer={onMyVolunteer} myVolunteer={myVolunteer}>
-            <DeleteModal showDeleteModal={showDeleteModal} closeModalHandler={closeDeleteModalHandler} deleteHandler={volunteerDeleteHandler} />
+            <DeleteModal showDeleteModal={showDeleteModal} closeModalHandler={closeDeleteModalHandler} deleteHandler={volunteerDeleteHandler} label="Volunteer" />
             <UpdateModal showUpdateModal={showUpdateModal} closeModalHandler={closeUpdateModalHandler} updateHanlder={confirmDeliveredHandler} />
             <Container fluid>
                 <h3>My Volunteer Detail</h3>

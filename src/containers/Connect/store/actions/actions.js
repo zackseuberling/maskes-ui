@@ -21,19 +21,15 @@ export const fetchCommentsFail = (error) => {
     }
 }
 
-export const fetchComments = (requestId, token) => {
+export const fetchComments = (requestId) => {
     return dispatch => {
         dispatch(fetchCommentsStart());
         const url = '/connect/comments/view_comments/';
-        const config = {
-            headers: {
-                "Authorization": `Bearer ${token}`,
-            }
-        }
+
         const body = {
             requestId: requestId
         }
-        axios.post(url, body, config)
+        axios.post(url, body)
             .then(response => {
                 const payload = response.data
                 dispatch(fetchCommentsSuccess(payload));
@@ -65,24 +61,20 @@ export const createCommentFail = (error) => {
     }
 }
 
-export const createComment = (requestId, content, token) => {
+export const createComment = (requestId, content) => {
     return dispatch => {
         dispatch(createCommentStart());
         const url = '/connect/comments/';
-        const config = {
-            headers: {
-                "Authorization": `Bearer ${token}`,
-            }
-        }
+
         const body = {
             request: requestId,
             comment_content: content
         }
-        axios.post(url, body, config)
+        axios.post(url, body)
             .then(response => {
                 const payload = response.data
                 dispatch(createCommentSuccess(payload));
-                dispatch(fetchComments(requestId, token))
+                dispatch(fetchComments(requestId))
             })
             .catch(error => {
                 dispatch(createCommentFail(error))
@@ -111,24 +103,20 @@ export const updateCommentFail = (error) => {
     }
 }
 
-export const updateComment = (requestId, commentId, content, token) => {
+export const updateComment = (requestId, commentId, content) => {
     return dispatch => {
         dispatch(updateCommentStart());
         const url = `/connect/comments/${commentId}/`;
-        const config = {
-            headers: {
-                "Authorization": `Bearer ${token}`,
-            }
-        }
+
         const body = {
             comment_content: content,
             request: requestId
         }
-        axios.put(url, body, config)
+        axios.put(url, body)
             .then(response => {
                 const payload = response.data
                 dispatch(updateCommentSuccess(payload));
-                dispatch(fetchComments(requestId, token));
+                dispatch(fetchComments(requestId));
             })
             .catch(error => {
                 dispatch(updateCommentFail(error))
@@ -157,20 +145,16 @@ export const deleteCommentFail = (error) => {
     }
 }
 
-export const deleteComment = (requestId, commentId, token) => {
+export const deleteComment = (requestId, commentId) => {
     return dispatch => {
         dispatch(deleteCommentStart());
         const url = `/connect/comments/${commentId}/`;
-        const config = {
-            headers: {
-                "Authorization": `Bearer ${token}`,
-            }
-        }
-        axios.delete(url, config)
+
+        axios.delete(url)
             .then(response => {
                 const payload = response.data
                 dispatch(deleteCommentSuccess(payload));
-                dispatch(fetchComments(requestId, token))
+                dispatch(fetchComments(requestId))
             })
             .catch(error => {
                 dispatch(deleteCommentFail(error))
@@ -199,23 +183,19 @@ export const createReplyFail = (error) => {
     }
 }
 
-export const createReply = (commentId, content, requestId, token) => {
+export const createReply = (commentId, content, requestId) => {
     return dispatch => {
         dispatch(createReplyStart());
         const url = '/connect/replies/';
-        const config = {
-            headers: {
-                "Authorization": `Bearer ${token}`,
-            }
-        }
+
         const body = {
             reply_content: content,
             comment: commentId
         }
-        axios.post(url, body, config)
+        axios.post(url, body)
             .then(response => {
                 dispatch(createReplySuccess());
-                dispatch(fetchComments(requestId, token))
+                dispatch(fetchComments(requestId))
             })
             .catch(error => {
                 dispatch(createReplyFail(error))
@@ -242,23 +222,19 @@ export const updateReplyFail = () => {
     }
 }
 
-export const updateReply = (replyId, content, commentId, requestId, token) => {
+export const updateReply = (replyId, content, commentId, requestId) => {
     return dispatch => {
         dispatch(updateReplyStart());
         const url = `/connect/replies/${replyId}/`;
-        const config = {
-            headers: {
-                "Authorization": `Bearer ${token}`,
-            }
-        }
+
         const body = {
             reply_content: content,
             comment: commentId
         }
-        axios.put(url, body, config)
+        axios.put(url, body)
             .then(response => {
                 dispatch(updateReplySuccess());
-                dispatch(fetchComments(requestId, token));
+                dispatch(fetchComments(requestId));
             })
             .catch(error => {
                 dispatch(updateReplyFail())
@@ -285,20 +261,16 @@ export const deleteReplyFail = () => {
     }
 }
 
-export const deleteReply = (replyId, requestId, token) => {
+export const deleteReply = (replyId, requestId) => {
     return dispatch => {
         dispatch(deleteReplyStart());
         const url = `/connect/replies/${replyId}/`;
-        const config = {
-            headers: {
-                "Authorization": `Bearer ${token}`,
-            }
-        }
-        axios.delete(url, config)
+
+        axios.delete(url)
             .then(response => {
 
                 dispatch(deleteReplySuccess());
-                dispatch(fetchComments(requestId, token))
+                dispatch(fetchComments(requestId))
             })
             .catch(error => {
                 dispatch(deleteReplyFail())

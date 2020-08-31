@@ -17,12 +17,8 @@ const ResetEmail = (props) => {
         if (formData.new_email === formData.re_new_email) {
             const url = `/users/reset_email_confirm/`;
             const body = formData;
-            const config = {
-                headers: {
-                    "Content-Type": "application/json",
-                }
-            }
-            axios.post(url, body, config)
+
+            axios.post(url, body)
                 .then(res => {
                     setAlert("Successfully changed email", "success");
                     history.push('/');

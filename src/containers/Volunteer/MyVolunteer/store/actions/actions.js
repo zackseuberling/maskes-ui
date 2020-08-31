@@ -23,16 +23,12 @@ export const fetchVolunteerListFail = (error) => {
     };
 }
 
-export const fetchVolunteerList = (page, token) => {
+export const fetchVolunteerList = (page) => {
     return dispatch => {
         dispatch(fetchVolunteerListStart());
         const url = `/requests/volunteering/?page=${page}`;
-        const config = {
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        };
-        axios.get(url, config)
+
+        axios.get(url)
             .then(response => {
                 const payload = response.data;
                 dispatch(fetchVolunteerListSuccess(payload))
@@ -65,16 +61,12 @@ export const fetchVolunteerDetailFail = (error) => {
     };
 }
 
-export const fetchVolunteerDetail = (volunteerId, token) => {
+export const fetchVolunteerDetail = (volunteerId) => {
     return dispatch => {
         dispatch(fetchVolunteerDetailStart());
         const url = `/requests/volunteering/${volunteerId}/`;
-        const config = {
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        };
-        axios.get(url, config)
+
+        axios.get(url)
             .then(response => {
                 const payload = response.data;
                 dispatch(fetchVolunteerDetailSuccess(payload))
@@ -108,19 +100,16 @@ export const deleteVolunteerFail = (error) => {
     };
 }
 
-export const deleteVolunteer = (volunteerId, token) => {
+export const deleteVolunteer = (volunteerId) => {
     return dispatch => {
         dispatch(deleteVolunteerStart());
         const url = `/requests/volunteering/${volunteerId}/`;
-        const config = {
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        };
-        axios.delete(url, config)
+
+        axios.delete(url)
             .then(response => {
                 const status = response.request.status;
                 dispatch(deleteVolunteerSuccess(status));
+                dispatch(fetchVolunteerList(1))
                 dispatch(setAlert(`Your volunteer #${volunteerId} has been canceled, the corresponding request will be available for all volunteers`, "warning"));
             })
             .catch(error => {
@@ -152,24 +141,20 @@ export const updateVolunteerFail = (error) => {
 }
 
 
-export const updateVolunteer = ({ volunteerId, requestId }, token) => {
+export const updateVolunteer = ({ volunteerId, requestId }) => {
     return dispatch => {
         dispatch(updateVolunteerStart());
         const url = `/requests/volunteering/${volunteerId}/`;
-        const config = {
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        };
+
         const body = {
             request: requestId,
             status: "Delivered"
         }
-        axios.put(url, body, config)
+        axios.put(url, body)
             .then(response => {
                 const status = response.request.status;
                 dispatch(updateVolunteerSuccess(status));
-                dispatch(fetchVolunteerDetail(volunteerId, token));
+                dispatch(fetchVolunteerDetail(volunteerId));
                 dispatch(setAlert(`Successfully confirmed delivery for request #${requestId}.`, "success"));
                 dispatch(setAlert("Please fill out reimbursement form if needed.", "info"))
             })

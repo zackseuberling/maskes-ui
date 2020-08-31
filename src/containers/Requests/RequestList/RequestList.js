@@ -14,19 +14,16 @@ import { Pagination } from 'semantic-ui-react';
 import './RequestList.css';
 
 const RequestList = (props) => {
-  const { requests, loading, token, fetchRequests, name, history, match } = props;
+  const { requests, loading, fetchRequests, name, history, match } = props;
   const { results, count } = requests
   const totalPages = Math.ceil(count / 21)
 
   const [activePage, setActivePage] = useState(1);
 
   useEffect(() => {
-    let mounted = true;
-    if (mounted) {
-      fetchRequests(activePage, token)
-    }
-    return () => mounted = false;
-  }, [fetchRequests, token, activePage])
+    fetchRequests(activePage)
+  }, [fetchRequests, activePage])
+
   let requests_list = []
 
   const onPageChange = (event, pageInfo) => {
@@ -42,7 +39,7 @@ const RequestList = (props) => {
     'Pending': '#fcdc04',
     'In Process': '#FF8C00',
     'Completed': '#5cb85c',
-    'Transfered': '#342452',
+    'Transferred': '#342452',
   }
 
   if (!loading && results) {
@@ -105,7 +102,6 @@ const RequestList = (props) => {
 const mapStateToProps = (state) => {
   return {
     hasLogin: state.auth.access !== null,
-    token: state.auth.access,
     loading: state.requestList.loading,
     requests: state.requestList.requests,
     name: state.auth.name,

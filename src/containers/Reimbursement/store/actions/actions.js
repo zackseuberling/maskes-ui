@@ -24,16 +24,11 @@ export const fetchReimbursementFail = (error) => {
     };
 }
 
-export const fetchReimbursement = (reimbursementId, token) => {
+export const fetchReimbursement = (reimbursementId) => {
     return dispatch => {
         dispatch(fetchReimbursementStart());
         const url = `/funds/reimbursement/${reimbursementId}/`;
-        const config = {
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        };
-        axios.get(url, config)
+        axios.get(url)
             .then(response => {
                 const payload = response.data;
                 dispatch(fetchReimbursementSuccess(payload))
@@ -67,16 +62,12 @@ export const deleteReimbursementFail = (error) => {
     };
 }
 
-export const deleteReimbursement = (reimbursementId, token) => {
+export const deleteReimbursement = (reimbursementId) => {
     return dispatch => {
         dispatch(deleteReimbursementStart());
         const url = `/funds/reimbursement/${reimbursementId}/`;
-        const config = {
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        };
-        axios.delete(url, config)
+
+        axios.delete(url)
             .then(response => {
                 const status = response.status;
                 dispatch(deleteReimbursementSuccess(status));
@@ -111,9 +102,10 @@ export const updateReimbursementFail = (error) => {
 }
 
 
-export const updateReimbursement = (formData, volunteerId, token, reimbursementId) => {
+export const updateReimbursement = (formData, volunteerId, reimbursementId) => {
     return dispatch => {
         dispatch(updateReimbursementStart());
+        const token = localStorage.getItem('access');
         const url = `/funds/reimbursement/${reimbursementId}/`;
         const config = {
             headers: {
@@ -138,7 +130,7 @@ export const updateReimbursement = (formData, volunteerId, token, reimbursementI
             .then(response => {
                 const status = response.status;
                 dispatch(updateReimbursementSuccess(status));
-                dispatch(fetchReimbursement(reimbursementId, token));
+                dispatch(fetchReimbursement(reimbursementId));
                 dispatch(setAlert(`Reimbursement #${reimbursementId} updated.`, "success"));
             })
             .catch(error => {
@@ -171,9 +163,10 @@ export const requestReimbursementFail = (error) => {
 }
 
 
-export const requestReimbursement = (formData, volunteerId, token) => {
+export const requestReimbursement = (formData, volunteerId) => {
     return dispatch => {
         dispatch(requestReimbursementStart());
+        const token = localStorage.getItem('access')
         const url = '/funds/reimbursement/';
         const config = {
             headers: {
@@ -195,7 +188,7 @@ export const requestReimbursement = (formData, volunteerId, token) => {
                 const reimbursementId = response.data.id
                 dispatch(requestReimbursementSuccess(response.status));
                 dispatch(setAlert(`Successfully create reimbursement #${reimbursementId}.`, "success"));
-                dispatch(fetchVolunteerDetail(volunteerId, token));
+                dispatch(fetchVolunteerDetail(volunteerId));
                 // dispatch(fetchReimbursement(reimbursementId, token));
             })
             .catch(error => {

@@ -16,8 +16,8 @@ import { Pagination } from 'semantic-ui-react';
 import '../Volunteer.css';
 
 const MyVolunteerList = (props) => {
-    const { volunteer, loading, token,
-        name, fetchVolunteerList } = props
+    const { volunteer, loading,
+        name, fetchVolunteerList, status } = props
 
     const history = useHistory();
     const { results, count } = volunteer
@@ -26,8 +26,8 @@ const MyVolunteerList = (props) => {
     const [activePage, setActivePage] = useState(1);
 
     useEffect(() => {
-        fetchVolunteerList(activePage, token);
-    }, [fetchVolunteerList, token, activePage]);
+        fetchVolunteerList(activePage);
+    }, [fetchVolunteerList, activePage, status]);
 
     let display = [];
 
@@ -105,11 +105,11 @@ const MyVolunteerList = (props) => {
 
 const mapStateToProps = (state) => {
     return {
-        token: state.auth.access,
         name: state.auth.name,
         loading: state.myVolunteer.loading,
         volunteer: state.myVolunteer.volunteer,
         error: state.myVolunteer.error,
+        status: state.myVolunteer.status
     }
 }
 

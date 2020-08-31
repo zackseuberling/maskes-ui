@@ -1,0 +1,6 @@
+.my-alert {
+    width: 100%;
+    position: absolute !important;
+    z-index: 25 !important;
+    opacity: 90%;
+}

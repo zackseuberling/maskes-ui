@@ -31,7 +31,7 @@ const ReimbursementForm = (props) => {
                     <InputGroup.Text>$</InputGroup.Text>
                 </InputGroup.Prepend>
                 <Form.Control
-                    value={onEdit ? formData.total_cost : null}
+                    value={onEdit ? formData.total_cost : undefined}
                     name="total_cost"
                     onChange={onChange}
                     placeholder="Total cost"
@@ -45,7 +45,7 @@ const ReimbursementForm = (props) => {
                 </InputGroup.Prepend>
                 <Form.Control
                     name="amount"
-                    value={onEdit ? formData.amount : null}
+                    value={onEdit ? formData.amount : undefined}
                     onChange={onChange}
                     placeholder="Reimbursement"
                     type="number"
@@ -56,7 +56,7 @@ const ReimbursementForm = (props) => {
                 <Form.Control
                     as="textarea" rows="3"
                     name="note"
-                    value={onEdit ? formData.note : null}
+                    value={onEdit ? formData.note : undefined}
                     onChange={onChange}
                     placeholder="Note" />
             </InputGroup>

@@ -32,9 +32,13 @@ import { withRouter } from 'react-router';
 import { authCheckLoginState } from './components/Auth/store/actions/actions';
 
 const App = ({ isAuthenticated, authCheckLoginState, is_requester, is_volunteer }) => {
+
+  const token = localStorage.getItem('access')
+
   useEffect(() => {
     authCheckLoginState();
-  })
+  }, [token, authCheckLoginState])
+
   const requester_routes = (
     <Switch>
       <ProtectedRoute exact path='/my-requests' component={RequestList} />

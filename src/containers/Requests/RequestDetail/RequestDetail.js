@@ -1,28 +1,54 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Spinner from 'react-bootstrap/Spinner';
 import { connect } from 'react-redux';
-import { fetchRequestDetail } from './store/actions/actions';
+import { fetchRequestDetail, deleteRequest } from './store/actions/actions';
+import DeleteModal from '../../../components/Modal/DeleteModal/DeleteModal';
 import Table from 'react-bootstrap/Table';
 import Container from 'react-bootstrap/Container';
+import Button from 'react-bootstrap/Button';
+import Aux from '../../../hoc/Aux/Aux';
 import Requests from '../Requests';
 
 const RequestDetail = (props) => {
-  const { request, loading, token, fetchRequestDetail, name } = props;
+  const { request, loading, fetchRequestDetail, deleteRequest, name, history } = props;
+
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [deleteId, setDeleteId] = useState(null)
+
+  const closeDeleteModalHandler = () => setShowDeleteModal(false);
+
+  const showDeleteModalHandler = (requestId) => {
+    setShowDeleteModal(true);
+    setDeleteId(requestId);
+  };
+
+  const requestDeleteHandler = () => {
+    deleteRequest(deleteId);
+    history.push('/my-requests')
+  }
 
   useEffect(() => {
-    let mounted = true;
-    if (mounted) {
-      fetchRequestDetail(props.match.params.requestId, token)
-    };
-    return () => mounted = false;
-  }, [fetchRequestDetail, token, props.match.params.requestId])
+
+    fetchRequestDetail(props.match.params.requestId)
+
+  }, [fetchRequestDetail, props.match.params.requestId])
+
+
+  const request_status_style = {
+    'New': '#5bc0de',
+    'Pending': '#fcdc04',
+    'In Process': '#FF8C00',
+    'Completed': '#5cb85c',
+    'Transferred': '#342452',
+  }
 
   let request_detail = {}
   if (!loading && request) {
     request_detail = (
       <tbody>
         <tr><td>Request #</td><td>{request.id}</td></tr>
-        <tr><td>Request Status</td><td>{request.status}</td></tr>
+        <tr><td >Request Status</td><td style={
+          { color: request_status_style[request.status] }}>{request.status}</td></tr>
         <tr><td>Created Date</td><td>{new Date(request.created_date).toLocaleDateString()}</td></tr>
         <tr><td>Phone</td><td>{request.phone}</td></tr>
         <tr><td>Address</td><td>{`${request.address1} ${request.address2}, ${request.city}, WA ${request.zip_code}`}</td></tr>
@@ -46,15 +72,24 @@ const RequestDetail = (props) => {
 
   return (
     <Requests name={name}>
+      <DeleteModal showDeleteModal={showDeleteModal} closeModalHandler={closeDeleteModalHandler} deleteHandler={requestDeleteHandler} label="Request" />
       <Container fluid>
         <h3>My Request Detail</h3>
         {loading
           ? <Spinner animation="grow" />
-          : <Table striped bordered hover size="sm">
+          : <Aux>
+            <Table striped bordered hover size="sm">
 
-            {request_detail}
+              {request_detail}
 
-          </Table>
+            </Table>
+            {request.status === "New"
+              ? <Button variant='danger' onClick={() => showDeleteModalHandler(request.id)}>Cancel</Button>
+              : request.status === "Transferred"
+                ? <Button style={{ backgroundColor: "#342452", borderColor: "#342452" }} variant='info' disabled >Request transferred</Button>
+                : <Button variant='warning' disabled >Request is in process...</Button>
+            }
+          </Aux>
         }
       </Container>
     </Requests>
@@ -64,7 +99,6 @@ const RequestDetail = (props) => {
 const mapStateToProps = (state) => {
   return {
     hasLogin: state.auth.access !== null,
-    token: state.auth.access,
     loading: state.requestDetail.loading,
     request: state.requestDetail.request,
     name: state.auth.name,
@@ -72,4 +106,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, { fetchRequestDetail })(RequestDetail);
+export default connect(mapStateToProps, { fetchRequestDetail, deleteRequest })(RequestDetail);

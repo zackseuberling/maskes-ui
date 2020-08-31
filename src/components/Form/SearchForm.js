@@ -38,13 +38,14 @@ const SearchForm = (props) => {
                     <Form.Group as={Col} controlId="familySize">
                         <Form.Label>Family Size</Form.Label>
                         <Form.Control as='select' name='familySize' value={familySize} onChange={onChange}>
-                            <option value={1}>Any...</option>
-                            <option value={2}>2+</option>
-                            <option value={3}>3+</option>
-                            <option value={4}>4+</option>
-                            <option value={5}>5+</option>
-                            <option value={6}>6+</option>
-                            <option value={7}>7+</option>
+                            <option value={0}>Any...</option>
+                            <option value={1}>1</option>
+                            <option value={2}>2</option>
+                            <option value={3}>3</option>
+                            <option value={4}>4</option>
+                            <option value={5}>5</option>
+                            <option value={6}>6</option>
+                            <option value={7}>7</option>
                             <option value={8}>8+</option>
                         </Form.Control>
                     </Form.Group>

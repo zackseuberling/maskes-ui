@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import axios from '../../shared/axios';
 import Profile from '../../components/Profile/Profile';
 const UserProfile = (props) => {
-    const { token, myId } = props
+    const { myId } = props
 
     const [profile, setProfile] = useState(null);
 
@@ -17,42 +17,28 @@ const UserProfile = (props) => {
     }
 
     useEffect(() => {
-        let mounted = true;
-
         const url = `/profile/${userId}/`
-        const config = {
-            headers: {
-                "Authorization": `Bearer ${token}`,
-            }
-        }
-        axios.get(url, config)
+        axios.get(url)
             .then(response => {
                 const payload = response.data
-                if (mounted) { setProfile(payload) }
+                setProfile(payload)
             })
             .catch(error => {
-                if (mounted) { setError(error.response.data.detail) }
+                setError(error.response.data.detail)
             })
-
-        return () => mounted = false;
-    }, [token, userId])
+    }, [userId])
 
     const nameChangeSubmitHandler = (event, first_name, last_name, display_name) => {
         event.preventDefault();
         const url = `/users/me/`
-        const config = {
-            headers: {
-                "Authorization": `Bearer ${token}`,
-                "Content-Type": "application/json"
-            }
-        }
+
         const body = {
             first_name: first_name,
             last_name: last_name,
             display_name: display_name
         }
 
-        axios.put(url, body, config)
+        axios.put(url, body)
             .then(response => {
                 props.history.push('/profile')
             })
@@ -63,12 +49,7 @@ const UserProfile = (props) => {
     const updateProfileHandler = (event, profileData) => {
         event.preventDefault();
         const url = `/profile/${myId}/`;
-        const config = {
-            headers: {
-                "Authorization": `Bearer ${token}`,
-                "Content-Type": "application/json"
-            }
-        }
+
         const body = {
             phone: profileData[0].phone,
             location: profileData[1].location,
@@ -78,7 +59,7 @@ const UserProfile = (props) => {
             venmo: profileData[5].venmo,
             user: myId,
         }
-        axios.put(url, body, config)
+        axios.put(url, body)
             .then(response => {
                 props.history.push('/profile')
             })
@@ -95,7 +76,6 @@ const UserProfile = (props) => {
                 myId={myId}
                 nameChangeSubmitHandler={nameChangeSubmitHandler}
                 updateProfileHandler={updateProfileHandler}
-                token={token}
                 history={props.history}
             /> : <Spinner />}
         </div>
@@ -106,7 +86,6 @@ const UserProfile = (props) => {
 
 const mapStateToProps = state => {
     return {
-        token: state.auth.access,
         myId: state.auth.user_id,
     }
 }

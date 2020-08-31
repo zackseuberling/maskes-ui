@@ -23,17 +23,13 @@ export const fetchVolunteerRequestsFail = (error) => {
     };
 }
 
-export const fetchVolunteerRequests = (page, token, searchValues) => {
+export const fetchVolunteerRequests = (page, searchValues) => {
     return dispatch => {
         dispatch(fetchVolunteerRequestsStart());
 
         let url = `/requests/volunteer/?page=${page}`;
-        const config = {
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        };
-        axios.post(url, searchValues, config)
+
+        axios.post(url, searchValues)
             .then(response => {
                 const payload = response.data;
                 dispatch(fetchVolunteerRequestsSuccess(payload))

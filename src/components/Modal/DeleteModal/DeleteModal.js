@@ -3,13 +3,13 @@ import { Modal, Button } from 'react-bootstrap';
 import './DeleteModal.css';
 
 const DeleteModal = (props) => {
-    const { showDeleteModal, closeModalHandler, deleteHandler } = props
+    const { showDeleteModal, closeModalHandler, deleteHandler, label } = props
     return (
         < Modal show={showDeleteModal} centered onHide={closeModalHandler} >
             <Modal.Header closeButton>
-                <Modal.Title>Cancel Volunteer</Modal.Title>
+                <Modal.Title>Cancel {label}</Modal.Title>
             </Modal.Header>
-            <Modal.Body>Are you sure you want to cancel this volunteer?</Modal.Body>
+            <Modal.Body>Are you sure you want to cancel this {label}?</Modal.Body>
             <Modal.Footer>
                 <Button variant="secondary" onClick={closeModalHandler}>
                     Close

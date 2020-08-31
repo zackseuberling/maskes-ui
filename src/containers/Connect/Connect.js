@@ -11,36 +11,36 @@ const Connect = (props) => {
     const { fetchComments, createComment,
         updateComment, deleteComment,
         createReply, updateReply, deleteReply,
-        comments, loading, requestId, token, user_id } = props
+        comments, loading, requestId, user_id } = props
 
-    useEffect(() => requestId && fetchComments(requestId, token),
+    useEffect(() => requestId && fetchComments(requestId),
         [fetchComments, createComment,
             updateComment, deleteComment,
             createReply, updateReply, deleteReply,
-            requestId, token])
+            requestId])
 
     const createCommentHandler = (content) => {
-        createComment(requestId, content, token);
+        createComment(requestId, content);
     }
 
     const updateCommentHandler = (commentId, content) => {
-        updateComment(requestId, commentId, content, token);
+        updateComment(requestId, commentId, content);
     }
 
     const deleteCommentHandler = (commentId) => {
-        deleteComment(requestId, commentId, token);
+        deleteComment(requestId, commentId);
     }
 
     const createReplyHandler = (commentId, content) => {
-        createReply(commentId, content, requestId, token);
+        createReply(commentId, content, requestId);
     }
 
     const updateReplyHandler = (replyId, content, commentId) => {
-        updateReply(replyId, content, commentId, requestId, token);
+        updateReply(replyId, content, commentId, requestId);
     }
 
     const deleteReplyHandler = (replyId) => {
-        deleteReply(replyId, requestId, token);
+        deleteReply(replyId, requestId);
     }
 
 
@@ -63,7 +63,6 @@ const mapStateToProps = state => {
         comments: state.connect.comments,
         error: state.connect.error,
         loading: state.connect.loading,
-        token: state.auth.access,
         user_id: state.auth.user_id
     }
 }

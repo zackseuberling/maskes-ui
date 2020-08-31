@@ -5,7 +5,7 @@ import { BsPencil, BsX, BsCheck } from 'react-icons/bs';
 import axios from '../../shared/axios';
 
 const Profile = (props) => {
-    const { profile, myId, nameChangeSubmitHandler, updateProfileHandler, token, history } = props;
+    const { profile, myId, nameChangeSubmitHandler, updateProfileHandler, history } = props;
     const isOwner = profile.id === parseInt(myId)
 
 
@@ -108,23 +108,17 @@ const Profile = (props) => {
     const onChangePrivacy = (e, i) => {
         // e.preventDefault();
         const url = `/profile/${myId}/`;
-        const config = {
-            headers: {
-                "Authorization": `Bearer ${token}`,
-            }
-        }
         const body = {
             user: myId,
             [e.target.id]: e.target.checked
         }
         setPrivacy(privacy.map((pvc, j) => (j === i) ? { ...pvc, key: j, [e.target.id]: e.target.checked } : { ...pvc, key: j }))
-        axios.put(url, body, config)
+        axios.put(url, body)
             .then(response => {
 
             })
             .catch(error => {
             })
-
     };
 
     return (
@@ -265,9 +259,10 @@ const Profile = (props) => {
                                     {isOwner && <Col sm='auto' className="text-secondary my-auto pull-right">
                                         <Form>
                                             <Form.Check
+                                                style={{ color: privacy[0].fullname_privacy ? "teal" : null }}
                                                 type="switch"
                                                 id="fullname_privacy"
-                                                label={privacy[0].fullname_privacy ? "private" : "public"}
+                                                label={"privacy"}
                                                 checked={privacy[0].fullname_privacy}
                                                 onChange={(e) => onChangePrivacy(e, 0)}
                                             />
@@ -290,9 +285,10 @@ const Profile = (props) => {
                                 {isOwner && <Col sm='auto' className="text-secondary my-auto">
                                     <Form>
                                         <Form.Check
+                                            style={{ color: privacy[1].email_privacy ? "teal" : null }}
                                             type="switch"
                                             id="email_privacy"
-                                            label={privacy[1].email_privacy ? "private" : "public"}
+                                            label={"privacy"}
                                             checked={privacy[1].email_privacy}
                                             onChange={(e) => onChangePrivacy(e, 1)}
                                         />
@@ -321,8 +317,9 @@ const Profile = (props) => {
                                     <Form>
                                         <Form.Check
                                             type="switch"
+                                            style={{ color: privacy[2].phone_privacy ? "teal" : null }}
                                             id="phone_privacy"
-                                            label={privacy[2].phone_privacy ? "private" : "public"}
+                                            label={"privacy"}
                                             checked={privacy[2].phone_privacy}
                                             onChange={(e) => onChangePrivacy(e, 2)}
                                         />
@@ -347,8 +344,9 @@ const Profile = (props) => {
                                     <Form>
                                         <Form.Check
                                             type="switch"
+                                            style={{ color: privacy[3].location_privacy ? "teal" : null }}
                                             id="location_privacy"
-                                            label={privacy[3].location_privacy ? "private" : "public"}
+                                            label={"privacy"}
                                             checked={privacy[3].location_privacy}
                                             onChange={(e) => onChangePrivacy(e, 3)}
                                         />

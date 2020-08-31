@@ -16,13 +16,13 @@ const Comment = (props) => {
 
     const { comments, create, update, remove,
         create_reply, update_reply, remove_reply,
-        loading, userId, profile, fetchProfile, token } = props
+        loading, userId, profile, fetchProfile } = props
 
     const history = useHistory();
 
     useEffect(() => {
-        fetchProfile(userId, token)
-    }, [userId, fetchProfile, token])
+        fetchProfile(userId)
+    }, [userId, fetchProfile])
 
     const [key, setKey] = useState('Comment');
     const [commentContent, setCommentContent] = useState()
@@ -43,7 +43,7 @@ const Comment = (props) => {
                 ...cm,
                 key: i,
                 onEdit: false,
-                collapsed: true,
+                collapsed: false,
                 comment_content: cm.comment_content,
                 reply_content: ""
             })
@@ -141,7 +141,6 @@ const Comment = (props) => {
                         moment={moment}
                         update={update_reply}
                         remove={remove_reply}
-                        token={token}
                     />) : null}
                 <Form reply onSubmit={() => create_reply(comment.id, comment.reply_content)}>
                     <Form.Group inline>
@@ -183,7 +182,6 @@ const Comment = (props) => {
 const mapStateToProps = state => {
     return {
         profile: state.profile.profile,
-        token: state.auth.access,
     }
 }
 export default connect(mapStateToProps, { fetchProfile })(Comment);

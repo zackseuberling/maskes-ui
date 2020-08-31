@@ -50,6 +50,7 @@ instance.interceptors.response.use(
                         .post('/auth/jwt/refresh/', { refresh: refresh })
                         .then((response) => {
                             localStorage.setItem('access', response.data.access);
+                            localStorage.setItem('refresh', response.data.refresh);
                             instance.defaults.headers['Authorization'] = "Bearer " + response.data.access;
                             request.headers['Authorization'] = "Bearer " + response.data.access;
                             return instance(request);

@@ -34,10 +34,10 @@ const Footer = (props) => (
                                 <Button variant="warning" size="sm" className='mt-2'>Subscribe</Button>
                             </Form>
                             <br />
-                            <Icon name='facebook' style={{ fontSize: "1.5rem" }} />
-                            <Icon name='instagram' style={{ fontSize: "1.5rem" }} />
-                            <Icon name='twitter' style={{ fontSize: "1.5rem" }} />
-                            <Icon name='whatsapp' style={{ fontSize: "1.5rem" }} />
+                            <Icon name='facebook' className="fb-icon" />
+                            <Icon name='instagram' className="ig-icon" />
+                            <Icon name='twitter' className="tw-icon" />
+                            <Icon name='whatsapp' className="wa-icon" />
                         </Grid.Column>
                     </Grid.Row>
                     <Grid.Row style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>

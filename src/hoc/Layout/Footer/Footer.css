@@ -21,3 +21,44 @@
   -webkit-box-shadow: none;
   box-shadow: none;
 }
+
+.fb-icon {
+  font-size: 1.5rem !important;
+  cursor: pointer;
+}
+
+.fb-icon:hover {
+  background-color: white;
+  color: rgb(0, 145, 255);
+  border-radius: 20%;
+}
+
+.ig-icon {
+  font-size: 1.5rem !important;
+  cursor: pointer;
+}
+
+.ig-icon:hover {
+  background-image: linear-gradient(to bottom, #bb456e 5%, #ffae00 60%  ,#da1f1f 100%);
+  border-radius: 20%;
+  color: white;
+}
+
+.tw-icon {
+  font-size: 1.5rem !important;
+  cursor: pointer;
+}
+
+.tw-icon:hover {
+  color: rgba(0, 217, 255, 0.851);
+}
+
+.wa-icon {
+  font-size: 1.5rem !important;
+  cursor: pointer;
+}
+
+.wa-icon:hover {
+  color: rgb(41, 187, 15);
+  border-radius: 20%;
+}

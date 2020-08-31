@@ -17,7 +17,7 @@ import moment from 'moment';
 import './VolunteerList.css';
 
 const VolunteerList = (props) => {
-    const { requests, loading, token,
+    const { requests, loading,
         name, match, fetchVolunteerRequests } = props
     const history = useHistory();
     const { results, count } = requests
@@ -29,14 +29,8 @@ const VolunteerList = (props) => {
     const { date, location, urgent, familySize } = searchValues;
 
     useEffect(() => {
-        let mounted = true;
-        if (mounted) {
-            fetchVolunteerRequests(activePage, token, searchValues);
-        }
-        return () => mounted = false
-    }, [fetchVolunteerRequests, token, searchValues, activePage]);
-
-
+        fetchVolunteerRequests(activePage, searchValues);
+    }, [fetchVolunteerRequests, searchValues, activePage]);
 
     let display = [];
     //ALL VOLUNTEER
@@ -156,7 +150,6 @@ const VolunteerList = (props) => {
 
 const mapStateToProps = (state) => {
     return {
-        token: state.auth.access,
         name: state.auth.name,
         loading: state.volunteerList.loading,
         requests: state.volunteerList.requests,

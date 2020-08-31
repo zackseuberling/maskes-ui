@@ -11,7 +11,7 @@ import "../Volunteer.css";
 
 const VolunteerDetail = (props) => {
 
-    const { request, loading, token, match,
+    const { request, loading, match,
         fetchVolunteerRequestDetail, volunteering, name, isMyVolunteer } = props;
     const history = useHistory();
 
@@ -24,8 +24,8 @@ const VolunteerDetail = (props) => {
     }, [isMyVolunteer])
 
     useEffect(() => {
-        fetchVolunteerRequestDetail(match.params.requestId, token)
-    }, [fetchVolunteerRequestDetail, token, match.params.requestId])
+        fetchVolunteerRequestDetail(match.params.requestId)
+    }, [fetchVolunteerRequestDetail, match.params.requestId])
 
     const onMyVolunteer = (event) => {
         setMyVolunteer(!myVolunteer);
@@ -35,7 +35,7 @@ const VolunteerDetail = (props) => {
     }
 
     const volunteerSignupHandler = requestId => {
-        volunteering(requestId, token);
+        volunteering(requestId);
         history.push('/volunteer/my-support');
     }
 
@@ -85,7 +85,6 @@ const VolunteerDetail = (props) => {
 
 const mapStateToProps = (state) => {
     return {
-        token: state.auth.access,
         name: state.auth.name,
         loading: state.volunteerDetail.loading,
         request: state.volunteerDetail.request,

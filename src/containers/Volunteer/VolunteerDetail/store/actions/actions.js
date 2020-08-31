@@ -23,16 +23,12 @@ export const fetchVolunteerRequestDetailFail = (error) => {
     };
 }
 
-export const fetchVolunteerRequestDetail = (requestId, token) => {
+export const fetchVolunteerRequestDetail = (requestId) => {
     return dispatch => {
         dispatch(fetchVolunteerRequestDetailStart());
         const url = `/requests/volunteer/${requestId}/`;
-        const config = {
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        };
-        axios.get(url, config)
+
+        axios.get(url)
             .then(response => {
                 const payload = response.data;
                 dispatch(fetchVolunteerRequestDetailSuccess(payload))
@@ -65,7 +61,7 @@ export const volunteeringSuccess = (payload) => {
     };
 }
 
-export const volunteering = (requestId, token) => {
+export const volunteering = (requestId) => {
     return dispatch => {
         dispatch(volunteeringStart());
         const url = '/requests/volunteering/'
@@ -73,16 +69,12 @@ export const volunteering = (requestId, token) => {
             request: requestId,
             status: 'Signed Up'
         }
-        const config = {
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        };
-        axios.post(url, body, config)
+
+        axios.post(url, body)
             .then(response => {
                 const payload = response.data;
                 dispatch(volunteeringSuccess(payload));
-                dispatch(fetchVolunteerList(1, token))
+                dispatch(fetchVolunteerList(1))
                 dispatch(setAlert(`Successfully signed up for Request #${requestId}! Thank you for volunteering`, "success"))
             })
             .catch(error => {

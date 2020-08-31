@@ -8,7 +8,7 @@ import moment from 'moment';
 import './Reply.css';
 
 const Reply = (props) => {
-    const { reply, userId, update, remove, token } = props;
+    const { reply, userId, update, remove } = props;
     const isOwner = userId === reply.author
 
     const [authorAvatar, setAuthorAvatar] = useState()
@@ -17,12 +17,8 @@ const Reply = (props) => {
         let mounted = true;
 
         const url = `/profile/${reply.author}/`
-        const config = {
-            headers: {
-                "Authorization": `Bearer ${token}`,
-            }
-        }
-        axios.get(url, config)
+
+        axios.get(url)
             .then(response => {
                 const payload = response.data.image
                 if (mounted) { setAuthorAvatar(payload) }
@@ -32,7 +28,7 @@ const Reply = (props) => {
             })
 
         return () => mounted = false;
-    }, [token, reply.author])
+    }, [reply.author])
 
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [deleteReplyId, setDeleteReplyId] = useState(null)

@@ -5,7 +5,7 @@ import { BsPencil, BsX, BsCheck } from 'react-icons/bs';
 import axios from '../../shared/axios';
 
 const Profile = (props) => {
-    const { profile, myId, nameChangeSubmitHandler, updateProfileHandler, token, history } = props;
+    const { profile, myId, nameChangeSubmitHandler, updateProfileHandler, history } = props;
     const isOwner = profile.id === parseInt(myId)
 
 
@@ -108,23 +108,17 @@ const Profile = (props) => {
     const onChangePrivacy = (e, i) => {
         // e.preventDefault();
         const url = `/profile/${myId}/`;
-        const config = {
-            headers: {
-                "Authorization": `Bearer ${token}`,
-            }
-        }
         const body = {
             user: myId,
             [e.target.id]: e.target.checked
         }
         setPrivacy(privacy.map((pvc, j) => (j === i) ? { ...pvc, key: j, [e.target.id]: e.target.checked } : { ...pvc, key: j }))
-        axios.put(url, body, config)
+        axios.put(url, body)
             .then(response => {
 
             })
             .catch(error => {
             })
-
     };
 
     return (

@@ -10,7 +10,7 @@ import Aux from '../../../hoc/Aux/Aux';
 import Requests from '../Requests';
 
 const RequestDetail = (props) => {
-  const { request, loading, token, fetchRequestDetail, deleteRequest, name, history } = props;
+  const { request, loading, fetchRequestDetail, deleteRequest, name, history } = props;
 
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [deleteId, setDeleteId] = useState(null)
@@ -23,17 +23,15 @@ const RequestDetail = (props) => {
   };
 
   const requestDeleteHandler = () => {
-    deleteRequest(deleteId, token);
+    deleteRequest(deleteId);
     history.push('/my-requests')
   }
 
   useEffect(() => {
-    let mounted = true;
-    if (mounted) {
-      fetchRequestDetail(props.match.params.requestId, token)
-    };
-    return () => mounted = false;
-  }, [fetchRequestDetail, token, props.match.params.requestId])
+
+    fetchRequestDetail(props.match.params.requestId)
+
+  }, [fetchRequestDetail, props.match.params.requestId])
 
 
   const request_status_style = {
@@ -101,7 +99,6 @@ const RequestDetail = (props) => {
 const mapStateToProps = (state) => {
   return {
     hasLogin: state.auth.access !== null,
-    token: state.auth.access,
     loading: state.requestDetail.loading,
     request: state.requestDetail.request,
     name: state.auth.name,

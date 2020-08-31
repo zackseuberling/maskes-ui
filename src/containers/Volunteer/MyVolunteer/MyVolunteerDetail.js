@@ -12,7 +12,7 @@ import './MyVolunteer.css';
 
 const MyVolunteerDetail = (props) => {
 
-    const { volunteer, loading, token, match, name, isMyVolunteer,
+    const { volunteer, loading, match, name, isMyVolunteer,
         fetchVolunteerDetail, deleteVolunteer, updateVolunteer } = props;
 
     const history = useHistory();
@@ -32,8 +32,8 @@ const MyVolunteerDetail = (props) => {
     }, [isMyVolunteer])
 
     useEffect(() => {
-        fetchVolunteerDetail(match.params.volunteerId, token)
-    }, [fetchVolunteerDetail, token, match.params.volunteerId])
+        fetchVolunteerDetail(match.params.volunteerId)
+    }, [fetchVolunteerDetail, match.params.volunteerId])
 
     useEffect(() => {
         if (volunteer.reimbursement_detail) {
@@ -60,12 +60,12 @@ const MyVolunteerDetail = (props) => {
     }
 
     const volunteerDeleteHandler = () => {
-        deleteVolunteer(deleteId, token);
+        deleteVolunteer(deleteId);
         history.push('/volunteer/my-support')
     }
 
     const confirmDeliveredHandler = () => {
-        updateVolunteer(updateId, token);
+        updateVolunteer(updateId);
         setShowUpdateModal(false);
     }
 
@@ -164,7 +164,6 @@ const MyVolunteerDetail = (props) => {
 const mapStateToProps = (state) => {
     return {
         hasLogin: state.auth.access !== null,
-        token: state.auth.access,
         name: state.auth.name,
         loading: state.myVolunteer.loading,
         volunteer: state.myVolunteer.volunteer,

@@ -11,7 +11,7 @@ import { withRouter } from 'react-router';
 import { createRequest } from '../../../containers/Requests/RequestList/store/actions/actions';
 
 const CreateRequest = (props) => {
-  const { createRequest, token } = props;
+  const { createRequest } = props;
   const history = useHistory();
   const [formData, setFormData] = useState({
     phone: '',
@@ -137,7 +137,7 @@ const CreateRequest = (props) => {
       offer_resources: offer_resources
     };
 
-    createRequest(body, token);
+    createRequest(body);
     history.push('/my-requests');
   }
 
@@ -479,11 +479,4 @@ const CreateRequest = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    token: state.auth.access
-  };
-};
-
-
-export default withRouter(connect(mapStateToProps, { createRequest })(CreateRequest));
+export default withRouter(connect(null, { createRequest })(CreateRequest));

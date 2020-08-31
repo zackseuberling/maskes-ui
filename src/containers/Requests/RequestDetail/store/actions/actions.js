@@ -23,16 +23,12 @@ export const fetchRequestDetailFail = (error) => {
     };
 }
 
-export const fetchRequestDetail = (requestId, token) => {
+export const fetchRequestDetail = (requestId) => {
     return dispatch => {
         dispatch(fetchRequestDetailStart());
         const url = `/requests/requester/${requestId}/`;
-        const config = {
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        };
-        axios.get(url, config)
+
+        axios.get(url)
             .then(response => {
                 const payload = response.data;
                 dispatch(fetchRequestDetailSuccess(payload))
@@ -64,19 +60,15 @@ export const deleteRequestFail = (error) => {
     };
 }
 
-export const deleteRequest = (requestId, token) => {
+export const deleteRequest = (requestId) => {
     return dispatch => {
         dispatch(deleteRequestStart());
         const url = `/requests/requester/${requestId}/`;
-        const config = {
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        };
-        axios.delete(url, config)
+
+        axios.delete(url)
             .then(response => {
                 dispatch(deleteRequestSuccess());
-                dispatch(fetchRequests(1, token))
+                dispatch(fetchRequests(1))
                 dispatch(setAlert(`Request #${requestId} successfully deleted`, "success"));
             })
             .catch(error => {

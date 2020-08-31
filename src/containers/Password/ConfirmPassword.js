@@ -17,12 +17,8 @@ const ResetPassword = (props) => {
         if (formData.new_password === formData.re_new_password) {
             const url = `/users/reset_password_confirm/`;
             const body = formData;
-            const config = {
-                headers: {
-                    "Content-Type": "application/json",
-                }
-            }
-            axios.post(url, body, config)
+
+            axios.post(url, body)
                 .then(res => {
                     setAlert("Successfully change password", "success");
                     history.push('/');

@@ -13,12 +13,8 @@ const ResetPassword = (props) => {
         const body = {
             email: userEmail
         }
-        const config = {
-            headers: {
-                "Content-Type": "application/json",
-            }
-        }
-        axios.post(url, body, config)
+
+        axios.post(url, body)
             .then(res => {
                 history.push(props.is_volunteer ? '/profile' : '/');
                 setAlert(`Password reset link sccessfully sent to ${userEmail}`, "success");

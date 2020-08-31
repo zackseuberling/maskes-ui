@@ -23,16 +23,12 @@ export const fetchRequestsFail = (error) => {
     };
 }
 
-export const fetchRequests = (page, token) => {
+export const fetchRequests = (page) => {
     return dispatch => {
         dispatch(fetchRequestsStart());
         const url = `/requests/requester/?page=${page}`;
-        const config = {
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        };
-        axios.get(url, config)
+
+        axios.get(url)
             .then(response => {
                 const payload = response.data;
                 dispatch(fetchRequestsSuccess(payload));
@@ -64,20 +60,16 @@ export const createRequestFail = (error) => {
     };
 }
 
-export const createRequest = (body, token) => {
+export const createRequest = (body) => {
     return dispatch => {
         dispatch(createRequestStart());
         const url = '/requests/requester/';
-        const config = {
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        };
-        axios.post(url, body, config)
+
+        axios.post(url, body)
             .then(response => {
                 const payload = response.data;
                 dispatch(createRequestSuccess(payload));
-                dispatch(fetchRequests(1, token))
+                dispatch(fetchRequests(1))
                 dispatch(setAlert(`Request #${payload.id} successfully created`, "success"));
             })
             .catch(error => {

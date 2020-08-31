@@ -21,17 +21,13 @@ export const fetchProfileFail = (error) => {
     }
 }
 
-export const fetchProfile = (userId, token) => {
+export const fetchProfile = (userId) => {
     return dispatch => {
         dispatch(fetchProfileStart());
 
         const url = `/profile/${userId}/`
-        const config = {
-            headers: {
-                "Authorization": `Bearer ${token}`,
-            }
-        }
-        axios.get(url, config)
+
+        axios.get(url)
             .then(response => {
                 const payload = response.data
                 dispatch(fetchProfileSuccess(payload))

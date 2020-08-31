@@ -12,7 +12,7 @@ const Reimbursement = (props) => {
 
     const { requestReimbursement, fetchReimbursement,
         updateReimbursement, deleteReimbursement,
-        volunteerId, reimbursement_detail, token, reimbursement, loading,
+        volunteerId, reimbursement_detail, reimbursement, loading,
         reimbursementId
     } = props;
 
@@ -29,24 +29,24 @@ const Reimbursement = (props) => {
 
 
     const handleCreate = (formData) => {
-        requestReimbursement(formData, volunteerId, token);
+        requestReimbursement(formData, volunteerId);
     };
 
     const handleUpdate = (formData) => {
-        updateReimbursement(formData, volunteerId, token, reimbursementId);
+        updateReimbursement(formData, volunteerId, reimbursementId);
         setOnEdit(false);
     };
 
     const handleDelete = () => {
-        deleteReimbursement(reimbursementId, token, volunteerId);
+        deleteReimbursement(reimbursementId, volunteerId);
         setShowDeleteModal(false);
     };
 
     useEffect(() => {
         if (reimbursement_detail) {
-            fetchReimbursement(reimbursement_detail.id, token)
+            fetchReimbursement(reimbursement_detail.id)
         }
-    }, [token, reimbursement_detail, fetchReimbursement, deleteReimbursement, volunteerId, reimbursementId]);
+    }, [reimbursement_detail, fetchReimbursement, deleteReimbursement, volunteerId, reimbursementId]);
 
 
     let display = <Spinner animation="border" style={{ marginLeft: '40%' }} />
@@ -126,7 +126,6 @@ const Reimbursement = (props) => {
 
 const mapStateToProps = (state) => {
     return {
-        token: state.auth.access,
         loading: state.reimbursement.loading,
         reimbursement: state.reimbursement.reimbursement,
         error: state.reimbursement.error,

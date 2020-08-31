@@ -70,8 +70,9 @@ const CreateRequest = (props) => {
     // eslint-disable-next-line
   }, [checkedItems]);
 
-  const createCheckboxOptions = (data, controlId) => data.map((option) => (
+  const createCheckboxOptions = (data, controlId) => data.map((option, index) => (
     <Form.Check
+      id={controlId + index}
       type="checkbox"
       label={option}
       name={controlId}
@@ -82,13 +83,13 @@ const CreateRequest = (props) => {
     />
   ));
 
-  const createRadioOptions = (data, formElement, controlId, required) => data.map((option) => (
+  const createRadioOptions = (data, controlId, required) => data.map((option, index) => (
     <Form.Check
       type="radio"
       label={option}
       name={controlId}
       value={option}
-      checked={formElement === option}
+      id={controlId + index}
       onChange={onChange}
       key={option}
       required={required}
@@ -160,7 +161,7 @@ const CreateRequest = (props) => {
             <Form.Label>
               What would be the quickest method of reaching you?{' '}<span className="required">*</span>
             </Form.Label>
-            {createRadioOptions(requestData.contact_preference, contact_preference, "contact_preference", true)}
+            {createRadioOptions(requestData.contact_preference, "contact_preference", true)}
           </Form.Group>
         </Card>
 
@@ -255,7 +256,7 @@ const CreateRequest = (props) => {
               the government.)
           </p>
 
-            {createRadioOptions(["Yes", "No"], agree_transfer, "agree_transfer", true)}
+            {createRadioOptions(["Yes", "No"], "agree_transfer", true)}
 
           </Form.Group>
         </Card>
@@ -333,7 +334,7 @@ const CreateRequest = (props) => {
               request.
               {' '}<span className="required">*</span>
             </Form.Label>
-            {createRadioOptions(requestData.urgency, urgency, 'urgency', true)}
+            {createRadioOptions(requestData.urgency, 'urgency', true)}
           </Form.Group>
         </Card>
 
@@ -349,7 +350,7 @@ const CreateRequest = (props) => {
               disabled, elderly, undocumented, queer, Black, Indigenous, and/or
               people of color.
           </p>
-            {createRadioOptions(requestData.financial_support, financial_support, "financial_support", true)}
+            {createRadioOptions(requestData.financial_support, "financial_support", true)}
             <a href="https://www.gofundme.com/f/covid19-eastside-survival-fund" target="_blank" rel="noopener noreferrer">https://www.gofundme.com/f/covid19-eastside-survival-fund</a>
           </Form.Group>
         </Card>
@@ -378,7 +379,7 @@ const CreateRequest = (props) => {
               with the volunteer who is doing the delivery?
               {' '}<span className="required">*</span>
             </Form.Label>
-            {createRadioOptions(["Yes", "No"], share_info, "share_info", true)}
+            {createRadioOptions(["Yes", "No"], "share_info", true)}
           </Form.Group>
         </Card>
 
@@ -389,7 +390,7 @@ const CreateRequest = (props) => {
               support you in your health and wellbeing?
               {' '}<span className="required">*</span>
             </Form.Label>
-            {createRadioOptions(requestData.need_checkin, need_checkin, "need_checkin", true)}
+            {createRadioOptions(requestData.need_checkin, "need_checkin", true)}
           </Form.Group>
         </Card>
 
@@ -416,7 +417,7 @@ const CreateRequest = (props) => {
               please go this link to join our Neighborhood Mutual Aid Pods Group:
               tinyurl.com/KCMutualAidPod
           </Form.Label>
-            {createRadioOptions(["Yes", "No"], ma_pod_setup, 'ma_pod_setup', false)}
+            {createRadioOptions(["Yes", "No"], 'ma_pod_setup', false)}
           </Form.Group>
         </Card>
 

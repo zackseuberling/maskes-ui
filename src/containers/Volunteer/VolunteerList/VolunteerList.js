@@ -25,7 +25,7 @@ const VolunteerList = (props) => {
 
     const [activePage, setActivePage] = useState(1);
 
-    const [searchValues, setSearchValues] = useState({ date: '', location: '', urgent: '', familySize: 1, requestId: '' })
+    const [searchValues, setSearchValues] = useState({ date: '', location: '', urgent: '', familySize: 0, requestId: '' })
     const { date, location, urgent, familySize } = searchValues;
 
     useEffect(() => {

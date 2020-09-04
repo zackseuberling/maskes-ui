@@ -292,6 +292,7 @@ const CreateRequest = (props) => {
               name="items_list"
               onChange={onChange}
               required
+              maxlength={2048}
             />
           </Form.Group>
         </Card>
@@ -307,6 +308,7 @@ const CreateRequest = (props) => {
               name="food_restrictions"
               onChange={onChange}
               required
+              maxlength={1024}
             />
           </Form.Group>
         </Card>
@@ -368,6 +370,7 @@ const CreateRequest = (props) => {
               name="special_info"
               onChange={onChange}
               required
+              maxlength={2048}
             />
           </Form.Group>
         </Card>
@@ -404,6 +407,7 @@ const CreateRequest = (props) => {
               placeholder="Your answer"
               name="extra_info"
               onChange={onChange}
+              maxlength={1024}
             />
           </Form.Group>
         </Card>
@@ -442,6 +446,7 @@ const CreateRequest = (props) => {
               placeholder="Your answer"
               name="offer_resources"
               onChange={onChange}
+              maxlength={1024}
             />
           </Form.Group>
         </Card>

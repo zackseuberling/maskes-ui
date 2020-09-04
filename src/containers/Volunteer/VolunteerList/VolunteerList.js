@@ -103,7 +103,7 @@ const VolunteerList = (props) => {
 
     const onSubmit = (event) => {
         event.preventDefault();
-        setSearchValues({ date: '', location: '', urgent: '', familySize: 1, requestId: searchRequestId });
+        setSearchValues({ date: '', location: '', urgent: '', familySize: 0, requestId: searchRequestId });
         setActivePage(1);
     }
 

@@ -1,0 +1,21 @@
+.edit-menu-item {
+    color: gray;
+}
+
+.edit-menu-item:hover {
+    cursor: pointer;
+    color: black;   
+}
+
+.edit-dots {
+    cursor: pointer;
+    color: rgb(193, 193, 193);
+  }
+  
+  .edit-dots:hover {
+    color: black;
+  }
+
+#popover-positioned-top {
+    z-index: 1;
+}

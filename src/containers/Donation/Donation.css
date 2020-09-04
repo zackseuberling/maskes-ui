@@ -1,0 +1,36 @@
+.donate-button {
+    color: #f7b015 !important;
+    background-color: rgb(52, 52, 52) !important;
+    border: 0 !important;
+    box-shadow: 1px 1px 6px #a5a5a5;
+}
+    
+.donate-button:hover {
+    color: black !important;
+    background-color: #f7b015 !important;
+    box-shadow: 2px 1px 8px #a9a9a9;
+    margin-left: 1px;
+    margin-bottom: 1px;
+    margin-top: -1px
+}
+
+.l-button {
+  
+  color: #007BFF;
+  cursor: pointer;
+  }
+  
+.l-button:hover,
+.l-button:focus {
+  text-decoration: underline;
+  color: #005bbd;
+}
+
+.edit-dots {
+  cursor: pointer;
+  color: rgb(193, 193, 193);
+}
+
+.edit-dots:hover {
+  color: black;
+}

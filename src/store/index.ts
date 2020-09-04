@@ -6,6 +6,7 @@ import volunteerList from '../containers/Volunteer/VolunteerList/store/reducer/r
 import volunteerDetail from '../containers/Volunteer/VolunteerDetail/store/reducer/reducer';
 import myVolunteer from '../containers/Volunteer/MyVolunteer/store/reducer/reducer';
 import reimbursement from '../containers/Reimbursement/store/reducer/reducer';
+import donation from '../containers/Donation/store/reducer/reducer';
 import alerts from '../components/Alert/store/reducer/reducer';
 import connect from '../containers/Connect/store/reducer/reducer';
 import profile from '../containers/UserProfile/store/reducer/reducer';
@@ -24,6 +25,7 @@ const rootReducer = combineReducers({
   reimbursement,
   connect,
   profile,
+  donation,
 });
 
 const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)));

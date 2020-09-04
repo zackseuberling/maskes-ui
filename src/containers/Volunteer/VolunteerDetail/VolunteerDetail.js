@@ -4,6 +4,7 @@ import Aux from '../../../hoc/Aux/Aux';
 import { Spinner, Button, Container, Table } from 'react-bootstrap';
 import Volunteer from '../Volunteer';
 import Connect from '../../../containers/Connect/Connect';
+import Donation from '../../Donation/Donation';
 import { connect } from 'react-redux';
 import { fetchVolunteerRequestDetail, volunteering } from './store/actions/actions';
 import { FaRegHandPaper } from 'react-icons/fa';
@@ -12,7 +13,7 @@ import "../Volunteer.css";
 const VolunteerDetail = (props) => {
 
     const { request, loading, match,
-        fetchVolunteerRequestDetail, volunteering, name, isMyVolunteer } = props;
+        fetchVolunteerRequestDetail, volunteering, name, isMyVolunteer, userId } = props;
     const history = useHistory();
 
     const [myVolunteer, setMyVolunteer] = useState(false)
@@ -39,6 +40,8 @@ const VolunteerDetail = (props) => {
         history.push('/volunteer/my-support');
     }
 
+    const [onDonate, setOnDonate] = useState(false)
+
     let display = []
     if (!loading && request) {
         display = (
@@ -63,6 +66,18 @@ const VolunteerDetail = (props) => {
                 >Volunteer! <FaRegHandPaper className='mb-1' /></Button> : null
                 }
 
+                {request.reimbursement &&
+                    <Donation
+                        userId={userId}
+                        supporter={request.reimbursement.reimbursement_supporter}
+                        supporterId={request.reimbursement.reimbursement_supporter_id}
+                        reimbursementId={request.reimbursement.reimbursement_id}
+                        reimbursementStatus={request.reimbursement.reimbursement_status}
+                        reimbursementAmount={request.reimbursement.reimbursement_amount}
+                        onDonate={onDonate} setOnDonate={setOnDonate} />
+                }
+
+
                 <Connect requestId={request.id} />
             </Aux >
         );
@@ -86,6 +101,7 @@ const VolunteerDetail = (props) => {
 const mapStateToProps = (state) => {
     return {
         name: state.auth.name,
+        userId: state.auth.user_id,
         loading: state.volunteerDetail.loading,
         request: state.volunteerDetail.request,
         error: state.volunteerDetail.error,
